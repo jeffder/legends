@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
+    # Legends apps
+    'legends.core',
 )
 
 # Dev apps
