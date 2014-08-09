@@ -66,13 +66,14 @@ WSGI_APPLICATION = 'legends.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'firebird',
-        'NAME' : 'legends3',      # Path to database or db alias
-        'USER' : 'legends',       # Your db user
-        'PASSWORD' : 'legends',   # db user password
-        'HOST' : '127.0.0.1',     # Your host machine
-        'PORT' : '3050',          # If is empty, use default 3050
-        'OPTIONS' : {'charset':'ISO8859_1'}
+        'ENGINE': 'firebird',
+        'NAME': 'legends3',      # Path to database or db alias
+        'USER': 'legends',       # Your db user
+        'PASSWORD': 'legends',   # db user password
+        'HOST': '127.0.0.1',     # Your host machine
+        'PORT': '3050',          # If is empty, use default 3050
+        'OPTIONS': {'charset': 'ISO8859_1'},
+        'TEST_NAME': '/home/jeff/src/legends_site/test_legends3.fdb'
     }
 }
 
@@ -94,3 +95,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Local settings
+SOUTH_TESTS_MIGRATE = False
