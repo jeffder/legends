@@ -343,11 +343,7 @@ class Migration(DataMigration):
             'initial': ('django.db.models.fields.CharField', [], {'blank': 'True', 'null': 'True', 'max_length': '1'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['core.Season']"}),
-            'supercoach_name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
-        },
-        'core.round': {
-            'Meta': {'object_name': 'Round'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'supercoach_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'})
         },
         'core.season': {
             'Meta': {'object_name': 'Season', 'ordering': "['-season']"},
@@ -356,8 +352,8 @@ class Migration(DataMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'season': ('django.db.models.fields.IntegerField', [], {})
         },
-        'core.venue': {
-            'Meta': {'object_name': 'Venue'},
+        'core.ground': {
+            'Meta': {'object_name': 'Ground'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         }

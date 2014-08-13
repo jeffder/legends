@@ -8,10 +8,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -60,10 +60,8 @@ ROOT_URLCONF = 'legends.urls'
 
 WSGI_APPLICATION = 'legends.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'firebird',
@@ -74,8 +72,13 @@ DATABASES = {
         'PORT': '3050',          # If is empty, use default 3050
         'OPTIONS': {'charset': 'ISO8859_1'},
         'TEST_NAME': '/home/jeff/src/legends_site/test_legends3.fdb'
-    }
+    },
+    'old': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'legends.db')
+    },
 }
+print(os.path.join(BASE_DIR, 'legends.db'))
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -84,7 +87,6 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

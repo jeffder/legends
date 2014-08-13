@@ -45,7 +45,7 @@ class Migration(SchemaMigration):
             ('initial', self.gf('django.db.models.fields.CharField')(blank=True, max_length=1, null=True)),
             ('last_name', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('season', self.gf('django.db.models.fields.related.ForeignKey')(related_name='players', to=orm['core.Season'])),
-            ('supercoach_name', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('supercoach_name', self.gf('django.db.models.fields.CharField')(max_length=30, null=True)),
         ))
         db.send_create_signal('core', ['Player'])
 
@@ -57,18 +57,12 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('core', ['Captain'])
 
-        # Adding model 'Round'
-        db.create_table('core_round', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-        ))
-        db.send_create_signal('core', ['Round'])
-
         # Adding model 'Venue'
-        db.create_table('core_venue', (
+        db.create_table('core_ground', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=20)),
         ))
-        db.send_create_signal('core', ['Venue'])
+        db.send_create_signal('core', ['Ground'])
 
 
     def backwards(self, orm):
@@ -77,9 +71,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Captain'
         db.delete_table('core_captain')
-
-        # Deleting model 'Round'
-        db.delete_table('core_round')
 
         # Deleting model 'Player'
         db.delete_table('core_player')
@@ -91,7 +82,7 @@ class Migration(SchemaMigration):
         db.delete_table('core_season')
 
         # Deleting model 'Venue'
-        db.delete_table('core_venue')
+        db.delete_table('core_ground')
 
 
     models = {
@@ -161,11 +152,7 @@ class Migration(SchemaMigration):
             'initial': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '1', 'null': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['core.Season']"}),
-            'supercoach_name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
-        },
-        'core.round': {
-            'Meta': {'object_name': 'Round'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'supercoach_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'})
         },
         'core.season': {
             'Meta': {'object_name': 'Season', 'ordering': "['-season']"},
@@ -174,8 +161,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'season': ('django.db.models.fields.IntegerField', [], {})
         },
-        'core.venue': {
-            'Meta': {'object_name': 'Venue'},
+        'core.ground': {
+            'Meta': {'object_name': 'Ground'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         }

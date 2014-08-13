@@ -15,7 +15,7 @@ class Season(models.Model):
     has_no_data = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.season
+        return '{}'.format(self.season)
 
     class Meta:
         ordering = ['-season']
@@ -39,6 +39,7 @@ class Coach(models.Model):
     club = models.ForeignKey(Club, related_name='coaches')
     first_name = models.CharField(max_length=30, null=True)
     has_paid_fees = models.BooleanField(default=False)
+    is_assistant = models.BooleanField(default=False)
     last_name = models.CharField(max_length=30, null=True)
     season = models.ForeignKey(Season, related_name='coaches')
 
@@ -64,7 +65,7 @@ class Player(models.Model):
     initial = models.CharField(max_length=1, null=True, blank=True)
     last_name = models.CharField(max_length=30)
     season = models.ForeignKey(Season, related_name='players')
-    supercoach_name = models.CharField(max_length=30)
+    supercoach_name = models.CharField(max_length=30, null=True)
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.club.nickname)
@@ -84,27 +85,49 @@ class Player(models.Model):
             return '{} {}'.format(self.first_name, self.last_name)
 
 
-class Captain(models.Model):
+class Round(models.Model):
 
-    # A club can have more than one captain in real life but we restrict each
-    # club to one captain for this competition.
-    club = models.ForeignKey('Club', related_name='club_captain')
-    player = models.ForeignKey('Player', related_name='player_captain')
+    _status_choices = (
+        ('Final', 'Final'),
+        ('Provisional', 'Provisional'),
+        ('Scheduled', 'Scheduled')
+    )
+    _status_help_text = ''.join(
+        (
+            'Round status:\n',
+            '\tscheduled to be played\n',
+            '\tprovisional\n',
+            '\tall games are completed.'
+        )
+    )
+
+    is_finals = models.BooleanField(default=False)
+    name = models.CharField(max_length=20)
+    num_bogs = models.IntegerField()
+    num_games = models.IntegerField()
+    season = models.ForeignKey(Season, related_name='rounds')
+    status = models.CharField(
+        max_length=15,
+        choices=_status_choices,
+        help_text=_status_help_text
+    )
+    start_time = models.DateTimeField(null=True)
+    tipping_deadline = models.DateTimeField(null=True)
 
     def __str__(self):
-        return self.player.name
+        return '{} {}'.format(self.season, self.name)
 
     class Meta:
-        ordering = ('-player__season', 'club')
+        ordering = ('-season', 'start_time')
 
 
-#class Round(models.Model):
-#    pass
-#
-#
-class Venue(models.Model):
+class Ground(models.Model):
 
     name = models.CharField(max_length=20, null=False)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
+
