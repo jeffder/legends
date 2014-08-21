@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 from main.models import Club, Ground, Round
@@ -52,6 +51,7 @@ class Game(models.Model):
     legends_home_winners_bonus = models.IntegerField(default=0)
 
     class Meta:
+        app_label = 'main'
         ordering = ('-round__season', 'round', 'game_date', 'afl_home')
 
     def __str__(self):

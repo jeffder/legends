@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 from main.models import Season
@@ -34,6 +33,7 @@ class Round(models.Model):
     tipping_deadline = models.DateTimeField(null=True)
 
     class Meta:
+        app_label = 'main'
         ordering = ('-season', 'start_time')
 
     def __str__(self):

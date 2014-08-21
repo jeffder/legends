@@ -17,8 +17,10 @@ class CoachAdmin(admin.ModelAdmin):
         'season', 'club', 'first_name', 'last_name',
         'has_paid_fees', 'is_assistant'
     )
+    list_display_links = ('club', )
 
 admin.site.register(models.Coach, CoachAdmin)
+
 
 class PlayerAdmin(admin.ModelAdmin):
 
@@ -39,11 +41,14 @@ class PlayerAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Player, PlayerAdmin)
 
+
 class RoundAdmin(admin.ModelAdmin):
 
     list_filter = ('season', )
 #    display_extras = ('bye_clubs', )
-    list_display = ('season', 'name', 'start_time', 'tipping_deadline', 'status')
+    list_display = (
+        'season', 'name', 'start_time', 'tipping_deadline', 'status')
+    list_display_links = ('season', 'name')
 
 #    def __init__(self, *args, **kwargs):
 #
@@ -64,3 +69,37 @@ class RoundAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Round, RoundAdmin)
 
+
+class GameAdmin(admin.ModelAdmin):
+
+    fieldsets = [
+        (
+            None, {
+                'fields': (
+                    ('round', 'ground'),
+                    ('game_date', 'tipping_deadline'),
+                    ('status', 'finals_game')
+                )
+            }
+        ),
+        ('AFL Teams',
+            {'fields': ('afl_home', 'afl_away')}),
+        ('Legends Teams',
+            {'fields': ('legends_home', 'legends_away')}),
+        ('AFL Results',
+            {'fields': ('afl_home_score', 'afl_away_score', 'crowd')}),
+        ('Legends Results',
+            {'fields': ('legends_home_score', 'legends_away_score')}),
+    ]
+    list_filter = ('round__season', 'round')
+    list_display = (
+        'round',
+        'afl_home', 'afl_away',
+        'ground', 'game_date',
+        'tipping_deadline', 'status',
+        'legends_home', 'legends_away',
+    )
+    list_display_links = list_display
+#    inlines = [AFLBogInline]
+
+admin.site.register(models.Game, GameAdmin)

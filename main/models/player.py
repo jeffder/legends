@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 from main.models import Club, Season
@@ -14,6 +13,7 @@ class Player(models.Model):
     supercoach_name = models.CharField(max_length=30, null=True)
 
     class Meta:
+        app_label = 'main'
         ordering = ['-season', 'club', 'last_name', 'initial', 'first_name']
 
     def __str__(self):

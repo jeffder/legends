@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -15,6 +14,7 @@ class Season(models.Model):
     has_no_data = models.BooleanField(default=False)
 
     class Meta:
+        app_label = 'main'
         ordering = ['-season']
 
     def __str__(self):

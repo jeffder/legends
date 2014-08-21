@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 from main.models import Club, Season
@@ -14,8 +13,9 @@ class Coach(models.Model):
     season = models.ForeignKey(Season, related_name='coaches')
 
     class Meta:
-        verbose_name_plural = 'coaches'
+        app_label = 'main'
         ordering = ['-season', 'club', 'last_name', 'first_name']
+        verbose_name_plural = 'coaches'
 
     def __str__(self):
         return self.name

@@ -9,6 +9,7 @@ class Club(models.Model):
     user = models.ForeignKey(User, unique=True, related_name='clubs')
 
     class Meta:
+        app_label = 'main'
         ordering = ['name']
 
     def __str__(self):
