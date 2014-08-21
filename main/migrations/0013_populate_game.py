@@ -2,7 +2,7 @@
 from south.db import dbs
 from south.v2 import DataMigration
 
-from legends.utils import fix_date, model_map
+from main import migration_utils as utils
 
 
 class Migration(DataMigration):
@@ -10,21 +10,9 @@ class Migration(DataMigration):
     def forwards(self, orm):
         old_db = dbs['old']
 
-        rnd_map = model_map(
-            old_db, 'round', orm.Round,
-            ('id', 'season_id', 'name'),
-            ('season__season', 'name')
-        )
-        club_map = model_map(
-            old_db, 'club', orm.Club,
-            ('id', 'name'),
-            ('name', )
-        )
-        ground_map = model_map(
-            old_db, 'venue', orm.Ground,
-            ('name', ),
-            ('name', )
-        )
+        round_map = utils.round_map(old_db, orm.Round)
+        club_map = utils.club_map(old_db, orm.Club)
+        ground_map = utils.ground_map(old_db, orm.Ground)
 
         afl_games = old_db.execute('select * from afl_fixture')
         leg_query = 'select * from legends_fixture where afl_fixture_id = {}'
@@ -34,13 +22,13 @@ class Migration(DataMigration):
             if afl_game[8] is None:
                 deadline = None
             else:
-                deadline = fix_date(afl_game[8])
+                deadline = utils.fix_date(afl_game[8])
 
             game_args = {
                 'crowd': afl_game[4],
                 'finals_game': afl_game[10],
-                'game_date': fix_date(afl_game[5]),
-                'round': rnd_map[afl_game[6]],
+                'game_date': utils.fix_date(afl_game[5]),
+                'round': round_map[afl_game[6]],
                 'status': afl_game[0],
                 'tipping_deadline': deadline,
                 'ground': ground_map[afl_game[3]],

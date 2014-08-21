@@ -4,25 +4,27 @@ from south.db import dbs
 from south.v2 import DataMigration
 from django.db import models
 
+from main import migration_utils as utils
+
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        seasons = {s.season: s for s in orm.Season.objects.all()}
-        clubs = {c.name: c for c in orm.Club.objects.all()}
+        old_db = dbs['old']
 
-        old =  dbs['old'].execute("select * from club")
-        old_clubs = {c[0]: c[1] for c in old}
+        club_map = utils.club_map(old_db, orm.Club)
+        season_map = utils.season_map(old_db, orm.Season)
 
-        old_players = dbs['old'].execute("select * from player")
+        old_players = old_db.execute("select * from player")
 
         for p in old_players:
             player_args = {
                 'first_name': p[0],
                 'last_name': p[1],
                 'initial': p[2] or '',
-                'club': clubs[old_clubs[p[3]]],
+                'club': club_map[p[3]],
                 'supercoach_name': p[4] or None,
-                'season': seasons[p[5]]
+                'season': season_map[p[5]]
             }
             player = orm.Player(**player_args)
             player.save()

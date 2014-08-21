@@ -4,27 +4,27 @@ from datetime import timedelta, timezone
 from south.db import dbs
 from south.v2 import DataMigration
 
-
-# Make sure we get the time right in the database:)
-TIMEZONE = '+1000'
+from main import migration_utils as utils
 
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        seasons = {s.season: s for s in orm.Season.objects.all()}
+        old_db = dbs['old']
 
-        old_rounds = dbs['old'].execute("select * from round")
+        season_map = utils.season_map(old_db, orm.Season)
+
+        old_rounds = old_db.execute("select * from round")
 
         for r in old_rounds:
-            start_time = self.fix_date(r[10])
-            deadline = self.fix_date(r[11])
+            start_time = utils.fix_date(r[10])
+            deadline = utils.fix_date(r[11])
             round_args = {
                 'is_finals': r[1],
                 'name': r[3],
                 'num_bogs': r[4],
                 'num_games': r[6],
-                'season': seasons[r[7]],
+                'season': season_map[r[7]],
                 'status': r[9],
                 'start_time': start_time,
                 'tipping_deadline': deadline
@@ -34,9 +34,6 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         orm.Round.objects.all().delete()
-
-    def fix_date(self, date):
-        return date.replace(tzinfo=timezone(timedelta(hours=10)))
 
     models = {
         'auth.group': {

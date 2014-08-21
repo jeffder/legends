@@ -1,10 +1,9 @@
-# Utility functions for the Legends project
+# Utility functions for the migrations
 
 from datetime import timedelta, timezone
 
 
 # Make sure get the time right in the database:)
-TIMEZONE = '+1000'
 TZ_OFFSET = 10
 
 
@@ -13,8 +12,8 @@ def fix_date(date):
 
 
 # Mapping functions
-# A generic one followed by more specialised ones
-# TODO: Pass map of old to new fields instead of old_fields and new_fields
+# First define a generic one and then use it in model specific ones
+
 def model_map(old_db, old_table, new_model,
               old_fields=('id',), new_fields=('id', )):
     '''
@@ -38,3 +37,25 @@ def model_map(old_db, old_table, new_model,
         mapping[key] = new_model.objects.get(**filter_args)
 
     return mapping
+
+# Model specific mappings
+
+
+def season_map(old_db, model):
+    return model_map(old_db, 'season', model, ('season', ), ('season', ))
+
+
+def club_map(old_db, model):
+    return model_map(old_db, 'club', model, ('id', 'name'), ('name', ))
+
+
+def ground_map(old_db, model):
+    return model_map(old_db, 'venue', model, ('name', ), ('name', ))
+
+
+def round_map(old_db, model):
+    return model_map(
+        old_db, 'round', model,
+        ('id', 'season_id', 'name'),
+        ('season__season', 'name')
+    )
