@@ -34,10 +34,8 @@ grounds = [
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        model = orm.Ground
-
         for g in grounds:
-            ground = model(**g)
+            ground = orm.Ground(**g)
             ground.save()
 
     def backwards(self, orm):

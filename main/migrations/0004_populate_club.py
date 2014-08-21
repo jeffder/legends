@@ -132,51 +132,51 @@ class Migration(DataMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'core.captain': {
+        'main.captain': {
             'Meta': {'ordering': "('-player__season', 'club')", 'object_name': 'Captain'},
-            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'club_captain'", 'to': "orm['core.Club']"}),
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'club_captain'", 'to': "orm['main.Club']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'player': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'player_captain'", 'to': "orm['core.Player']"})
+            'player': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'player_captain'", 'to': "orm['main.Player']"})
         },
-        'core.club': {
+        'main.club': {
             'Meta': {'ordering': "['name']", 'object_name': 'Club'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'nickname': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'clubs'", 'to': "orm['auth.User']", 'unique': 'True'})
         },
-        'core.coach': {
+        'main.coach': {
             'Meta': {'ordering': "['-season', 'club', 'last_name', 'first_name']", 'object_name': 'Coach'},
-            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'coaches'", 'to': "orm['core.Club']"}),
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'coaches'", 'to': "orm['main.Club']"}),
             'first_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '30'}),
             'has_paid_fees': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '30'}),
-            'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'coaches'", 'to': "orm['core.Season']"})
+            'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'coaches'", 'to': "orm['main.Season']"})
         },
-        'core.player': {
+        'main.player': {
             'Meta': {'ordering': "['-season', 'club', 'last_name', 'initial', 'first_name']", 'object_name': 'Player'},
-            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['core.Club']"}),
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['main.Club']"}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'initial': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '1'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['core.Season']"}),
+            'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['main.Season']"}),
             'supercoach_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'})
         },
-        'core.season': {
+        'main.season': {
             'Meta': {'ordering': "['-season']", 'object_name': 'Season'},
             'has_full_data': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'has_no_data': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'season': ('django.db.models.fields.IntegerField', [], {})
         },
-        'core.ground': {
+        'main.ground': {
             'Meta': {'object_name': 'Ground'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         }
     }
 
-    complete_apps = ['core']
+    complete_apps = ['main']
     symmetrical = True
