@@ -44,11 +44,19 @@ class Game(models.Model):
 
     # Legends specific fields
     legends_away = models.ForeignKey(Club, related_name='legends_game_away')
-    legends_away_score = models.IntegerField(default=0)
-    legends_away_winners_bonus = models.IntegerField(default=0)
+    legends_away_crowds_score = models.IntegerField(default=0, verbose_name='Crowds')
+    legends_away_margins_score = models.IntegerField(default=0, verbose_name='Margins')
+    legends_away_score = models.IntegerField(default=0, verbose_name='Total')
+    legends_away_votes_score = models.IntegerField(default=0, verbose_name='Votes')
+    legends_away_winners_bonus = models.IntegerField(default=0, verbose_name='Winners Bonus')
+    legends_away_winners_score = models.IntegerField(default=0, verbose_name='Winners')
     legends_home = models.ForeignKey(Club, related_name='legends_game_home')
-    legends_home_score = models.IntegerField(default=0)
-    legends_home_winners_bonus = models.IntegerField(default=0)
+    legends_home_crowds_score = models.IntegerField(default=0, verbose_name='Crowds')
+    legends_home_margins_score = models.IntegerField(default=0, verbose_name='Margins')
+    legends_home_score = models.IntegerField(default=0, verbose_name='Total')
+    legends_home_votes_score = models.IntegerField(default=0, verbose_name='Votes')
+    legends_home_winners_bonus = models.IntegerField(default=0, verbose_name='Winners Bonus')
+    legends_home_winners_score = models.IntegerField(default=0, verbose_name='Winners')
 
     class Meta:
         app_label = 'main'

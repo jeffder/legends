@@ -83,13 +83,39 @@ class GameAdmin(admin.ModelAdmin):
             }
         ),
         ('AFL Teams',
-            {'fields': ('afl_home', 'afl_away')}),
+            {'fields': (('afl_home', 'afl_away'), )}),
         ('Legends Teams',
-            {'fields': ('legends_home', 'legends_away')}),
+            {'fields': (('legends_home', 'legends_away'), )}),
         ('AFL Results',
-            {'fields': ('afl_home_score', 'afl_away_score', 'crowd')}),
-        ('Legends Results',
-            {'fields': ('legends_home_score', 'legends_away_score')}),
+            {'fields': (('afl_home_score', 'afl_away_score', 'crowd'), )}),
+        ('Legends Results - Home',
+            {
+                'fields': (
+                    'legends_home_score',
+                    (
+                        'legends_home_winners_score',
+                        'legends_home_winners_bonus'
+                    ),
+                    'legends_home_margins_score',
+                    'legends_home_crowds_score',
+                    'legends_home_votes_score',
+                )
+            }
+         ),
+        ('Legends Results - Away',
+            {
+                'fields': (
+                    'legends_away_score',
+                    (
+                        'legends_away_winners_score',
+                        'legends_away_winners_bonus'
+                    ),
+                    'legends_away_margins_score',
+                    'legends_away_crowds_score',
+                    'legends_away_votes_score',
+                )
+            }
+         ),
     ]
     list_filter = ('round__season', 'round')
     list_display = (
