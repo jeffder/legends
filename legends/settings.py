@@ -78,15 +78,14 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'legends.db')
     },
 }
-print(os.path.join(BASE_DIR, 'legends.db'))
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-USE_TZ = True
+TIME_ZONE = 'Australia/Melbourne'
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

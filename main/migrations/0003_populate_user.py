@@ -4,9 +4,6 @@ from django.utils import timezone
 from south.v2 import DataMigration
 
 
-# Make sure get the time right in the database:)
-TIMEZONE = '+1000'
-
 users = [
     {
         'username': 'jeff',
@@ -15,10 +12,10 @@ users = [
         'is_active': True,
         'is_superuser': True,
         'is_staff': True,
-        'last_login': '2014-03-25T20:04:46.187{}'.format(TIMEZONE),
+        'last_login': '2014-03-25T20:04:46.187',
         'password': 'pbkdf2_sha256$10000$unKAiiJMc6Is$VfOEjZ6eWIFB8iJjI5ZV65mYQlibJYOKNo/PeQJFCp8=',
         'email': 'jderuyter@iinet.net.au',
-        'date_joined': '2008-03-19T21:19:51.035{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:19:51.035',
     },
     {
         'username': 'rez',
@@ -27,10 +24,10 @@ users = [
         'is_active': True,
         'is_superuser': True,
         'is_staff': True,
-        'last_login': '2013-03-19T12:03:18.918{}'.format(TIMEZONE),
+        'last_login': '2013-03-19T12:03:18.918',
         'password': 'pbkdf2_sha256$10000$L9jbYgwQx4qe$b1jb0GLXr7uop1ASMybSkJxbbMSIDOhEbSdv0lorhZg=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'crows',
@@ -39,10 +36,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-06T12:57:19.462{}'.format(TIMEZONE),
+        'last_login': '2014-06-06T12:57:19.462',
         'password': 'pbkdf2_sha256$10000$A7HIlIKarDQm$ITKJqUkNjCdcJi2zBNGWT7/ugnkF2rSW0Ax36oDjm+s=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'lions',
@@ -51,10 +48,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-05-13T18:56:18.715{}'.format(TIMEZONE),
+        'last_login': '2014-05-13T18:56:18.715',
         'password': 'pbkdf2_sha256$10000$Eh0TkbuJvcvS$DCqLVGaQ28Sc27XRdZ8bTvlIxMnXrn57ApT6EOT53dk=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'blues',
@@ -63,10 +60,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-05-19T22:05:36.244{}'.format(TIMEZONE),
+        'last_login': '2014-05-19T22:05:36.244',
         'password': 'pbkdf2_sha256$10000$aV5FcSFFrYmD$3/wGZNjJKblO0zyZnYE4mjnAJNv+qOj4gfCqhPjYC/s=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'pies',
@@ -75,10 +72,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-28T00:28:21.652{}'.format(TIMEZONE),
+        'last_login': '2014-06-28T00:28:21.652',
         'password': 'pbkdf2_sha256$10000$ikVd611doPVv$LmCXr+7CtC5lWlBwLf1BIDRwNUM0VdI8buMGPGG5VgY=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'bombers',
@@ -87,10 +84,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-05-15T19:26:05.526{}'.format(TIMEZONE),
+        'last_login': '2014-05-15T19:26:05.526',
         'password': 'pbkdf2_sha256$10000$WQoUX7MQaNfR$BUVLof58K5rW2ss2fe2tXjZVwgRLX+lJEvZp/vKymK8=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'dockers',
@@ -99,10 +96,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T16:24:29.347{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T16:24:29.347',
         'password': 'pbkdf2_sha256$10000$MCjbvsumg29a$qEqjGo2+x1wUWAHTw1XzXPeClt9MyoF4691kdLNgVCE=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'fitzroy',
@@ -111,10 +108,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-03-09T11:01:16.278{}'.format(TIMEZONE),
+        'last_login': '2014-03-09T11:01:16.278',
         'password': 'arpeigjbn50tu25408yu40-5q035tu35yuty80',
         'email': '',
-        'date_joined': '2014-03-09T11:01:16.278{}'.format(TIMEZONE)
+        'date_joined': '2014-03-09T11:01:16.278',
     },
     {
         'username': 'cats',
@@ -123,10 +120,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T17:01:20.123{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T17:01:20.123',
         'password': 'pbkdf2_sha256$10000$XKInlMMdgmcc$3+VUag3673JQIruXvPjjmESKnwBxCdw/eCTLcer455w=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'suns',
@@ -135,10 +132,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-23T15:43:08.939{}'.format(TIMEZONE),
+        'last_login': '2014-06-23T15:43:08.939',
         'password': 'pbkdf2_sha256$10000$HCwsKusqduHE$MqIYj4Q+H2iVt5Rg8AoEFgf6h6wczY9aPUlUra2yXwE=',
         'email': '',
-        'date_joined': '2011-08-31T21:34:53{}'.format(TIMEZONE)
+        'date_joined': '2011-08-31T21:34:53',
     },
     {
         'username': 'giants',
@@ -147,10 +144,10 @@ users = [
         'is_active': True,
         'is_superuser': True,
         'is_staff': True,
-        'last_login': '2014-06-26T11:46:32.957{}'.format(TIMEZONE),
+        'last_login': '2014-06-26T11:46:32.957',
         'password': 'pbkdf2_sha256$10000$WiYptbzApGXe$Oyp9LR2MJm1bsuNQqVj2fnyrZLrlaKFlQnaKm5FyVXI=',
         'email': '',
-        'date_joined': '2012-03-27T19:32:19{}'.format(TIMEZONE)
+        'date_joined': '2012-03-27T19:32:19',
     },
     {
         'username': 'hawks',
@@ -159,10 +156,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T17:31:14.652{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T17:31:14.652',
         'password': 'pbkdf2_sha256$10000$Ap8NLy5L3bXg$ESegpRypsaKq6CVWQBH7yT3F0YgqkdpfcQbTeEI1fG4=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'demons',
@@ -171,10 +168,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T17:05:58.007{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T17:05:58.007',
         'password': 'pbkdf2_sha256$10000$ODK5SXDqZiPc$8DszWIT8VFRyjdLw24slFB3xxzN9xXtLIAJlTYHD/tI=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'roos',
@@ -183,10 +180,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T21:50:07.983{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T21:50:07.983',
         'password': 'pbkdf2_sha256$10000$Gif4AGyKAtYU$8UqRfd93yrn6Ah4n4qdH5EA9HoQZje0d/t0pQwbyz3s=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00.939{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00.939',
     },
     {
         'username': 'power',
@@ -195,10 +192,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-12T21:58:19.669{}'.format(TIMEZONE),
+        'last_login': '2014-06-12T21:58:19.669',
         'password': 'pbkdf2_sha256$10000$zlCYY15Tvlcl$sItu9BVi39R/YRGA0yT/W8W8zUGKFI1ou+hrxNNLh4g=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'tigers',
@@ -207,10 +204,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-25T14:33:41.125{}'.format(TIMEZONE),
+        'last_login': '2014-06-25T14:33:41.125',
         'password': 'pbkdf2_sha256$10000$CRzCw2auuDzF$mPIY6E6L6ht6EculqJso6gIZRs0AXwsMrtAuPEf0KrU=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'saints',
@@ -219,10 +216,10 @@ users = [
         'is_active': True,
         'is_superuser': True,
         'is_staff': True,
-        'last_login': '2014-08-06T20:04:51.265{}'.format(TIMEZONE),
+        'last_login': '2014-08-06T20:04:51.265',
         'password': 'pbkdf2_sha256$12000$5xfK84suMKU1$DWZ9EOV1uLwFRHIlc3MIKbcZ4FAyemTYiYEr0WZC+D4=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'swans',
@@ -231,10 +228,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T14:29:25.559{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T14:29:25.559',
         'password': 'pbkdf2_sha256$10000$XHS6kFgv5iin$+3C/DHz0riVKI/nReOWTvILzkPeNs31lNkTbERdhOqI=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'eagles',
@@ -243,10 +240,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-15T21:41:54.148{}'.format(TIMEZONE),
+        'last_login': '2014-06-15T21:41:54.148',
         'password': 'pbkdf2_sha256$10000$tN68pHDdYI6H$ktNHM8R3163Ss2DpaflifHJ5L/F4FlY1WamwPi9OnUo=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
     {
         'username': 'dogs',
@@ -255,10 +252,10 @@ users = [
         'is_active': True,
         'is_superuser': False,
         'is_staff': False,
-        'last_login': '2014-06-27T23:49:37.994{}'.format(TIMEZONE),
+        'last_login': '2014-06-27T23:49:37.994',
         'password': 'pbkdf2_sha256$10000$rHOW7lMjclP1$n7aJPwSFhgSz0qhUl834yjMUGB3qwfkmtCR4p17sQI0=',
         'email': '',
-        'date_joined': '2008-03-19T21:15:00{}'.format(TIMEZONE)
+        'date_joined': '2008-03-19T21:15:00',
     },
 ]
 

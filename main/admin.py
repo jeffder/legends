@@ -21,7 +21,6 @@ class CoachAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Coach, CoachAdmin)
 
-
 class PlayerAdmin(admin.ModelAdmin):
 
     list_display = ('season', 'club', 'player_name', 'supercoach_name')
@@ -41,33 +40,26 @@ class PlayerAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Player, PlayerAdmin)
 
-
 class RoundAdmin(admin.ModelAdmin):
 
     list_filter = ('season', )
-#    display_extras = ('bye_clubs', )
     list_display = (
-        'season', 'name', 'start_time', 'tipping_deadline', 'status')
+        'season', 'name', 'start_time', 'tipping_deadline',
+        'bye_clubs', 'status'
+    )
     list_display_links = ('season', 'name')
 
-#    def __init__(self, *args, **kwargs):
-#
-#        super(RoundAdmin, self).__init__(*args, **kwargs)
-#
-#        for extra in self.display_extras:
-#            method_name = '_%s' % extra
-#            method = getattr(self, method_name)
-#
-#            setattr(self, extra, method)
-#            setattr(getattr(self, extra).im_func, 'short_description', 'Byes')
-#            self.list_display += (extra, )
-#
-#    def _bye_clubs(self, obj):
-#        byes = getattr(obj, 'bye_clubs')
-#
-#        return ', '.join(b.name for b in byes())
+    def bye_clubs(self, obj):
+        byes = obj.byes.all()
+
+        return ', '.join(b.club.name for b in byes)
 
 admin.site.register(models.Round, RoundAdmin)
+
+class VoteInline(admin.TabularInline):
+
+    extra = 0
+    model = models.Vote
 
 
 class GameAdmin(admin.ModelAdmin):
@@ -126,6 +118,61 @@ class GameAdmin(admin.ModelAdmin):
         'legends_home', 'legends_away',
     )
     list_display_links = list_display
-#    inlines = [AFLBogInline]
+    inlines = [VoteInline]
 
 admin.site.register(models.Game, GameAdmin)
+
+class VoteAdmin(admin.ModelAdmin):
+
+    list_filter = ('game__round__season', 'player__club')
+
+admin.site.register(models.Vote, VoteAdmin)
+
+
+class VoteTipInline(INLINE_MODEL):
+
+    model = models.VoteTip
+
+    extra = 0
+    ordering = ['player__last_name', 'player__initial', 'player__first_name']
+
+
+class TipAdmin(admin.ModelAdmin):
+
+    fieldsets = [
+        (
+            None, {
+                'fields': (('game', 'club'), )
+            }
+        ),
+        ('Tips',
+            {'fields': (('winner', 'margin', 'crowd'), )}),
+        ('Tip Scores',
+            {'fields': (
+                ('winner_score', 'margin_score', 'crowd_score', 'votes_score'),
+            )}),
+    ]
+
+    inlines = [VoteTipInline]
+    list_display = ('season', 'club', 'round', 'game')
+    list_display_links = list_display
+    list_filter = ('game__round__season', 'club', 'game__round')
+    ordering = ('club', )
+    search_fields = (
+        'club__name',
+        '=club__nickname',
+        'game__round__name',
+        '=game__round__season__season',
+        '^game__afl_home__name',
+        '^game__afl_away__name'
+    )
+
+    def season(self, obj):
+        return obj.game.round.season.season
+    season.short_description = 'Season'
+
+    def round(self, obj):
+        return obj.game.round.name
+    round.short_description = 'Round'
+
+admin.site.register(models.Tip, TipAdmin)

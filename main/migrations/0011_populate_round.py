@@ -17,8 +17,6 @@ class Migration(DataMigration):
         old_rounds = old_db.execute("select * from round")
 
         for r in old_rounds:
-            start_time = utils.fix_date(r[10])
-            deadline = utils.fix_date(r[11])
             round_args = {
                 'is_finals': r[1],
                 'name': r[3],
@@ -26,8 +24,8 @@ class Migration(DataMigration):
                 'num_games': r[6],
                 'season': season_map[r[7]],
                 'status': r[9],
-                'start_time': start_time,
-                'tipping_deadline': deadline
+                'start_time': r[10],
+                'tipping_deadline': r[11]
             }
             rnd = orm.Round(**round_args)
             rnd.save()

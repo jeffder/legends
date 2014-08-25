@@ -10,79 +10,26 @@ class Migration(DataMigration):
     def forwards(self, orm):
         old_db = dbs['old']
 
-        round_map = utils.round_map(old_db, orm.Round)
-        club_map = utils.club_map(old_db, orm.Club)
-        ground_map = utils.ground_map(old_db, orm.Ground)
+        player_map = utils.player_map(
+            old_db, orm.Player, fk_models={'club': orm.Club})
+        tip_map = utils.tip_map(
+            old_db, orm.Tip, fk_models={
+                'round': orm.Round, 'club': orm.Club, 'game': orm.Game}
+        )
 
-        afl_games = old_db.execute('select * from afl_fixture')
-        leg_query = 'select * from legends_fixture where afl_fixture_id = {}'
-        tips_query = '''
-            select t.* from tip t
-            join legends_fixture lf on lf.id = t.legends_fixture_id
-            join round r on r.id = lf.round_id
-            where r.id = {} and t.club_id = {}
-        '''
+        votes = old_db.execute('select * from bog_tip')
 
-        for afl_game in afl_games:
-            legends_game = old_db.execute(leg_query.format(afl_game[-1]))[0]
-            away_tips = old_db.execute(
-                tips_query.format(afl_game[6], legends_game[0])
-            )
-            home_tips = old_db.execute(
-                tips_query.format(afl_game[6], legends_game[5])
-            )
-
-            game_args = {
-                'crowd': afl_game[4],
-                'finals_game': afl_game[10],
-                'game_date': afl_game[5],
-                'round': round_map[afl_game[6]],
-                'status': afl_game[0],
-                'tipping_deadline': afl_game[8],
-                'ground': ground_map[afl_game[3]],
-                'afl_away': club_map[afl_game[1]],
-                'afl_away_score': afl_game[13],
-                'afl_home': club_map[afl_game[9]],
-                'afl_home_score': afl_game[11],
-                'legends_away': club_map[legends_game[0]],
-                'legends_away_score': legends_game[8],
-                'legends_away_winners_bonus': legends_game[4],
-                'legends_home': club_map[legends_game[5]],
-                'legends_home_score': legends_game[7],
-                'legends_home_winners_bonus': legends_game[1]
+        for v in votes:
+            vote_args = {
+                'player': player_map[v[0]],
+                'tip': tip_map[v[2]],
             }
 
-            # Add quarter scores for legends games
-            scores = self.legends_scores(away_tips)
-            for key in ('winners', 'margins', 'crowds', 'votes'):
-                game_args['legends_away_{}_score'.format(key)] = scores[key]
-            scores = self.legends_scores(home_tips)
-            for key in ('winners', 'margins', 'crowds', 'votes'):
-                game_args['legends_home_{}_score'.format(key)] = scores[key]
-
-            game = orm.Game(**game_args)
-            game.save()
+            vote = orm.VoteTip(**vote_args)
+            vote.save()
 
     def backwards(self, orm):
-        orm.Game.objects.all().delete()
-
-    def legends_scores(self, tips):
-        '''
-        Calculates total scores for each quarter for the round.
-        '''
-        scores = {
-            'winners': 0,
-            'margins': 0,
-            'crowds': 0,
-            'votes': 0,
-        }
-        for tip in tips:
-            scores['winners'] = sum((t[1] for t in tips), 0)
-            scores['margins'] = sum((t[5] for t in tips), 0)
-            scores['crowds'] = sum((t[2] for t in tips), 0)
-            scores['votes'] = sum((t[6] for t in tips), 0)
-
-        return scores
+        orm.VoteTip.objects.all().delete()
 
     models = {
         'auth.group': {
@@ -92,7 +39,7 @@ class Migration(DataMigration):
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'to': "orm['auth.Permission']", 'symmetrical': 'False'})
         },
         'auth.permission': {
-            'Meta': {'unique_together': "(('content_type', 'codename'),)", 'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'object_name': 'Permission'},
+            'Meta': {'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission', 'ordering': "('content_type__app_label', 'content_type__model', 'codename')"},
             'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -115,21 +62,33 @@ class Migration(DataMigration):
             'username': ('django.db.models.fields.CharField', [], {'max_length': '30', 'unique': 'True'})
         },
         'contenttypes.contenttype': {
-            'Meta': {'object_name': 'ContentType', 'unique_together': "(('app_label', 'model'),)", 'ordering': "('name',)", 'db_table': "'django_content_type'"},
+            'Meta': {'unique_together': "(('app_label', 'model'),)", 'db_table': "'django_content_type'", 'object_name': 'ContentType', 'ordering': "('name',)"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'main.bye': {
+            'Meta': {'object_name': 'Bye', 'ordering': "('-round__season', 'round', 'club')"},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Club']", 'related_name': "'byes'"}),
+            'crowds_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'margins_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'round': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Round']", 'related_name': "'byes'"}),
+            'score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'votes_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'winners_bonus': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'winners_score': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
         'main.club': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Club'},
+            'Meta': {'object_name': 'Club', 'ordering': "['name']"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'nickname': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'related_name': "'clubs'", 'unique': 'True'})
         },
         'main.coach': {
-            'Meta': {'ordering': "['-season', 'club', 'last_name', 'first_name']", 'object_name': 'Coach'},
+            'Meta': {'object_name': 'Coach', 'ordering': "['-season', 'club', 'last_name', 'first_name']"},
             'club': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Club']", 'related_name': "'coaches'"}),
             'first_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '30'}),
             'has_paid_fees': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -139,7 +98,7 @@ class Migration(DataMigration):
             'season': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Season']", 'related_name': "'coaches'"})
         },
         'main.game': {
-            'Meta': {'ordering': "('-round__season', 'round', 'game_date', 'afl_home')", 'object_name': 'Game'},
+            'Meta': {'object_name': 'Game', 'ordering': "('-round__season', 'round', 'game_date', 'afl_home')"},
             'afl_away': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Club']", 'related_name': "'afl_game_away'"}),
             'afl_away_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'afl_home': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Club']", 'related_name': "'afl_game_home'"}),
@@ -168,22 +127,22 @@ class Migration(DataMigration):
             'tipping_deadline': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'null': 'True'})
         },
         'main.ground': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Ground'},
+            'Meta': {'object_name': 'Ground', 'ordering': "['name']"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         },
         'main.player': {
-            'Meta': {'ordering': "['-season', 'club', 'last_name', 'initial', 'first_name']", 'object_name': 'Player'},
+            'Meta': {'object_name': 'Player', 'ordering': "['-season', 'club', 'last_name', 'initial', 'first_name']"},
             'club': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Club']", 'related_name': "'players'"}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'initial': ('django.db.models.fields.CharField', [], {'blank': 'True', 'null': 'True', 'max_length': '1'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'season': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Season']", 'related_name': "'players'"}),
-            'supercoach_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '30'})
+            'supercoach_name': ('django.db.models.fields.CharField', [], {'blank': 'True', 'null': 'True', 'max_length': '30'})
         },
         'main.round': {
-            'Meta': {'ordering': "('-season', 'start_time')", 'object_name': 'Round'},
+            'Meta': {'object_name': 'Round', 'ordering': "('-season', 'start_time')"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_finals': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
@@ -195,11 +154,39 @@ class Migration(DataMigration):
             'tipping_deadline': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
         },
         'main.season': {
-            'Meta': {'ordering': "['-season']", 'object_name': 'Season'},
+            'Meta': {'object_name': 'Season', 'ordering': "['-season']"},
             'has_full_data': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'has_no_data': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'season': ('django.db.models.fields.IntegerField', [], {})
+        },
+        'main.tip': {
+            'Meta': {'object_name': 'Tip', 'ordering': "('-game', 'club')"},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Club']", 'related_name': "'tips'"}),
+            'crowd': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'crowd_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'game': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Game']", 'related_name': "'tips'"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_default': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'margin': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'margin_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'total': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'votes_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'winner': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'related_name': "'tip_winners'", 'to': "orm['main.Club']"}),
+            'winner_score': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
+        'main.vote': {
+            'Meta': {'object_name': 'Vote'},
+            'game': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Game']", 'related_name': "'votes'"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'player': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Player']", 'related_name': "'votes'"}),
+            'votes': ('django.db.models.fields.IntegerField', [], {})
+        },
+        'main.votetip': {
+            'Meta': {'object_name': 'VoteTip', 'ordering': "('player__last_name', 'player__initial', 'player__first_name')"},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'player': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'related_name': "'vote_tips'", 'to': "orm['main.Player']"}),
+            'tip': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.Tip']", 'related_name': "'vote_tips'"})
         }
     }
 

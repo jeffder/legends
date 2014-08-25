@@ -10,7 +10,7 @@ class Player(models.Model):
     initial = models.CharField(max_length=1, null=True, blank=True)
     last_name = models.CharField(max_length=30)
     season = models.ForeignKey(Season, related_name='players')
-    supercoach_name = models.CharField(max_length=30, null=True)
+    supercoach_name = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:
         app_label = 'main'

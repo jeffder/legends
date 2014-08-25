@@ -21,9 +21,9 @@ class Migration(DataMigration):
             player_args = {
                 'first_name': p[0],
                 'last_name': p[1],
-                'initial': p[2] or '',
+                'initial': p[2],
                 'club': club_map[p[3]],
-                'supercoach_name': p[4] or None,
+                'supercoach_name': p[4],
                 'season': season_map[p[5]]
             }
             player = orm.Player(**player_args)

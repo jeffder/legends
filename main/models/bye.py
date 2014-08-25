@@ -3,7 +3,7 @@ from django.db import models
 from main.models import Club, Round
 
 
-class Game(models.Model):
+class Bye(models.Model):
     '''
     Bye games
     '''
@@ -11,7 +11,7 @@ class Game(models.Model):
     club = models.ForeignKey(Club, related_name='byes')
     crowds_score = models.IntegerField(default=0)
     margins_score = models.IntegerField(default=0)
-    round = models.ForeignKey(Round, related_name='games')
+    round = models.ForeignKey(Round, related_name='byes')
     score = models.IntegerField(default=0)
     votes_score = models.IntegerField(default=0)
     winners_bonus = models.IntegerField(default=0)
