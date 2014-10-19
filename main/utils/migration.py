@@ -64,6 +64,7 @@ def round_map(old_db, model):
         ('season__season', 'name')
     )
 
+
 def player_map(old_db, model, fk_models):
     c_map = club_map(old_db, fk_models['club'])
 
@@ -72,6 +73,7 @@ def player_map(old_db, model, fk_models):
         ('id', 'season_id', ('club_id', c_map), 'first_name', 'initial', 'last_name'),
         ('season__season', 'club', 'first_name', 'initial', 'last_name')
     )
+
 
 def game_map(old_db, model, fk_models):
     c_map = club_map(old_db, fk_models['club'])

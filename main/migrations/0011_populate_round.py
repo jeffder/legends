@@ -4,7 +4,7 @@ from datetime import timedelta, timezone
 from south.db import dbs
 from south.v2 import DataMigration
 
-from main import migration_utils as utils
+from main.utils import migration
 
 
 class Migration(DataMigration):
@@ -12,7 +12,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         old_db = dbs['old']
 
-        season_map = utils.season_map(old_db, orm.Season)
+        season_map = migration.season_map(old_db, orm.Season)
 
         old_rounds = old_db.execute("select * from round")
 

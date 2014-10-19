@@ -2,7 +2,7 @@
 from south.db import dbs
 from south.v2 import DataMigration
 
-from main import migration_utils as utils
+from main.utils import migration
 
 
 class Migration(DataMigration):
@@ -10,8 +10,8 @@ class Migration(DataMigration):
     def forwards(self, orm):
         old_db = dbs['old']
 
-        club_map = utils.club_map(old_db, orm.Club)
-        game_map = utils.game_map(
+        club_map = migration.club_map(old_db, orm.Club)
+        game_map = migration.game_map(
             old_db, orm.Game, fk_models={'round': orm.Round, 'club': orm.Club})
 
         tips = old_db.execute('select * from tip')

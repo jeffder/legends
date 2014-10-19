@@ -37,6 +37,3 @@ class TestSeasonTestCase(TestCase):
     def test_default_has_no_data(self):
         season = self.seasons[0]
         self.assertFalse(season.has_no_data)
-
-
-

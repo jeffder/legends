@@ -2,7 +2,7 @@
 from south.db import dbs
 from south.v2 import DataMigration
 
-from main import migration_utils as utils
+from main.utils import migration
 
 
 class Migration(DataMigration):
@@ -10,8 +10,8 @@ class Migration(DataMigration):
     def forwards(self, orm):
         old_db = dbs['old']
 
-        club_map = utils.club_map(old_db, orm.Club)
-        season_map = utils.season_map(old_db, orm.Season)
+        club_map = migration.club_map(old_db, orm.Club)
+        season_map = migration.season_map(old_db, orm.Season)
 
         # Get the asistant coaches
         assistants = set(
