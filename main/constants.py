@@ -10,3 +10,6 @@ class PrizeCategories(object):
         'Premier', 'Runner Up', 'Minor Premier', 'Wooden Spoon', 'Coleman',   \
         'Brownlow', 'Margins', 'Crowds', 'High Season', 'High Round'
 
+class Round(object):
+    statuses = SCHEDULED, PROVISIONAL, FINAL =   \
+        'Scheduled', 'Provisional', 'Final'

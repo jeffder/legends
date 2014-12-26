@@ -22,7 +22,21 @@ class Coach(models.Model):
 
     @property
     def name(self):
-        '''
+        """
         Return the coach's full name as first_name last_name.
-        '''
+        """
         return '{} {}'.format(self.first_name, self.last_name)
+
+    def can_tip_in_round(self, rnd):
+        """
+        Can coach tip in this round?
+        """
+        # Can always tip in home/away rounds
+        if not rnd.is_finals:
+            return True
+
+        for game in rnd.games:
+            if self.club == game.legends.home or self.club == game.legends_away:
+                return True
+
+        return False

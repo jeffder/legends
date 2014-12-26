@@ -1,5 +1,7 @@
 from django.db import models
 
+from main import constants
+
 
 class Season(models.Model):
 
@@ -19,3 +21,20 @@ class Season(models.Model):
 
     def __str__(self):
         return '{}'.format(self.season)
+
+    def live_round(self):
+        """
+        Return the round currently being played for this season.
+        It will be the earliest non-final round in the season or the Grand Final
+        Round if all rounds are final.
+        """
+        rounds = self.rounds   \
+            .exclude(status=constants.Round.FINAL)   \
+            .exclude(start_time=None)
+
+        if rounds:
+            return rounds[0]
+
+        # All rounds have status of 'Final' so return the Grand Final round for
+        # season
+        return self.rounds.filter(name='Grand Final')[0]

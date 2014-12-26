@@ -56,10 +56,10 @@ class RoundAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Round, RoundAdmin)
 
-class VoteInline(admin.TabularInline):
+class SupercoachRankingInline(admin.TabularInline):
 
     extra = 0
-    model = models.Vote
+    model = models.SupercoachRanking
 
 
 class GameAdmin(admin.ModelAdmin):
@@ -90,7 +90,7 @@ class GameAdmin(admin.ModelAdmin):
                     ),
                     'legends_home_margins_score',
                     'legends_home_crowds_score',
-                    'legends_home_votes_score',
+                    'legends_home_supercoach_score',
                 )
             }
          ),
@@ -104,7 +104,7 @@ class GameAdmin(admin.ModelAdmin):
                     ),
                     'legends_away_margins_score',
                     'legends_away_crowds_score',
-                    'legends_away_votes_score',
+                    'legends_away_supercoach_score',
                 )
             }
          ),
@@ -118,20 +118,20 @@ class GameAdmin(admin.ModelAdmin):
         'legends_home', 'legends_away',
     )
     list_display_links = list_display
-    inlines = [VoteInline]
+    inlines = [SupercoachRankingInline]
 
 admin.site.register(models.Game, GameAdmin)
 
-class VoteAdmin(admin.ModelAdmin):
+class SupercoachRankingAdmin(admin.ModelAdmin):
 
     list_filter = ('game__round__season', 'player__club')
 
-admin.site.register(models.Vote, VoteAdmin)
+admin.site.register(models.SupercoachRanking, SupercoachRankingAdmin)
 
 
-class VoteTipInline(INLINE_MODEL):
+class SupercoachTipInline(INLINE_MODEL):
 
-    model = models.VoteTip
+    model = models.SupercoachTip
 
     extra = 0
     ordering = ['player__last_name', 'player__initial', 'player__first_name']
@@ -149,11 +149,12 @@ class TipAdmin(admin.ModelAdmin):
             {'fields': (('winner', 'margin', 'crowd'), )}),
         ('Tip Scores',
             {'fields': (
-                ('winner_score', 'margin_score', 'crowd_score', 'votes_score'),
+                ('winner_score', 'margin_score', 'crowd_score',
+                 'supercoach_score'),
             )}),
     ]
 
-    inlines = [VoteTipInline]
+    inlines = [SupercoachTipInline]
     list_display = ('season', 'club', 'round', 'game')
     list_display_links = list_display
     list_filter = ('game__round__season', 'club', 'game__round')

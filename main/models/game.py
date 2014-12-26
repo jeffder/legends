@@ -1,12 +1,14 @@
+import datetime
+
 from django.db import models
 
 from main.models import Club, Ground, Round
 
 
 class Game(models.Model):
-    '''
+    """
     AFL/Legends games
-    '''
+    """
 
     _statusChoices = (
         ('Final', 'Final'),
@@ -44,19 +46,31 @@ class Game(models.Model):
 
     # Legends specific fields
     legends_away = models.ForeignKey(Club, related_name='legends_game_away')
-    legends_away_crowds_score = models.IntegerField(default=0, verbose_name='Crowds')
-    legends_away_margins_score = models.IntegerField(default=0, verbose_name='Margins')
-    legends_away_score = models.IntegerField(default=0, verbose_name='Total')
-    legends_away_votes_score = models.IntegerField(default=0, verbose_name='Votes')
-    legends_away_winners_bonus = models.IntegerField(default=0, verbose_name='Winners Bonus')
-    legends_away_winners_score = models.IntegerField(default=0, verbose_name='Winners')
+    legends_away_crowds_score = models.IntegerField(
+        default=0, verbose_name='Away Crowds')
+    legends_away_margins_score = models.IntegerField(
+        default=0, verbose_name='Away Margins')
+    legends_away_score = models.IntegerField(
+        default=0, verbose_name='Away Total')
+    legends_away_supercoach_score = models.IntegerField(
+        default=0, verbose_name='Away Supercoach Scores')
+    legends_away_winners_bonus = models.IntegerField(
+        default=0, verbose_name='Away Winners Bonus')
+    legends_away_winners_score = models.IntegerField(
+        default=0, verbose_name='Away Winners')
     legends_home = models.ForeignKey(Club, related_name='legends_game_home')
-    legends_home_crowds_score = models.IntegerField(default=0, verbose_name='Crowds')
-    legends_home_margins_score = models.IntegerField(default=0, verbose_name='Margins')
-    legends_home_score = models.IntegerField(default=0, verbose_name='Total')
-    legends_home_votes_score = models.IntegerField(default=0, verbose_name='Votes')
-    legends_home_winners_bonus = models.IntegerField(default=0, verbose_name='Winners Bonus')
-    legends_home_winners_score = models.IntegerField(default=0, verbose_name='Winners')
+    legends_home_crowds_score = models.IntegerField(
+        default=0, verbose_name='Home Crowds')
+    legends_home_margins_score = models.IntegerField(
+        default=0, verbose_name='Home Margins')
+    legends_home_score = models.IntegerField(
+        default=0, verbose_name='Home Total')
+    legends_home_supercoach_score = models.IntegerField(
+        default=0, verbose_name='Home Supercoach Scores')
+    legends_home_winners_bonus = models.IntegerField(
+        default=0, verbose_name='Home Winners Bonus')
+    legends_home_winners_score = models.IntegerField(
+        default=0, verbose_name='Home Winners')
 
     class Meta:
         app_label = 'main'
@@ -64,3 +78,28 @@ class Game(models.Model):
 
     def __str__(self):
         return u'%s: %s v %s' % (self.round, self.afl_home, self.afl_away)
+
+    @property
+    def deadline_has_passed(self):
+        """
+        Determine if the tipping deadline has passed.
+
+        The last home/away round is a floating round and will have no dates and
+        times for its fixtures until after the previous round has been played.
+        So, it won't have a tipping deadline until then.
+        """
+        try:
+            return datetime.datetime.now() >= self.tipping_deadline
+        except TypeError:
+            return False
+
+    def create_default_tip(self, game):
+        """
+        Create a default tip for this club for game.
+        """
+        tip = Tip(
+            club=self,
+            game=game,
+            is_default=True
+        )
+        tip.save()

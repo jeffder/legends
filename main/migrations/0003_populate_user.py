@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.utils import timezone
-
 from south.v2 import DataMigration
 
 
@@ -16,7 +14,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$unKAiiJMc6Is$VfOEjZ6eWIFB8iJjI5ZV65mYQlibJYOKNo/PeQJFCp8=',
         'email': 'jderuyter@iinet.net.au',
         'date_joined': '2008-03-19T21:19:51.035',
-    },
+        },
     {
         'username': 'rez',
         'first_name': '',
@@ -28,7 +26,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$L9jbYgwQx4qe$b1jb0GLXr7uop1ASMybSkJxbbMSIDOhEbSdv0lorhZg=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'crows',
         'first_name': '',
@@ -40,7 +38,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$A7HIlIKarDQm$ITKJqUkNjCdcJi2zBNGWT7/ugnkF2rSW0Ax36oDjm+s=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'lions',
         'first_name': '',
@@ -52,7 +50,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$Eh0TkbuJvcvS$DCqLVGaQ28Sc27XRdZ8bTvlIxMnXrn57ApT6EOT53dk=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'blues',
         'first_name': '',
@@ -64,7 +62,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$aV5FcSFFrYmD$3/wGZNjJKblO0zyZnYE4mjnAJNv+qOj4gfCqhPjYC/s=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'pies',
         'first_name': '',
@@ -76,7 +74,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$ikVd611doPVv$LmCXr+7CtC5lWlBwLf1BIDRwNUM0VdI8buMGPGG5VgY=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'bombers',
         'first_name': '',
@@ -88,7 +86,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$WQoUX7MQaNfR$BUVLof58K5rW2ss2fe2tXjZVwgRLX+lJEvZp/vKymK8=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'dockers',
         'first_name': '',
@@ -100,7 +98,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$MCjbvsumg29a$qEqjGo2+x1wUWAHTw1XzXPeClt9MyoF4691kdLNgVCE=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'fitzroy',
         'first_name': '',
@@ -112,7 +110,7 @@ users = [
         'password': 'arpeigjbn50tu25408yu40-5q035tu35yuty80',
         'email': '',
         'date_joined': '2014-03-09T11:01:16.278',
-    },
+        },
     {
         'username': 'cats',
         'first_name': '',
@@ -124,7 +122,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$XKInlMMdgmcc$3+VUag3673JQIruXvPjjmESKnwBxCdw/eCTLcer455w=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'suns',
         'first_name': '',
@@ -136,7 +134,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$HCwsKusqduHE$MqIYj4Q+H2iVt5Rg8AoEFgf6h6wczY9aPUlUra2yXwE=',
         'email': '',
         'date_joined': '2011-08-31T21:34:53',
-    },
+        },
     {
         'username': 'giants',
         'first_name': '',
@@ -148,7 +146,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$WiYptbzApGXe$Oyp9LR2MJm1bsuNQqVj2fnyrZLrlaKFlQnaKm5FyVXI=',
         'email': '',
         'date_joined': '2012-03-27T19:32:19',
-    },
+        },
     {
         'username': 'hawks',
         'first_name': '',
@@ -160,7 +158,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$Ap8NLy5L3bXg$ESegpRypsaKq6CVWQBH7yT3F0YgqkdpfcQbTeEI1fG4=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'demons',
         'first_name': '',
@@ -172,7 +170,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$ODK5SXDqZiPc$8DszWIT8VFRyjdLw24slFB3xxzN9xXtLIAJlTYHD/tI=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'roos',
         'first_name': '',
@@ -184,7 +182,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$Gif4AGyKAtYU$8UqRfd93yrn6Ah4n4qdH5EA9HoQZje0d/t0pQwbyz3s=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00.939',
-    },
+        },
     {
         'username': 'power',
         'first_name': '',
@@ -196,7 +194,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$zlCYY15Tvlcl$sItu9BVi39R/YRGA0yT/W8W8zUGKFI1ou+hrxNNLh4g=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'tigers',
         'first_name': '',
@@ -208,7 +206,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$CRzCw2auuDzF$mPIY6E6L6ht6EculqJso6gIZRs0AXwsMrtAuPEf0KrU=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'saints',
         'first_name': '',
@@ -220,7 +218,7 @@ users = [
         'password': 'pbkdf2_sha256$12000$5xfK84suMKU1$DWZ9EOV1uLwFRHIlc3MIKbcZ4FAyemTYiYEr0WZC+D4=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'swans',
         'first_name': '',
@@ -232,7 +230,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$XHS6kFgv5iin$+3C/DHz0riVKI/nReOWTvILzkPeNs31lNkTbERdhOqI=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'eagles',
         'first_name': '',
@@ -244,7 +242,7 @@ users = [
         'password': 'pbkdf2_sha256$10000$tN68pHDdYI6H$ktNHM8R3163Ss2DpaflifHJ5L/F4FlY1WamwPi9OnUo=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
+        },
     {
         'username': 'dogs',
         'first_name': '',
@@ -256,8 +254,8 @@ users = [
         'password': 'pbkdf2_sha256$10000$rHOW7lMjclP1$n7aJPwSFhgSz0qhUl834yjMUGB3qwfkmtCR4p17sQI0=',
         'email': '',
         'date_joined': '2008-03-19T21:15:00',
-    },
-]
+        },
+    ]
 
 
 class Migration(DataMigration):
@@ -278,10 +276,10 @@ class Migration(DataMigration):
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'symmetrical': 'False', 'to': "orm['auth.Permission']"})
+            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'blank': 'True', 'to': "orm['auth.Permission']"})
         },
         'auth.permission': {
-            'Meta': {'object_name': 'Permission', 'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)"},
+            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
             'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -292,7 +290,7 @@ class Migration(DataMigration):
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'blank': 'True', 'max_length': '75'}),
             'first_name': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '30'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'user_set'", 'blank': 'True', 'symmetrical': 'False', 'to': "orm['auth.Group']"}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'user_set'", 'blank': 'True', 'to': "orm['auth.Group']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -300,59 +298,135 @@ class Migration(DataMigration):
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '30'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'user_set'", 'blank': 'True', 'symmetrical': 'False', 'to': "orm['auth.Permission']"}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'user_set'", 'blank': 'True', 'to': "orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         'contenttypes.contenttype': {
-            'Meta': {'object_name': 'ContentType', 'db_table': "'django_content_type'", 'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)"},
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'main.captain': {
-            'Meta': {'object_name': 'Captain', 'ordering': "('-player__season', 'club')"},
-            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'club_captain'", 'to': "orm['main.Club']"}),
+        'main.bye': {
+            'Meta': {'ordering': "('-round__season', 'round', 'club')", 'object_name': 'Bye'},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'byes'", 'to': "orm['main.Club']"}),
+            'crowds_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'player': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'player_captain'", 'to': "orm['main.Player']"})
+            'margins_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'round': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'byes'", 'to': "orm['main.Round']"}),
+            'score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'supercoach_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'winners_bonus': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'winners_score': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
         'main.club': {
-            'Meta': {'object_name': 'Club', 'ordering': "['name']"},
+            'Meta': {'ordering': "['name']", 'object_name': 'Club'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'nickname': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'unique': 'True', 'related_name': "'clubs'", 'to': "orm['auth.User']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'clubs'", 'unique': 'True', 'to': "orm['auth.User']"})
         },
         'main.coach': {
-            'Meta': {'object_name': 'Coach', 'ordering': "['-season', 'club', 'last_name', 'first_name']"},
+            'Meta': {'ordering': "['-season', 'club', 'last_name', 'first_name']", 'object_name': 'Coach'},
             'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'coaches'", 'to': "orm['main.Club']"}),
-            'first_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '30'}),
+            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'}),
             'has_paid_fees': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '30'}),
+            'is_assistant': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'}),
             'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'coaches'", 'to': "orm['main.Season']"})
         },
+        'main.game': {
+            'Meta': {'ordering': "('-round__season', 'round', 'game_date', 'afl_home')", 'object_name': 'Game'},
+            'afl_away': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'afl_game_away'", 'to': "orm['main.Club']"}),
+            'afl_away_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'afl_home': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'afl_game_home'", 'to': "orm['main.Club']"}),
+            'afl_home_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'crowd': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'finals_game': ('django.db.models.fields.IntegerField', [], {'blank': 'True', 'null': 'True'}),
+            'game_date': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'null': 'True'}),
+            'ground': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'games'", 'to': "orm['main.Ground']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'legends_away': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'legends_game_away'", 'to': "orm['main.Club']"}),
+            'legends_away_crowds_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_away_margins_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_away_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_away_supercoach_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_away_winners_bonus': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_away_winners_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_home': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'legends_game_home'", 'to': "orm['main.Club']"}),
+            'legends_home_crowds_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_home_margins_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_home_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_home_supercoach_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_home_winners_bonus': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'legends_home_winners_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'round': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'games'", 'to': "orm['main.Round']"}),
+            'status': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'tipping_deadline': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'null': 'True'})
+        },
+        'main.ground': {
+            'Meta': {'ordering': "['name']", 'object_name': 'Ground'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
+        },
         'main.player': {
-            'Meta': {'object_name': 'Player', 'ordering': "['-season', 'club', 'last_name', 'initial', 'first_name']"},
+            'Meta': {'ordering': "['-season', 'club', 'last_name', 'initial', 'first_name']", 'object_name': 'Player'},
             'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['main.Club']"}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'initial': ('django.db.models.fields.CharField', [], {'blank': 'True', 'null': 'True', 'max_length': '1'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'players'", 'to': "orm['main.Season']"}),
-            'supercoach_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'})
+            'supercoach_name': ('django.db.models.fields.CharField', [], {'blank': 'True', 'null': 'True', 'max_length': '30'})
+        },
+        'main.round': {
+            'Meta': {'ordering': "('-season', 'start_time')", 'object_name': 'Round'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_finals': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'num_bogs': ('django.db.models.fields.IntegerField', [], {}),
+            'num_games': ('django.db.models.fields.IntegerField', [], {}),
+            'season': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'rounds'", 'to': "orm['main.Season']"}),
+            'start_time': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'status': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'tipping_deadline': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
         },
         'main.season': {
-            'Meta': {'object_name': 'Season', 'ordering': "['-season']"},
+            'Meta': {'ordering': "['-season']", 'object_name': 'Season'},
             'has_full_data': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'has_no_data': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'season': ('django.db.models.fields.IntegerField', [], {})
         },
-        'main.ground': {
-            'Meta': {'object_name': 'Ground'},
+        'main.supercoachranking': {
+            'Meta': {'object_name': 'SupercoachRanking', 'db_table': "'main_supercoach_ranking'"},
+            'game': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'supercoach_rankings'", 'to': "orm['main.Game']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
+            'player': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'supercoach_rankings'", 'to': "orm['main.Player']"}),
+            'ranking': ('django.db.models.fields.IntegerField', [], {})
+        },
+        'main.supercoachtip': {
+            'Meta': {'ordering': "('player__last_name', 'player__initial', 'player__first_name')", 'object_name': 'SupercoachTip', 'db_table': "'main_supercoach_tip'"},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'player': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'supercoach_tips'", 'to': "orm['main.Player']", 'null': 'True'}),
+            'tip': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'supercoach_tips'", 'to': "orm['main.Tip']"})
+        },
+        'main.tip': {
+            'Meta': {'ordering': "('-game', 'club')", 'object_name': 'Tip'},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tips'", 'to': "orm['main.Club']"}),
+            'crowd': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'crowds_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'game': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tips'", 'to': "orm['main.Game']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_default': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'margin': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'margins_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'supercoach_score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'total': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'winner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tip_winners'", 'to': "orm['main.Club']", 'null': 'True'}),
+            'winners_score': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         }
     }
 

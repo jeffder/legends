@@ -1,5 +1,9 @@
-*.pyc
-__pycache__
+.idea
 legends.fbk
 legends.fdb
+legends.fdb.bak
 legends.db
+*.pyc
+__pycache__
+.sass-cache
+static_old

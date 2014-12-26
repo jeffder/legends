@@ -13,7 +13,7 @@ class Bye(models.Model):
     margins_score = models.IntegerField(default=0)
     round = models.ForeignKey(Round, related_name='byes')
     score = models.IntegerField(default=0)
-    votes_score = models.IntegerField(default=0)
+    supercoach_score = models.IntegerField(default=0)
     winners_bonus = models.IntegerField(default=0)
     winners_score = models.IntegerField(default=0)
 

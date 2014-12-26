@@ -14,3 +14,16 @@ class Club(models.Model):
 
     def __str__(self):
         return self.name
+
+#    def create_default_tip(self, game):
+#        """
+#        Create a default tip for this club for game.
+#        """
+#        tip = Tip(
+#            club=self,
+#            game=game,
+#            is_default=True
+#        )
+#        tip.save()
+#
+#        return tip

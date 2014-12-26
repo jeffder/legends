@@ -6,12 +6,12 @@
 
 def model_map(old_db, old_table, new_model,
               old_fields=('id',), new_fields=('id', )):
-    '''
+    """
     Map fields on old database to objects in new one.
     'old_fields' is a tuple of either a column name in the old database or a
     tuple of column name and a mapping of old id to new object (to handle
     foreign keys in the old table).
-    '''
+    """
 
     mapping = {}
 
@@ -25,11 +25,10 @@ def model_map(old_db, old_table, new_model,
     old_data = old_db.execute(query)
 
     for row in old_data:
+        key = row[0]
         if len(row) == 1:
-            key = row[0]
             filter_args = {new_fields[0]: row[0]}
         else:
-            key = row[0]
             old_flds = row[1:]
             filter_args = {}
             for i, f in enumerate(new_fields):
@@ -38,7 +37,11 @@ def model_map(old_db, old_table, new_model,
                     filter_args[f] = fld[1][old_flds[i]]
                 else:
                     filter_args[f] = old_flds[i]
+
+        try:
             mapping[key] = new_model.objects.get(**filter_args)
+        except new_model.DoesNotExist:
+            pass
 
     return mapping
 
@@ -70,7 +73,8 @@ def player_map(old_db, model, fk_models):
 
     return model_map(
         old_db, 'player', model,
-        ('id', 'season_id', ('club_id', c_map), 'first_name', 'initial', 'last_name'),
+        ('id', 'season_id', ('club_id', c_map), 'first_name', 'initial',
+         'last_name'),
         ('season__season', 'club', 'first_name', 'initial', 'last_name')
     )
 
