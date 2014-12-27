@@ -1,0 +1,48 @@
+/*** Ladder styles ***/
+
+.ladder {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ladder thead th {
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.ladder tbody td {
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.ladder tbody td.club {
+    text-align: left;
+}
+th.header_sort_asc { 
+    background-color: #97be99;
+} 
+
+th.header_sort_desc { 
+    background-color: #c2f4c5;
+} 
+
+th.header { 
+    background-image: url(../img/bg.gif);     
+    cursor: pointer; 
+    background-repeat: no-repeat; 
+    background-position: bottom right;
+} 
+
+.streak_loss {
+    color: #a0a0a0;
+}
+
+.streak_draw {
+    color: #585858;
+}
+
+.streak_win {
+    color: black;
+}

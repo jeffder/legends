@@ -1,0 +1,56 @@
+{% comment %}
+    The template for the coaches views.
+{% endcomment %}
+
+
+<div id="coach_v_coach">
+    {% if results %}
+        <div class="span_4">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="no_top_border">{{ summary.coach_1 }}:</td>
+                        <td class="no_top_border">{{ summary.coach_1_wins }} win{% if summary.coach_1_wins != 1 %}s{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ summary.coach_2 }}:</td>
+                        <td>{{ summary.coach_2_wins }} win{% if summary.coach_2_wins != 1 %}s{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>Draws:</td>
+                        <td>{{ summary.draws }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Season</th>
+                <th>Round</th>
+                <th>Home</th>
+                <th>Home Score</th>
+                <th>Away Score</th>
+                <th>Away</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.result.round.season }}</td>
+                    <td>{{ result.result.round.name }}</td>
+                    <td>{{ result.result.home }}<br>{{ result.h_coach }}</td>
+                    <td class="score">{{ result.result.home_score }}</td>
+                    <td class="score">{{ result.result.away_score }}</td>
+                    <td>{{ result.result.away }}<br>{{ result.a_coach }}</td>
+                    <td>{{ result.result.winner }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+

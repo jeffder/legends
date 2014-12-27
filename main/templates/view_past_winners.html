@@ -1,0 +1,131 @@
+{% comment %}
+    The template for the past winners view.
+{% endcomment %}
+
+{% load get %}
+
+
+<div id="past_winners">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Season</th>
+                <th>Premier</th>
+                <th>Runner Up</th>
+                <th>Minor Premier</th>
+                <th>Wooden Spoon</th>
+                <th>Points (Season)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for season, categories in data.iteritems %}
+                <tr>
+                    <td class="season">{{ season }}</td>
+                    <td>
+                        {% with categories|get:'Premier' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'Runner Up' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'Minor Premier' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'Wooden Spoon' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'High Season' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Season</th>
+                <th>Coleman</th>
+                <th>Brownlow</th>
+                <th>Margins</th>
+                <th>Crowds</th>
+                <th>Points (Round)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for season, categories in data.iteritems %}
+                <tr>
+                    <td class="season">{{ season }}</td>
+                    <td>
+                        {% with categories|get:'Coleman' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'Brownlow' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'Margins' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'Crowds' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        {% with categories|get:'High Round' as category %}
+                            {% for winner in category %}
+                                <p class="club">{{ winner.club }}</p>
+                                <p>{{ winner.coaches|join:'<br>' }}</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </td>
+                </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+

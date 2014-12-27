@@ -1,0 +1,100 @@
+{% comment %}
+    Template for displaying tips and results
+{% endcomment %}
+
+{% load humanize %}
+{% comment %}
+{% load chop %}
+{% load split %}
+
+{% cycle 'tip_result_left' 'tip_result_centre' 'tip_result_right' as tip_result_class silent %}
+{% endcomment %}
+
+<div class="container-fluid">
+    <div class="row content">
+        <ul class="nav nav-tabs nav-stacked col-md-3">
+            {% for game in games %}
+                <li {% if forloop.counter == 1 %}class="active"{% endif %}>
+                    <a href="#game_{{ game.id }}" data-toggle="tab" class="text-left">
+                        {{ game.afl_home }} v {{ game.afl_away }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="tab-content col-md-9">
+            {% for item in data %}
+                {% with item.game as game %}
+{% comment %}
+                    {% if data_type == 'tip' or game.status == 'Provisional' or game.status == 'Final' %}
+{% endcomment %}
+                        <div id="game_{{ game.id }}" class="tab-pane{% if forloop.counter == 1 %} active{% endif %}">
+                            <div class="game-header row">
+                                {% if game.status == 'Scheduled' %}
+                                        <div class="col-md-4 text-left"><p>{{ game.afl_home }} v {{ game.afl_away }}</p></div>
+                                        <div class="col-md-4 text-center"><p>{{ game.ground }}</p></div>
+                                        <div class="col-md-4 text-right"><p>{{ game.game_date|date:"D M d H:i" }}</p></div>
+                                {% else %}
+                                        <div class="col-md-6 text-left"><p>{{ game.afl_home }} {{ game.afl_home_score }} - {{ game.afl_away_score }} {{ game.afl_away }}</p></div>
+                                        <div class="col-md-6 text-right"><p>{{ game.ground }} ({{ game.crowd|intcomma }})</p></div>
+                                {% endif %}
+                    {% comment %}
+                                {% if data_type == 'result' %}
+{% endcomment %}
+                                {% if game.status == 'Provisional' or game.status == 'Final' %}
+                                    <p class="supercoach-result">
+                                        {% for sc in game.supercoach_rankings.all %}
+                                            {{ sc.ranking }} - {{ sc.player }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <table class="table table-condensed tips-table">
+                                <thead>
+                                    <tr class="table-header">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="table-cell-left" colspan="2">Winner</td>
+                                        <td class="table-cell-left" colspan="2">Margin</td>
+                                        <td class="table-cell-left" colspan="2">Crowd</td>
+                                        <td class="table-cell-left" colspan="2">Supercoach</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% cycle 'game-row-1' 'game-row-2' as game_rows silent %}
+                                    {% for group in item.game_tips %}
+                                        {% cycle game_rows %}
+                                        {% for row in group %}
+                                            <tr class="{{ game_rows }}">
+                                                {% include "result_tip_table.html" %}
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% cycle game_rows %}
+
+                                    {% if item.bye_tips %}
+                                        <tr class="bye-splitter"><td colspan="10"></td></tr>
+                                        {% for tip in item.bye_tips %}
+                                            <tr>
+                                                {% include "bye_tip.html" %}
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                                <tfoot>
+                                    {% if game.status == 'Scheduled' %}
+                                        {% include "tip_summary.html" %}
+                                    {% else %}
+                                        {% include "result_summary.html" %}
+                                    {% endif %}
+                                </tfoot>
+                            </table>
+                        </div>
+                    {% comment %}
+                    {%endif %}
+            {% endcomment %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

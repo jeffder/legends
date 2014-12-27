@@ -1,0 +1,7 @@
+{# The template for the tipping deadline. #}
+
+{% with request.session.active_round as round %}
+    {{ round }} Deadline: {{ round.tipping_deadline|date:"l d M H:i" }}
+{% endwith %}
+    
+

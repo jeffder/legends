@@ -1,0 +1,21 @@
+{% comment %}
+    The template for manual tips submission.
+{% endcomment %}
+
+<div class="tip_form_container">
+    <div id="tip_submission">
+        <form method="post" action="/legends/admin/{{ club.id }}/">
+            <div>{% csrf_token %}</div>
+            {% if round.is_finals %}
+                {% with columns=2 %}
+                    {% include "tip_forms.html" %}
+                {% endwith %}
+            {% else %}
+                {% with columns=3 %}
+                    {% include "tip_forms.html" %}
+                {% endwith %}
+            {% endif %}
+            <input class="submit_button" type="submit" value = 'Submit Tips'>
+        </form>
+    </div>
+</div>

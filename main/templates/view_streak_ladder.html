@@ -1,0 +1,37 @@
+{% comment %}
+    The template for the Streaks ladder view.
+{% endcomment %}
+
+<div class="ladder">
+    <table class="table table-striped table-hover" id="streak_ladder">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                {% for row in ladder.0.round.season.ha_rounds %}
+                <th>{{ forloop.counter }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ladder %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        {% if row.previous_position %}
+                            ({{ row.previous_position }})
+                        {% else %}
+                            (-)
+                        {% endif %}
+                    </td>
+                    <td class="club">{{ row.club }}</td>
+                    {% for item in row.streak %}
+                    <td class="{% if item == 'W' %}streak_win{% else %}{% if item == 'L' %}streak_loss{% else %}streak_draw{% endif %}{% endif %}">{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

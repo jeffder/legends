@@ -1,0 +1,16 @@
+{% comment %}
+    The template for the tips views.
+{% endcomment %}
+
+{% load split %}
+
+{% if round.status != 'Scheduled' %}
+    {% if data_type = 'result' %}
+        {% include "legends_result.html" %}
+    {% endif %}
+    {% include "tips.html" %}
+{% elif round.deadline_has_passed %}
+    {% include "tips.html" %}
+{% else %}
+    {% include "tip_form.html" %}
+{% endif %}

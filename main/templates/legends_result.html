@@ -1,0 +1,80 @@
+{% comment %}
+    Template for legends results
+{% endcomment %}
+
+{% load humanize %}
+{% comment %}
+    {% load split %}
+    {% load chop %}
+{% endcomment %}
+
+{% comment %}
+{% cycle 'game-row-1' 'game-row-1' 'game-row-2' 'game-row-2' as game_rows silent %}
+{% endcomment %}
+<div class="clearfix legends_results">
+    {% for group in grouped_games %}
+        {% cycle 'game-row-1' 'game-row-2' as game_rows silent %}
+        {% with forloop.counter0 as bye_index %}
+            <div class="col-xs-6">
+                <table class="table table-condensed tips-table pull-left">
+                    <thead>
+                        <tr class="table-header">
+                            <th></th>
+                            <th class="table-cell-right">W</th>
+                            <th class="table-cell-right">M</th>
+                            <th class="table-cell-right">C</th>
+                            <th class="table-cell-right">S</th>
+                            <th class="table-cell-right">B</th>
+                            <th class="table-cell-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for game in group %}
+                            {% if game %}
+                                {% cycle game_rows %}
+                                <tr class="{{ game_rows }}">
+                                    <td class="table-cell-left">{{ game.legends_home }}</td>
+                                    <td class="table-cell-right">{{ game.legends_home_winners_score }}</td>
+                                    <td class="table-cell-right">{{ game.legends_home_margins_score }}</td>
+                                    <td class="table-cell-right">{{ game.legends_home_crowds_score}}</td>
+                                    <td class="table-cell-right">{{ game.legends_home_supercoach_score }}</td>
+                                    <td class="table-cell-right">{{ game.legends_home_winners_bonus }}</td>
+                                    <td class="table-cell-right">{{ game.legends_home_score }}</td>
+                                </tr>
+                                <tr class="{{ game_rows }}">
+                                    <td class="table-cell-left">{{ game.legends_away }}</td>
+                                    <td class="table-cell-right">{{ game.legends_away_winners_score }}</td>
+                                    <td class="table-cell-right">{{ game.legends_away_margins_score }}</td>
+                                    <td class="table-cell-right">{{ game.legends_away_crowds_score}}</td>
+                                    <td class="table-cell-right">{{ game.legends_away_supercoach_score }}</td>
+                                    <td class="table-cell-right">{{ game.legends_away_winners_bonus }}</td>
+                                    <td class="table-cell-right">{{ game.legends_away_score }}</td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="7">&nbsp;</td></tr>
+                                <tr><td colspan="7">&nbsp;</td></tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if round.has_byes %}
+                            {% include "bye_result.html" %}
+                        {% endif %}
+
+                        {% for game in item.bye_tips %}
+                            <div class="{% cycle 'bye_left' 'bye_centre' 'bye_right' %}">
+                                <div class="cell_color_bye bye_cell">
+                                    {% for row in game %}
+                                        {% include "bye_tip.html" %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        {% include "legends_result_summary.html" %}
+                    </tfoot>
+                </table>
+            </div>
+        {% endwith %}
+    {% endfor %}
+</div>

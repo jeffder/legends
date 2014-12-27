@@ -1,0 +1,14 @@
+{% comment %}
+    The template for ladder/round selection for past years view for pre 2008
+{% endcomment %}
+
+<div id="ladder_round_selection">
+    <form class="form-inline" method="post" action="{{ url }}">
+        {% csrf_token %}
+        
+        {{ form.ladder_name }}
+
+        <button class="btn" type="submit">Select Ladder</button>
+        
+    </form>
+</div>

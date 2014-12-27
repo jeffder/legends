@@ -1,0 +1,1163 @@
+/* CSS for tips pages */
+
+/*****
+.hidden {
+    display: none;
+}
+*****/
+.in_progress {
+    background-color: red;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+/*** Game headers ***/
+.game_header_left {
+    float: left;
+    font-size: 16px;
+    padding-left: 10px;
+    text-align: left;
+    width: 350px;
+}
+
+.game_header_centre {
+    float: clear;
+    font-size: 12px;
+    padding-right: 100px;
+    text-align: center;
+    width: 220px;
+}
+
+.game_header_right {
+    font-size: 12px;
+    float: right;
+    padding-right: 10px;
+    text-align: right;
+    width: 250px;
+}
+
+.game_result_header_centre {
+    float: clear;
+    font-size: 12px;
+    padding-right: 360px;
+    text-align: center;
+    width: 220px;
+}
+
+/*****
+.tip_table table,
+.legends_results table {
+    margin-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    border-top: none;
+    border-radius: 5px;
+}
+
+.tip_tables_left {
+    float: left;
+    margin-left: 10px;
+    width: 450px;
+}
+
+.tip_tables_right {
+    float: right;
+    margin-right: 10px;
+}
+
+.tip_results table {
+    width: 750px;
+}
+*****/
+
+.table_cell {
+    text-align: center;
+    padding-left:5px;
+    padding-right:0px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 1em;
+}
+
+.result_tables_left {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+.result_tables_right {
+    float: right;
+    margin-right: 10px;
+}
+
+/*****
+span.table_cell_club {
+    float: left;
+    text-align: left;
+    padding-left:5px;
+    padding-right:0px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 80px;
+}
+*****/
+
+.table_cell_club_left {
+    text-align: right;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 110px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.table_cell_club_right {
+    text-align: left;
+    margin-bottom: 0px;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 110px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.result .table_cell_club_left {
+    background-color: #b0deb3;
+    font-weight: bold;
+}
+
+.result .table_cell_club_right {
+    background-color: #b0deb3;
+    font-weight: bold;
+}
+
+.tip .table_cell_club_left {
+    width: 145px;
+}
+
+.tip .table_cell_club_right {
+    width: 145px;
+}
+
+ul.table_cell_club_left {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+ul.table_cell_club_right {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+.table_cell_score_left {
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: right;
+    vertical-align: top;
+}
+
+.table_cell_score_right {
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: right;
+    width: 20px;
+    vertical-align: top;
+}
+
+.results_summary_cell_score {
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: right;
+    width: 60px;
+}
+
+.table_cell_score_total_left {
+    font-weight: bold;
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: right;
+}
+
+.table_cell_score_total_right {
+    font-weight: bold;
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: right;
+    width: 20px;
+}
+
+.table_head {
+    font-weight: bold;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 50px;
+}
+
+.table_head_first {
+    font-weight: bold;
+    margin-top: 19px;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 50px;
+}
+
+.result {
+    float: left;
+    width=80px;
+    font-size:11px;
+    padding-left:0px;
+    padding-right: 0px;
+}
+
+.table_club_header_left {
+    font-weight: bold;
+    text-align: right;
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 145px;
+    background-color: #b0deb3;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.table_club_header_right {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 145px;
+    background-color: #b0deb3;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.bye_header_left {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 140px;
+    background-color: #b0deb3;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.bye_header_centre {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 140px;
+    background-color: #b0deb3;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.bye_header_right {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 140px;
+    background-color: #b0deb3;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.bye_result_header {
+    font-weight: bold;
+    text-align: center;
+    padding-left: 0px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    width: 110px;
+    background-color: #b0deb3;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+div.bye_result {
+    float: left;
+    width: 110px;
+    font-size:11px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+div.bye_result_left {
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+/*****
+div.bye_result_centre {
+    margin-left: 8px;
+    margin-right: 10px;
+}
+*****/
+div.bye_result_right {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/*****
+div.bye_result span {
+    width: 25px;
+    margin-right: 55px;
+}
+*****/
+
+.table_cell_player {
+    text-align: left;
+    padding-right:2px;
+    padding-bottom: 0;
+    padding-left: 2px;
+    vertical-align: top;
+    width: 16.2em;
+}
+
+/*****
+.result_tip {
+    float: left;
+}
+
+.legends_result_cell {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.legends_result_left {
+    float: left;
+}
+
+.legends_result_right {
+    float: left;
+}
+*****/
+
+.result_tip_score_bye {
+    float: right;
+    padding-left: 0px;
+    padding-right: 10px;
+    text-align: right;
+    width: 12px;
+}
+
+.result_tip_score_left {
+    float: right;
+    padding-left: 10px;
+    padding-right: 0px;
+    width: 12px;
+}
+
+.result_tip_score_right {
+    float: left;
+    padding-left: 0px;
+    padding-right: 10px;
+    width: 12px;
+    text-align: right;
+}
+
+.table_cell_player p {
+    padding:0px;
+    padding-right: 5px;
+    margin: 0;
+}
+
+/*****
+.tip_table .table_cell_left,
+.tip_table .table_cell_right,
+.legends_results .table_head {
+    padding-right:10px;
+    padding-bottom: 0;
+    vertical-align: top;
+}
+.summary .table_cell_score {
+    padding-right:5px;
+    padding-bottom: 0;
+    width: 33px;
+}
+
+.tip_table .table_cell_left {
+    text-align: left;
+}
+
+.legends_results .table_head {
+    text-align: right;
+}
+
+.tip_table .table_cell_right,
+.tip_table .table_cell_score {
+    text-align: right;
+}
+
+.tip_table .table_cell_score {
+    width: 60px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+}
+
+.tip_table caption {
+    border: 1px solid black;
+}
+
+.tip_table caption,
+.tip_table .header_first_row,
+.legends_results thead,
+*****/
+.ladder thead { 
+    background-color: #ccc;
+}
+
+/*****
+.tip_table caption span,
+.tip_table tfoot .summary_header p {
+    float: left;
+    margin: 0;
+}
+
+.tip_table .header_first_row {
+    font-weight: bold;
+    padding: 4px;
+}
+
+.tip_table tfoot p {
+    padding: 4px;
+}
+
+.legends_result_head {
+    margin-left: 10px;
+    background-color: #688ebf;
+    width: 60px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    clear: both;
+    float: left;
+}
+*****/
+
+.legends_result_head_left {
+    margin-left: 10px;
+    background-color: transparent;
+    width: 80px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 0px;
+    clear: both;
+    float: left;
+}
+
+.legends_result_head_right {
+    margin-left: 15px;
+    background-color: transparent;
+    width: 80px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 0px;
+    float: right;
+}
+
+.legends_result_summary_left {
+    margin-left: 0px;
+    background-color: transparent;
+    width: 80px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+    clear: both;
+    float: left;
+}
+
+.legends_result_summary_right {
+    margin-left: 5px;
+    background-color: transparent;
+    width: 80px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 0px;
+    margin-top: 5px;
+    float: left;
+}
+
+/*****
+.legends_results .table_head {
+    padding: 4px;
+    font-weight: bold;
+    padding-right: 5px;
+    width: 60px;
+}
+
+.tip_table .header_first_row,
+.legends_results thead {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    font-weight: bold;
+    padding: 0px;
+    background-color: #688ebf;
+}
+*****/
+
+.header_first_row p {
+    font-weight: bold;
+    font-size: 12px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-top: 10px;
+    background-color: #b0c4de;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.bog_result_header {
+    font-size: 11px;
+    padding-left: 25px;
+    padding-top: 0px;
+    margin-bottom: 5px;
+}
+
+.header_first_row {
+    clear: both;
+    border: 0px solid black;
+    border-radius: 5px;
+    background-color: #688ebf;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+/*****
+.tip_table .header_first_row p {
+    font-weight: bold;
+    text-align: left;
+}
+
+.tip_table .header_first_row p>span.left {
+    width: 250px;
+}
+
+.club_header {
+    text-align: left;
+    padding-left:5px;
+    padding-right:0px;
+    padding-bottom: 0;
+    vertical-align: top;
+    width: 9.5em;
+}
+
+.clear_float {
+    clear: both;
+}
+
+.tip_table tfoot p.expand_button,
+.expand_button {
+    background-color: #b0deb3;
+    float: right;
+}
+
+.legends_results .expand_button {
+    background-color: #b0deb3;
+    text-align: right;
+    width: 48px;
+}
+
+.tip_table .expand_button:hover {
+    cursor: pointer;
+}
+*****/
+
+div.new_cell {
+    border-radius: 5px;
+    float: left;
+    font-size:11px;
+    padding-left:0px;
+    padding-right:0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+div.bye_cell {
+    border-radius: 5px;
+    float: left;
+    font-size:11px;
+    padding-left:0px;
+    padding-right:0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 0px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+div.tip {
+    float: left;
+    width: 150px;
+    font-size:11px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+div.bye_tip {
+    float: left;
+    width: 150px;
+    font-size:11px;
+    padding-left:0px;
+    padding-right:0px;
+    margin-left: 0px;
+}
+
+tr.cell_color,
+div.cell_color {
+    background-color: transparent;
+}
+
+tr.cell_color_alt {
+    background-color: #f5cacf;
+}
+
+tr.cell_color_alt td,
+div.cell_color_alt {
+    background-color: #deb0db;
+}
+
+tr.cell_color_bye,
+div.cell_color_bye {
+    background-color: #fffffe;
+}
+
+/*****
+.legends_tip_score {
+    float: right;
+    padding-left: 10px;
+    font-weight: bold;
+}
+*****/
+
+/*** Table summary styles ***/
+.tip_summary,
+.result_summary {
+    clear: both;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: block;
+}
+.summary_header {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.summary_header td {
+    padding: 0;
+}
+
+.tip_summary h4,
+.result_summary h4 {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 5px;
+    border-radius: 5px;
+    background-color: #b0deb3;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
+.summary_table {
+    float:left;
+    width:150px;
+    margin-bottom: 10px;
+}
+
+.results_summary_table {
+    float:left;
+    width:85px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+
+.summary_table_bog {
+    float:left;
+    width:200px;
+    margin-bottom: 10px;
+}
+
+.summary_table_crowd {
+    float:left;
+    width:150px;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.summary_category {
+    font-weight: bold;
+    text-align: left;
+    padding-left:5px;
+    padding-right:0px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    display: block;
+}
+
+.results_summary_category {
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: right;
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    width: 60px;
+}
+
+.summary_category_bog {
+    font-weight: bold;
+    text-align: left;
+    padding-left:0px;
+    padding-right:0px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    display: block;
+}
+
+/*****
+.summary_key,
+*****/
+.summary_value {
+    text-align: left;
+    padding-left: 0px;
+    padding-right:10px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+}
+
+.summary_margin_club {
+    text-align: left;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    display: block;
+    clear: both;
+    float: left;
+}
+
+/*****
+.summary_margin_club_first {
+    text-align: left;
+    padding-left: 0px;
+    padding-right:10px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+}
+*****/
+
+.summary_value {
+    text-align: right;
+    padding-left: 0px;
+    padding-right:15px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    display: block;
+}
+
+.summary_margin_value {
+    text-align: left;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    vertical-align: top;
+    display: block;
+}
+
+/*.summary_bog_key_first,*/
+.summary_bog_key,
+.summary_bog_value/*,
+.summary_bog_value_split*/ {
+    text-align: left;
+    padding-left: 0px;
+    padding-right:10px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+}
+
+/*****
+.summary_bog_key_first {
+    float: left;
+    text-align: right;
+    padding-right:10px;
+    width: 20px;
+}
+*****/
+
+.summary_bog_key {
+    float: left;
+    padding-right:10px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: right;
+    width: 15px;
+}
+
+.summary_bog_value {
+    padding-left: 25px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    text-align: left;
+}
+
+/*****
+.summary_bog_value_split {
+    padding-left: 0px;
+    text-align: left;
+}
+*****/
+
+.result_summary_total {
+    text-align: left;
+    padding-left: 0px;
+    padding-right:0px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+    float: right;
+}
+
+/*** Tip submission form styles ***/
+
+#tip_submission {
+    background-color: #b0c4de;
+}
+
+.tip_forms_left {
+    float: left;
+    margin-left: 10px;
+    width: 308px;
+}
+
+.tip_forms_centre {
+    float: left;
+    margin-left: 8px;
+    width: 308px;
+}
+
+.tip_forms_right {
+    float: right;
+    margin-right: 10px;
+    width: 308px;
+}
+
+.tip_result_left {
+    float: left;
+    margin-left: 10px;
+    width: 300px;
+}
+
+.tip_result_centre {
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 300px;
+}
+
+.tip_result_right {
+    float: right;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.bye_left {
+    float: left;
+    margin-left: 10px;
+    width: 300px;
+}
+
+.bye_centre {
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 300px;
+}
+
+.bye_right {
+    float: right;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.tip_submission_header {
+    clear: both;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.tip_submission_header p {
+    background-color: #b0c4de;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: -20px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 10px;
+    text-align: left;
+}
+
+.header_first_row p {
+    font-weight: bold;
+    font-size: 12px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-top: 10px;
+    background-color: #b0c4de;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.tip_form {
+    border: 0px solid black;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-bottom: 8px;
+    border-radius: 5px;
+}
+
+.tip_form_game_header {
+    background-color: #b0deb3;
+    width: 298px;
+    padding: 5px;
+    padding-left: 0px;
+    height: 33px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.tip_form_teams {
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 10px;
+    text-align: left;
+    width: 288px;
+}
+
+.tip_form_venue {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 10px;
+    text-align: left;
+    width: 120px;
+}
+
+.tip_form_date {
+    font-size: 12px;
+    font-weight: bold;
+    float: right;
+    padding-right: 10px;
+    text-align: right;
+    width: 120px;
+}
+
+.tip_form_label {
+    text-align: left;
+    padding-left:5px;
+    padding-right:5px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+    width: 40px;
+    float: left;
+}
+
+.tip_form_winner {
+    width: 130px;
+}
+
+.tip_form_player select {
+    width: 230px;
+}
+
+.submit_button {
+    background-color: #c7c7c7;
+    clear: left;
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/*****
+.errorlist {
+    margin: 0;
+}
+*****/
+
+.form_error/*,
+.error_list*/ {
+    color: red;
+    padding-left: 5px;
+}
+
+/*** Finals games styles ***/
+
+#finals_games {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#finals_games .versus {
+    text-align: center;
+}
+#finals_games .game_left {
+    text-align: right;
+}
+
+#finals_games .game_right {
+    text-align: left;
+}
+
+#finals_games .span8 {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#finals_games .game_header {
+    font-weight: bold;
+    background-color: #b0deb3;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/*** Result submission form styles ***/
+
+/*****
+.result_forms_left {
+    float: left;
+    margin-right: 10px;
+}
+
+.result_forms_right {
+    margin-left: 370px;
+    width: 360px;
+}
+
+.result_form {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.result_form_game_header {
+    background-color: #ccc;
+    width: 350px;
+    padding: 4px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.result_form_label {
+    text-align: left;
+    padding-left:5px;
+    padding-right:15px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+    width: 65px;
+    float: left;
+}
+
+.errorlist {
+    margin: 0;
+}
+
+.form_error,
+.error_list {
+    color: red;
+    padding-left: 5px;
+}
+*****/
+

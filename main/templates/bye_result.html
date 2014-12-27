@@ -1,0 +1,34 @@
+{% comment %}
+    Template for bye results
+{% endcomment %}
+
+<tr><td colspan="7"></td></tr>
+{% if bye_index == 0 %}
+    {% with byes.0 as bye_group %}
+        {% for bye in bye_group %}
+            <tr>
+                <td class="table-cell-left">{{ bye.club }}</td>
+                <td class="table-cell-right">{{ bye.winners_score }}</td>
+                <td class="table-cell-right">{{ bye.margins_score }}</td>
+                <td class="table-cell-right">{{ bye.crowds_score}}</td>
+                <td class="table-cell-right">{{ bye.supercoach_score }}</td>
+                <td class="table-cell-right">{{ bye.winners_bonus }}</td>
+                <td class="table-cell-right">{{ bye.score }}</td>
+            </tr>
+        {% endfor %}
+    {% endwith %}
+{% else %}
+    {% with byes.1 as bye_group %}
+        {% for bye in bye_group %}
+            <tr>
+                <td class="table-cell-left">{{ bye.club }}</td>
+                <td class="table-cell-right">{{ bye.winners_score }}</td>
+                <td class="table-cell-right">{{ bye.margins_score }}</td>
+                <td class="table-cell-right">{{ bye.crowds_score}}</td>
+                <td class="table-cell-right">{{ bye.supercoach_score }}</td>
+                <td class="table-cell-right">{{ bye.winners_bonus }}</td>
+                <td class="table-cell-right">{{ bye.score }}</td>
+            </tr>
+        {% endfor %}
+    {% endwith %}
+{% endif %}

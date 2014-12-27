@@ -1,0 +1,34 @@
+{% comment %}
+    Template for displaying Legends result summary
+{% endcomment %}
+
+{% load humanize %}
+
+<tr class="table-splitter"><td colspan="7"></td></tr>
+<tr class="results_summary_table">
+    <td class="table_head_first">Minimum</td>
+    <td class="table-cell-right">{{ total_summary.winners_score.min }}</td>
+    <td class="table-cell-right">{{ total_summary.margins_score.min }}</td>
+    <td class="table-cell-right">{{ total_summary.crowds_score.min }}</td>
+    <td class="table-cell-right">{{ total_summary.supercoach_score.min }}</td>
+    <td class="table-cell-right">{{ total_summary.winners_bonus.min }}</td>
+    <td class="table-cell-right">{{ total_summary.score.min }}</td>
+</tr>
+<tr class="results_summary_table">
+    <td class="table_head">Maximum</td>
+    <td class="table-cell-right">{{ total_summary.winners_score.max }}</td>
+    <td class="table-cell-right">{{ total_summary.margins_score.max }}</td>
+    <td class="table-cell-right">{{ total_summary.crowds_score.max }}</td>
+    <td class="table-cell-right">{{ total_summary.supercoach_score.max }}</td>
+    <td class="table-cell-right">{{ total_summary.winners_bonus.max }}</td>
+    <td class="table-cell-right">{{ total_summary.score.max }}</td>
+</tr>
+<tr class="results_summary_table">
+    <td class="table_head">Average</td>
+    <td class="table-cell-right">{{ total_summary.winners_score.avg|floatformat:2 }}</td>
+    <td class="table-cell-right">{{ total_summary.margins_score.avg|floatformat:2 }}</td>
+    <td class="table-cell-right">{{ total_summary.crowds_score.avg|floatformat:2 }}</td>
+    <td class="table-cell-right">{{ total_summary.supercoach_score.avg|floatformat:2 }}</td>
+    <td class="table-cell-right">{{ total_summary.winners_bonus.avg|floatformat:2 }}</td>
+    <td class="table-cell-right">{{ total_summary.score.avg|floatformat:2 }}</td>
+</tr>

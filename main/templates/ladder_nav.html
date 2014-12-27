@@ -1,0 +1,48 @@
+<!-- Round navigation -->
+<div id="round_nav" class="nav">
+    <ul>
+        <li>
+            <p>Round</p>
+        </li>
+        {% for rnd in nav_rounds %}
+            {% if rnd.id == curr_round.id %}
+                <li>
+                    <a href="/legends/{{ rnd.id }}/ladders/" class="selected">{{ rnd.tab_label }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="/legends/{{ rnd.id }}/ladders/">{{ rnd.tab_label }}</a>
+                </li>
+            {%endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Ladder navigation -->
+<div id="ladder_nav" class="nav">
+    <ul>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_legends_ladder/" {% if ladder_name == 'legends' %}class="selected"{% endif %}>Legends</a>
+        </li>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_coleman_ladder/" {% if ladder_name == 'coleman' %}class="selected"{% endif %}>Coleman</a>
+        </li>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_brownlow_ladder/" {% if ladder_name == 'brownlow' %}class="selected"{% endif %}>Brownlow</a>
+        </li>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_margins_ladder/" {% if ladder_name == 'margins' %}class="selected"{% endif %}>Margins</a>
+        </li>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_crowds_ladder/" {% if ladder_name == 'crowds' %}class="selected"{% endif %}>Crowds</a>
+        </li>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_streak_ladder/" {% if ladder_name == 'streak' %}class="selected"{% endif %}>Form Guide</a>
+        </li>
+        <li>
+            <a href="/legends/{{ curr_round.id }}/view_afl_ladder/" {% if ladder_name == 'afl' %}class="selected"{% endif %}>AFL</a>
+        </li>
+    </ul>
+</div>
+
+

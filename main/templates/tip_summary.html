@@ -1,0 +1,69 @@
+{% comment %}
+    Template for displaying tip summary
+{% endcomment %}
+
+{% load humanize %}
+
+<tr class="table-splitter"><td colspan="10"></td></tr>
+<tr>
+<td colspan="10">
+<div class="row">
+    <ul class="col-md-3 list-unstyled">
+        <li class="summary-header">Winner</li>
+        {% for club, value in item.summary.winner %}
+            {% if club != 'draw' %}
+                <li class="clearfix">
+                    <span class="pull-left text-left">{{ club }}:</span>
+                    <span class="pull-right text-right">{{ value }}</span>
+                </li>
+            {% else %}
+                {% if value != 0 %}
+                    <li>
+                        <span class="pull-left text-left">Draw:</span>
+                        <span class="pull-right text-right">{{ value }}</span>
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul class="col-md-3 list-unstyled">
+        <li class="summary-header">Min/Max/Avg</li>
+        {% for team in item.summary.margin %}
+            <li class="text-left">
+                    by {{ team.1.min }} / {{ team.1.max }} / {{ team.1.avg|floatformat:0 }}
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="col-md-2 list-unstyled">
+        <li class="summary-header">Crowd</li>
+        <li class="clearfix">
+            <span class="pull-left text-left">Min:</span>
+            <span class="pull-right text-right">{{ item.summary.crowd.min|intcomma }}</span>
+        </li>
+        <li class="clearfix">
+            <span class="pull-left text-left">Max:</span>
+            <span class="pull-right text-right">{{ item.summary.crowd.max|intcomma }}</span>
+        </li>
+        <li class="clearfix">
+            <span class="pull-left text-left">Avg:</span>
+            <span class="pull-right text-right">{{ item.summary.crowd.avg|floatformat:0|intcomma }}</span>
+        </li>
+    </ul>
+    <ul class="col-md-4 list-unstyled">
+        <li class="summary-header">Supercoach</li>
+        {% for value, players in item.summary.supercoach %}
+            <li class="clearfix">
+                <span class="pull-left text-right">{{ value }}:</span>
+                <ul class="list-unstyled">
+                    {% for player in players %}
+                        <li class="text-left player-sub-cell">
+                            {{ player.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</td>
+</tr>

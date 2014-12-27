@@ -1,0 +1,27 @@
+{# The template for stats navigation. #}
+
+<div id="stats_nav" class="nav">
+    <ul>
+        <li>
+        <a href="/legends/stats/rules/"{% if active_stats == 'rules' %} class="selected"{%endif %}>Rules</a>
+        </li>
+        <li>
+        <a href="/legends/stats/coaches/"{% if active_stats == 'coaches' %} class="selected"{%endif %}>Coaches</a>
+        </li>
+        <li>
+            <a href="/legends/stats/past_winners/"{% if active_stats == 'past_winners' %} class="selected"{%endif %}>Past Winners</a>
+        </li>
+        <li>
+            <a href="/legends/stats/past_years/"{% if active_stats == 'past_years' %} class="selected"{%endif %}>Past Years</a>
+        </li>
+        <li>
+            <a href="/legends/stats/coach_v_coach/"{% if active_stats == 'coach_v_coach' %} class="selected"{%endif %}>Coach v Coach</a>
+        </li>
+        <li>
+            <a href="/legends/stats/records/"{% if active_stats == 'records' %} class="selected"{%endif %}>Records</a>
+        </li>
+    </ul>
+</div>
+
+
+

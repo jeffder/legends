@@ -1,0 +1,14 @@
+{% comment %}
+    The template for club selection for manual tips view
+{% endcomment %}
+
+<div id="coach_selection">
+    <form class="form-inline" method="post" action="{{ url }}">
+        {% csrf_token %}
+        
+        {{ form.club }}
+
+        <button class="btn" type="submit">Select Coach</button>
+        
+    </form>
+</div>

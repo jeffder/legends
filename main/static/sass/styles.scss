@@ -1,0 +1,266 @@
+@import "compass";
+
+// Define site variables
+@import "partials/site_variables";
+
+@import "bootstrap-compass";
+@import "bootstrap";
+
+// Override bootstrap styles and variables
+@import "partials/bootstrap_overrides";
+
+// =============================
+// Wrapper
+// =============================
+
+body {
+    background-color: $wrapper-bg;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.base-div {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.content {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.container {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+// =============================
+// Navigation
+// =============================
+
+.main-nav, .round-nav {
+    background-color: $nav-bg;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.main-nav {
+/*
+    .clearfix();
+*/
+}
+
+.main-nav a {
+    width: 100px;
+}
+
+.main-navbar {
+    margin-top: 20px;
+
+    div {
+        background-color: $nav-bg;
+        border-radius: 5px;
+
+        div.collapse {
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+    }
+}
+.nav-item a {
+    width: 32px;
+}
+
+.round-nav > h4, .round-nav > .h4 {
+    margin-top: 0px;
+    color: $pill-bg;
+}
+
+// =============================
+// In progress banner
+// =============================
+
+.in_progress {
+    background-color: red;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.in_progress h4 {
+    color: #000000;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.in_progress .btn {
+    background-color: $nav-bg;
+    margin-right: 20px;
+    margin-top: -7px;
+}
+
+// =============================
+// Game details - tips/results
+// =============================
+
+.tab-content {
+    padding-left: 15px;
+}
+
+.game-header {
+    background-color: $game-header-bg;
+    border-radius: 5px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 0px;
+    padding-top: 10px;
+}
+
+.table-header {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.table-cell-left {
+    margin-bottom: 0px;
+    text-align: left;
+    white-space: pre;
+}
+
+.table-cell-right {
+    margin-bottom: 0px;
+    padding-right: 20px;
+    text-align: right;
+}
+
+.table-cell-center {
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.game-row {
+}
+
+.game-row-1 {
+    background-color: $wrapper-bg;
+}
+.game-row-2 {
+    background-color: $pill-bg;
+;
+}
+
+.legends_results {
+    margin: 0 -15px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/*
+.tips-table tbody tr:nth-child(even) td {
+    border-bottom: 1px solid #dcdcdc;
+}
+*/
+
+.game-footer {
+    background-color: $game-header-bg;
+    border-radius: 5px;
+    font-weight: 100;
+}
+
+.game-footer ul li:first-child {
+    font-weight: bold;
+}
+
+.game-footer ul li.player-sub-cell {
+    font-weight: 100;
+}
+
+.player-sub-cell {
+    margin-left: 20px;
+}
+
+.table-splitter {
+    background-color: $game-header-bg;
+}
+
+.bye-splitter {
+    background-color: $pill-bg;
+}
+
+p.supercoach-result {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+span.tip-score {
+    font-weight: bold;
+    text-align: right;
+    float: right;
+    padding-right: 10px;
+}
+
+.tips-table span.summary-tip-score {
+    float: right;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.tips-table td {
+    margin-bottom: 0;
+}
+
+td.tips-table {
+    padding-bottom: 0;
+}
+
+// =============================
+// General
+// =============================
+
+.round-all {
+    border-radius: 5px;
+}
+
+.round-left {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.round-right {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.tips-table .tip-score {
+    color: $game-header-bg;
+    margin-bottom: 0px;
+    padding-right: 20px;
+    text-align: right;
+    white-space: pre;
+}
+
+.tips-table .summary-tip-score {
+    margin-bottom: 0px;
+    padding-right: 20px;
+    text-align: right;
+    white-space: pre;
+}
+
+.summary-header {
+    text-align: left;
+    font-weight: bold;
+}
+
+.tips-table td ul {
+    margin-bottom: 0;
+}
+
+.table-cell-number-left {
+    margin-bottom: 0px;
+    text-align: right;
+    padding-right: 20px;
+}
+

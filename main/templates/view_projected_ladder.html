@@ -1,0 +1,43 @@
+{% comment %}
+    The template for the past winners view.
+{% endcomment %}
+
+
+{% if ladder_rows %}
+    <div id="projected_ladder">
+        <h2>Projected ladder</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Played</th>
+                    <th>Won</th>
+                    <th>Drawn</th>
+                    <th>Lost</th>
+                    <th>For</th>
+                    <th>Against</th>
+                    <th>Percentage</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in ladder_rows %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td class="club">{{ row.club }}</td>
+                        <td>{{ row.played }}</td>
+                        <td>{{ row.win }}</td>
+                        <td>{{ row.draw }}</td>
+                        <td>{{ row.loss }}</td>
+                        <td>{{ row.score_for }}</td>
+                        <td>{{ row.score_against }}</td>
+                        <td>{{ row.percentage|floatformat:2 }}%</td>
+                        <td>{{ row.points }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+

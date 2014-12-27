@@ -1,0 +1,71 @@
+{% comment %}
+    Template for displaying score details for individual games in a round
+{% endcomment %}
+
+{% load humanize %}
+{% load chop %}
+
+<div class="container">
+    {% for tip in tips %}
+        {% if tip %}
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr></tr>
+                        <tr></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="score_detail_game">{{ tip.0.afl_fixture.home }} v {{ tip.0.afl_fixture.away }}</td>
+                            <td >{{ tip.0.winner }}</td>
+                            <td class="score_detail_score">{{ tip.0.winner_score }}</td>
+                            <td class="score_detail_score">{{ tip.1.winner_score }}</td>
+                            <td >{{ tip.1.winner }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ tip.0.afl_fixture.home_score }} - {{ tip.0.afl_fixture.away_score }}</td>
+                            <td>{{ tip.0.margin }}</td>
+                            <td class="score_detail_score">{{ tip.0.margin_score }}</td>
+                            <td class="score_detail_score">{{ tip.1.margin_score }}</td>
+                            <td>{{ tip.1.margin }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ tip.0.afl_fixture.venue }} ({{ tip.0.afl_fixture.crowd|intcomma }})</td>
+                            <td>{{ tip.0.crowd|intcomma }}</td>
+                            <td class="score_detail_score">{{ tip.0.crowd_score }}</td>
+                            <td class="score_detail_score">{{ tip.1.crowd_score }}</td>
+                            <td>{{ tip.1.crowd|intcomma }}</td>
+                        </tr>
+                        <tr>
+                            <td class="score_detail_bog">
+                                {% for bog in tip.0.afl_fixture.bogs.all %}
+                                    {{ bog.votes }} - {{ bog.player }}{% if not forloop.last %}</br>{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="score_detail_bog">
+                                {% for bog in tip.0.bogtips.all %}
+                                    {{ bog.player }}{% if not forloop.last %}</br>{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="score_detail_score">{{ tip.0.bog_score }}</td>
+                            <td class="score_detail_score">{{ tip.1.bog_score }}</td>
+                            <td class="score_detail_bog">
+                                {% for bog in tip.1.bogtips.all %}
+                                    {{ bog.player }}{% if not forloop.last %}</br>{% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr class="score_detail_totals">
+                            <td></td>
+                            <td></td>
+                            <td class="score_detail_score">{{ tip.0.total }}</td>
+                            <td class="score_detail_score">{{ tip.1.total }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+

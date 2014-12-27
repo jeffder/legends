@@ -1,0 +1,363 @@
+{% comment %}
+    The template for the competition rules view.
+{% endcomment %}
+
+{% load get %}
+
+
+<div id="comp_rules">
+    <h2>Tipping</h2>
+    <p>You need to tip the following for each game in each round:</p>
+    <h3>Winner</h3>
+    <ul>
+        <li>tip the winning team.</li>
+        <li>you can tip a draw but you must tip 0 for the margin.</li>
+    </ul>
+
+    <h3>Margin</h3>
+    <ul>
+        <li>tip the winning margin.</li>
+    </ul>
+
+    <h3>Crowd</h3>
+    <ul>
+        <li>tip the size of the crowd to the nearest 1000 e.g 23000.</li>
+    </ul>
+
+    <h3>Best on Ground (BOG)</h3>
+    <ul>
+        <li>tip the player who you think will be best on ground.</li>
+        <li>tip five players in Finals games.</li>
+        <li>tip seven players in the Grand Final.</li>
+    </ul>
+
+    <h3>Non-submission of tips</h3>
+    <ul>
+        <li>if you don't submit tips for a game you get zero points in each
+        category for that game. In order to prevent percentages from blowing
+        out, you will a "total" score equal to the lowest score minus 1 from the
+        coaches who tipped for the game</li>
+        <li>you will not be able to submit tips if you haven't paid your fees
+        (see <a href="#fees">fees</a> below)
+    </ul>
+
+    <h3>Submitting Tips</h3>
+    <ul>
+        <li>tips must be submitted using the website</li>
+        <li>tips will not be accepted by the web site after the round's tipping deadline (half an hour before the first game of the round)</li>
+        <li>the tipping deadline will be reset for “split” rounds (e.g. Round 1, ANZAC day round). A split round is generally one where games are played over two weekends or where games are played midweek like ANZAC day</li>
+        <li>in exceptional circumstances, late tips will be accepted via email or text with the proviso that you get default tips for every game that has started before your tips are received. Note that if you do this too often, late tips will not be accepted</li>
+        <li>it's a good idea to submit tips early in the week and change them later if you want to</li>
+    </ul>
+
+    <h2>Scoring</h2>
+
+    <p>Points are awarded as follows:</p>
+
+    <h3>Winners</h3>
+    <ul>
+        <li>6 points for each correct winner or draw</li>
+        <li>10 points bonus for tipping all 9 winners. There is no bonus in bye rounds.</li>
+    </ul>
+
+    <h3>Margins</h3>
+    <ul>
+        <li>Points are awarded according to how far off the winning margin you are:
+        <div class="container">
+            <div class="margins_table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Difference</th>
+                            <th>Points</th>
+                            <th>Bonus</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>15</td>
+                            <td>5</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>14</td>
+                            <td>4</td>
+                            <td>18</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>13</td>
+                            <td>3</td>
+                            <td>16</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>12</td>
+                            <td>2</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>11</td>
+                            <td>1</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>10</td>
+                            <td></td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>9</td>
+                            <td></td>
+                            <td>9</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>8</td>
+                            <td></td>
+                            <td>8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="margins_table_right">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Difference</th>
+                            <th>Points</th>
+                            <th>Bonus</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>8</td>
+                            <td>7</td>
+                            <td></td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>6</td>
+                            <td></td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>5</td>
+                            <td></td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>4</td>
+                            <td></td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>3</td>
+                            <td></td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>2</td>
+                            <td></td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>15+</td>
+                            <td>0</td>
+                            <td></td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </li>
+        <li>You must tip the correct winner or correctly tip a draw to score margin points.</li>
+        <li>If you correctly tip a draw, you get 20 points (15 for the exact margin plus 5 bonus).</li>
+        <li>If you incorrectly tip a draw, you get 0 margin points.</li>
+    </ul>
+
+    <h3>Crowds</h3>
+    <ul>
+        <li>Points are awarded according to how far off the actual crowd (rounded to the nearest 1000) you are:
+            <div class="container">
+                <div class="crowds_table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Difference</th>
+                                <th>Points</th>
+                                <th>Bonus</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>5</td>
+                                <td>3</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>1000</td>
+                                <td>4</td>
+                                <td></td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>2000</td>
+                                <td>3</td>
+                                <td></td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>3000</td>
+                                <td>2</td>
+                                <td></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>4000</td>
+                                <td>1</td>
+                                <td></td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>5000+</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>0</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <h3>BOGs</h3>
+    <ul>
+        <li>Votes are awarded to the players scoring the top 5 Supercoach scores in each game with 5, 4, 3, 2, 1 votes for 1st, 2nd, 3rd, 4th and 5th respectively. For these purposes, ties count as seperate scores e.g if the top scores were 120, 120, 115, 110, 110, 105 and 100, the top 5 scores are 120, 115 and 110.</li>
+        <li>There will normally be 5 players getting votes for each game, but ties can increase this to 6 or 7 or more depending on the ties.</li>
+        <li>If players are tied for any position, they each get the number of votes applicable to that position e.g. if Swan and Ablett are the top two scorers and both score 120 Supercoach points, they both get 5 votes.
+        <li>You get 2 points per vote.</li>
+    </ul>
+
+
+    <h3>Drawn Games in Finals</h3>
+    <ul>
+
+        <li><strong>To be determined.</strong> The Grand Final will probably have extra selections (first goalkicker, Norm Smith medallist, …).</li>
+    </ul>
+
+    <h2 id="fees">Fees</h2>
+    <ul>
+        <li>Each coach must pay a fee of $50 for entry to the competition.</li>
+        <li>Entry fees are payable by the start of Round 1.</li>
+        <li>You will not be able to submit tips if you haven't paid your fees
+        (you will see the games for the round instead of the tip forms). This is so that Rez and I can concentrate on winning the competition instead of chasing up late payments.</li>
+        <li>Entry fees will be placed on term deposit until the end of the season.</li>
+    </ul>
+
+    <h2>Prize money and Trophies</h2>
+    <ul>
+        <li>Prizemoney and trophies are awarded as follows:
+            <div class="container">
+                <div class="prizes_table">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="table_first_row">Premier</td>
+                                <td class="table_first_row">$225 + trophy</td>
+                            </tr>
+                            <tr>
+                                <td>Runner Up</td>
+                                <td>$150</td>
+                            </tr>
+                            <tr>
+                                <td>Minor Premier</td>
+                                <td>$50</td>
+                            </tr>
+                            <tr>
+                                <td>Highest Scorer - Season</td>
+                                <td>$50</td>
+                            </tr>
+                            <tr>
+                                <td>Coleman (winners)</td>
+                                <td>$100</td>
+                            </tr>
+                            <tr>
+                                <td>Brownlow (BOGs)</td>
+                                <td>$100</td>
+                            </tr>
+                            <tr>
+                                <td>Margins</td>
+                                <td>$75</td>
+                            </tr>
+                            <tr>
+                                <td>Crowds</td>
+                                <td>$75</td>
+                            </tr>
+                            <tr>
+                                <td>Last in Premiership</td>
+                                <td>Wooden Spoon</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </li>
+        <li>$50 is reserved for engraving and cleaning the trophy.</li>
+        <li>$25 is reserved for website admin costs.</li>
+    </ul>
+
+    <h2>Pre-season Draft</h2>
+    <ul>
+        <li>The pre-season draft will held at the EOSPU.</li>
+        <li>The reigning Premier can choose to coach any team in the competition.</li>
+        <li>If the reigning Premier chooses to coach another another team the following season, the displaced coach can choose to coach the Premier's current team or choose any team in the bottom ten.</li>
+        <li>The remaining coaches who finished in the top eight can choose any available team from:</li>
+        <ul>
+            <li>the bottom 10 </li>
+            <li>the Premier's current team if the Premier changes team</li>
+        </ul>
+        <li>The displaced bottom 10 coaches choose any available team from the discarded top eight teams.</li>
+        <li>The selection order for the top eight and displaced bottom ten selections is based on final ladder positions with the highest finishing teams choosing first.</li>
+    </ul>
+
+    <h2>EOSPU</h2>
+    <ul>
+        <li>The EOSPU will be held as soon as possible after the Grand Final.</li>
+        <li>The agenda will be:</li>
+        <ul>
+            <li>Drink beer</li>
+            <li>Awarding prizemoney</li>
+            <li>Pre-season draft</li>
+            <li>Discussion of any rule changes</li>
+            <li>Drunken chitchat</li>
+        </ul>
+        <li>Coaches must be present to receive a prize or participate in the pre-season draft. Coaches can appoint a proxy to represent them if their absence is unavoidable (e.g. work, holidays).</li>
+        <li>Last minute absentees have two weeks to collect their prizemony.</li>
+        <li>Uncollected prizemoney will be added to the prize pool for the next season.</li>
+        <li>It is traditional for coaches to shout beers for the commish and his assistant for the work they've done during the year.</li>
+    </ul>
+</div>
+
+

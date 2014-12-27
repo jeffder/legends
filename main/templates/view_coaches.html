@@ -1,0 +1,44 @@
+{% comment %}
+    The template for the coaches views.
+{% endcomment %}
+
+{% load chop %}
+{% load get %}
+
+<div id="coaches">
+    {% for sub_seasons in seasons|chop:3 %}
+        <div class="row coach_details">
+            {% for season in sub_seasons %}
+                <div class="span4">
+                    {% with data|get:season as d_season %}
+                        {% if d_season %}
+                            <div class="coach_club">{{ season }}</div>
+                            <table class="table">
+                                <tbody>
+                                    {% for club in d_season.keys %}
+                                        <tr>
+                                            {% if forloop.counter == 1 %}
+                                                <td class="coaches_first_row">
+                                            {% else %}
+                                                <td>
+                                            {% endif %}
+                                            {{ club }}
+                                            </td>
+                                            {% if forloop.counter == 1 %}
+                                                <td class="coaches_first_row">
+                                            {% else %}
+                                                <td>
+                                            {% endif %}
+                                            <p>{{ d_season|get:club|join:'<br>' }}</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

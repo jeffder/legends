@@ -1,0 +1,54 @@
+{% comment %}
+    The template for the Brownlow ladder view.
+{% endcomment %}
+
+
+<div class="ladder">
+    <table class="table table-striped table-hover" id="brownlow_ladder">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Votes</th>
+                <th>Five</th>
+                <th>Four</th>
+                <th>Three</th>
+                <th>Two</th>
+                <th>One</th>
+                <th>Nothing</th>
+                <th>%</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Avg</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ladder %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        {% if row.previous_position %}
+                            ({{ row.previous_position }})
+                        {% else %}
+                            (-)
+                        {% endif %}
+                    </td>
+                    <td class="club">{{ row.club }}</td>
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.five }}</td>
+                    <td>{{ row.four }}</td>
+                    <td>{{ row.three }}</td>
+                    <td>{{ row.two }}</td>
+                    <td>{{ row.one }}</td>
+                    <td>{{ row.nothing }}</td>
+                    <td>{{ row.strike_rate|floatformat:2 }}%</td>
+                    <td>{{ row.min_score }}</td>
+                    <td>{{ row.max_score }}</td>
+                    <td>{{ row.avg_score|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

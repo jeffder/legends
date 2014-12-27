@@ -1,0 +1,79 @@
+/* CSS for the navigation buttons */
+
+#round_nav {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#round_nav p {
+    color: #b0c4de;
+    font-size: 18px;
+    margin-bottom: 0px;
+    margin-right: 8px;
+    padding: 2px 0px;
+}
+
+.nav {
+    clear: both;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0px;
+}
+
+.nav ul {  
+    margin: 0px !important; 
+    padding: 10px 10px 10px 10px;
+    height: 22px;
+    border-bottom: 0px solid #666;
+    background-color: #4873ac;
+    border-radius: 5px;
+    list-style-type: none;    
+}
+
+/* single button */
+.nav ul li {
+    float: left;     
+    padding: 0; 
+    margin: 0;  
+}
+
+.nav a {  
+    font-size: 13px;
+    display: block;
+    padding: 3px 5px;    
+    padding-right: 4px;    
+/*    text-decoration: none;
+    border: 1px solid #666;    
+    border-bottom: 1px;   */
+    background-color: #c7c7c7;
+    color: black;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.nav a:hover {
+    background-color: #fffffe;
+    color: #333;
+    outline: none;
+}
+    
+/* selected button */
+.nav ul a.selected {
+    background-color: #b0c4de;
+    color: #000;    
+    cursor: default;
+    outline: none;
+}
+
+#results_button {
+    float: right;
+}
+
+#results_button .selected {
+    background-color: #c7c7c7;
+}
+
+#ladder_nav {
+    margin-bottom: 10px;
+}
+

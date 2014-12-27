@@ -1,0 +1,51 @@
+{% comment %}
+    The template for the pre-2008 Legends ladder view.
+{% endcomment %}
+
+<div class="ladder {% if season.season != 2007 %}span8{% endif %}">
+    <table class="table table-striped table-hover" id="legends_ladder">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>F</th>
+                {% if season.season == 2007 %}
+                    <th>A</th>
+                    <th>%</th>
+                {% endif %}
+                <th>Pts</th>
+                <th>F Avg</th>
+                {% if season.season == 2007 %}
+                    <th>A Avg</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ladder %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="club">{{ row.club }}</td>
+                    <td>{{ row.played }}</td>
+                    <td>{{ row.win }}</td>
+                    <td>{{ row.draw }}</td>
+                    <td>{{ row.loss }}</td>
+                    <td>{{ row.points_for }}</td>
+                    {% if season.season == 2007 %}
+                        <td>{{ row.points_against }}</td>
+                        <td>{{ row.percentage|floatformat:2 }}</td>
+                    {% endif %}
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.avg_points_for|floatformat:2 }}</td>
+                    {% if season.season == 2007 %}
+                        <td>{{ row.avg_points_against|floatformat:2 }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

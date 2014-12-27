@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    {% comment %}
+        The main template for the Legends application.
+
+        It defines the look and feel for the application as well as common layout.
+    {% endcomment %}
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Legends Footy Tipping {{ request.session.active_season }}</title>
+
+        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-1.7.2.min.js"></script>
+        <!--        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.tools.min.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>  -->
+        <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/source/jquery.fancybox.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/legends.js"></script>
+<!--
+        <script type="text/javascript" src="{{ STATIC_URL }}js/legends_table_wrapper.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/legends_chart_wrapper.js"></script>
+        <script type="text/javascript">
+            // Load Google visualizations
+            google.load('visualization', '1', {packages:['table', 'corechart']});
+        </script>
+-->
+        <script type="text/javascript">
+            $(document).ready(function() 
+            {
+                // Show tips and results for selected game in games list
+                $("#games-list a").click(function (e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
+
+                $("#afl_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#brownlow_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#coleman_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#crowds_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#legends_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#margins_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#streak_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: {
+                        0: { sorter: false}, 1: {sorter: false}, 3: {sorter: false},
+                        4: { sorter: false}, 5: {sorter: false}, 6: {sorter: false},
+                        7: { sorter: false}, 8: {sorter: false}, 9: {sorter: false},
+                        10: { sorter: false}, 11: {sorter: false}, 12: {sorter: false},
+                        13: { sorter: false}, 14: {sorter: false}, 15: {sorter: false},
+                        16: { sorter: false}, 17: {sorter: false}, 18: {sorter: false},
+                        19: { sorter: false}, 20: {sorter: false}, 21: {sorter: false},
+                        22: { sorter: false}, 23: {sorter: false}, 24: {sorter: false},
+                        25: { sorter: false}
+                    }
+                });
+            });
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/fancybox/jquery.fancybox.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/fancybox/jquery.fancybox-buttons.css" >
+<!--
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap/bootstrap.min.css" media="screen">
+-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/styles.css">
+<!--
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/nav.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tips.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ladders.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/stats.css" >
+-->
+<!--
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/legends/fixtures.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/legends/ladders.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/legends/coaches.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/gviz.css" >
+-->
+    </head>
+   
+    <body>
+        <header class="clearfix">
+            <div class="text-center">
+                {% if request.session.live_season %}
+                    <h1>Legends Footy Tipping {{ request.session.live_season }}</h1>
+                {% else %}
+                    <h1>Legends Footy Tipping</h1>
+                {% endif %}
+            </div>
+
+            <div class="pull-left text-left base-div">
+                <span>Coach: {{ club }}</span>
+            </div>
+
+            <div class="pull-right text-right base-div">
+                <span>
+                    {{ live_round.name }}
+                    {% if live_round.status != 'Final' and live_round.deadline_has_passed %}In Progress {% endif %}
+                    Deadline: {{ live_round.tipping_deadline|date:"l d M H:i" }}
+                </span>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-default main-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse-1">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="main-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li
+                            {% if selected_page == 'tips' %} class="active"{% endif %}
+                        >
+                            <a href="/legends/{{ request.session.live_round }}/tips/" class="round-left">
+                                Tips
+                            </a>
+                        </li>
+                        <li
+                            {% if selected_page == 'ladders' %} class="active"{% endif %}
+                        >
+                            <a href="/legends/{{ request.session.live_round }}/ladders/">
+                                Ladders
+                            </a>
+                        </li>
+                        <li
+                            {% if selected_page == 'stats' %} class="active"{% endif %}
+                        >
+                            <a href="/legends/stats/">
+                                Stats
+                            </a>
+                        </li>
+                        {% if request.user.is_superuser %}
+                            <li
+                                {% if selected_page == 'admin' %} class="active"{% endif %}
+                            >
+                                <a href="/legends/admin/" class="round-right">
+                                    Admin
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if request.user.is_authenticated %}
+                            <li><a href="/accounts/logout" class="round-left">Logout</a></li>
+                            <li><a href="#change_password" class="round-right fancybox">Change Password</a></li>
+                        {% else %}
+                            <li><a href="#login" class="round-all fancybox">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        {% block content %}
+            {{ content|safe }}
+        {% endblock content %}
+    </body>
+</html>

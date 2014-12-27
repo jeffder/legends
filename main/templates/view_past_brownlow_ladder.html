@@ -1,0 +1,28 @@
+{% comment %}
+    The template for the Brownlow ladder view.
+{% endcomment %}
+
+
+<div class="ladder span5">
+    <table class="table table-striped table-hover" id="brownlow_ladder">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Votes</th>
+                <th>Avg</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ladder %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="club">{{ row.club }}</td>
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.avg_score|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

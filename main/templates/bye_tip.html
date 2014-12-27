@@ -1,0 +1,28 @@
+{% comment %}
+    Template for displaying tip tips
+{% endcomment %}
+
+{% load humanize %}
+
+<td class="table-cell-left">{{ tip.club }}</td>
+<td class="tip-score">{% if tip.game.status != 'Scheduled' %}{{ tip.score }}{% endif %}</td>
+<td class="table-cell-left">{{ tip.winner }}</td>
+<td class="tip-score">{% if tip.game.status != 'Scheduled' %}{{ tip.winners_score }}{% endif %}</td>
+<td class="table-cell-number-left">{{ tip.margin }}</td>
+<td class="tip-score">{% if tip.game.status != 'Scheduled' %}{{ tip.margins_score }}{% endif %}</td>
+<td class="table-cell-number-left">{{ tip.crowd|intcomma }}</td>
+<td class="tip-score">{% if tip.game.status != 'Scheduled' %}{{ tip.crowds_score }}{% endif %}</td>
+<td>
+    <ul class="list-unstyled">
+        {% if tip.supercoach_tips.all.count == 0 %}
+            <li>None</li>
+        {% else %}
+            {% for sc in tip.supercoach_tips.all %}
+                <li>{% if sc.player.name %}{{ sc.player.name }}{% else %}None{% endif %}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</td>
+<td class="tip-score">{{ tip.supercoach_score }}</td>
+
+

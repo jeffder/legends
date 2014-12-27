@@ -1,0 +1,45 @@
+{% comment %}
+    Template for displaying Legends result summary
+{% endcomment %}
+
+{% load humanize %}
+
+{% with item.summary as summary %}
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">{{ item.summary.score.min }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.winners_score.min }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.margins_score.min }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.crowds_score.min }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.supercoach_score.min }}</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">{{ item.summary.score.max }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.winners_score.max }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.margins_score.max }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.crowds_score.max }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.supercoach_score.max }}</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">{{ item.summary.score.avg|floatformat:2 }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.winners_score.avg|floatformat:2 }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.margins_score.avg|floatformat:2 }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.crowds_score.avg|floatformat:2 }}</td>
+        <td></td>
+        <td class="summary-tip-score">{{ item.summary.supercoach_score.avg|floatformat:2 }}</td>
+    </tr>
+{% endwith %}

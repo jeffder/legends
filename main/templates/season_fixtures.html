@@ -1,0 +1,119 @@
+{% comment %}
+    Template for legends results
+{% endcomment %}
+
+{% load chop %}
+{% load get %}
+
+<div id="season_fixtures">
+    {% for rnds in rounds|chop:3 %}
+        <div class="row coach_details">
+            {% for rnd in rnds %}
+                {% if rnd %}
+                    {% with rnd.name as name %}
+                        {% if forloop.counter == 1 %}
+                            <div class="span4">
+                        {% else %}
+                            <div class="span4">
+                        {% endif %}
+                        <div class="coach_club">{{ name }}</div>
+                            <table class="table">
+                                <tbody>
+                                    {% for fixture in fixture_data|get:name %}
+                                        <tr
+                                            id="score_{{ fixture.id }}"
+                                            class="game_score {% if club == fixture.home or club == fixture.away %}season_club_highlight"{% endif %}""
+                                        >
+                                            <td {% if forloop.counter == 1 %}class="coaches_first_row"{% endif %}>
+                                                {{ fixture.home }}
+                                            </td>
+                                            <td class="season_results_score {% if forloop.counter == 1 %}coaches_first_row{% endif %}">
+                                                {{ fixture.home_score}}
+                                            </td>
+                                            <td class="season_results_score {% if forloop.counter == 1 %}coaches_first_row{% endif %}">
+                                                {{ fixture.away_score }}
+                                            </td>
+                                            <td {% if forloop.counter == 1 %}class="coaches_first_row"{% endif %}>
+                                                {{ fixture.away }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if bye_data|get:name %}
+                                <table class="table season_bye">
+                                    <tbody>
+                                        {% for byes in bye_data|get:name|chop:2 %}
+                                            <tr>
+                                                <td class="score_{{ byes.0.id }} bye_season_results_score {% if club == byes.0.club %}season_club_highlight{% endif %}">
+                                                    {{ byes.0.club }}
+                                                </td>
+                                                <td class="score_{{ byes.0.id }} bye_season_results_score {% if club == byes.0.club %}season_club_highlight{% endif %}">
+                                                    {{ byes.0.score }}
+                                                </td>
+                                                {% if byes.1 %}
+                                                    <td class="score_{{ byes.1.id }} bye_season_results_score {% if club == byes.1.club %}season_club_highlight{% endif %}">
+                                                        {{ byes.1.club }}
+                                                    </td>
+                                                    <td class="score_{{ byes.1.id }} bye_season_results_score {% if club == byes.1.club %}season_club_highlight{% endif %}">
+                                                        {{ byes.1.score }}
+                                                    </td>
+                                                {% else %}
+                                                    <td></td>
+                                                    <td></td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+<div id="score_detail" class="modal hide fade">
+    <div class="modal-header">
+        {% comment %}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove-circle"></i>Close</button>
+        {% endcomment %}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 id="score_detail_header"></h2>
+    </div>
+    <div class="modal-body"></div>
+</div>
+
+<script type="text/javascript">
+    // Pop up score details for a normal game
+    $('#season_fixtures table tbody tr.game_score').on('click', function(event) {
+        var id_parts = $(this).attr('id').split('_');
+
+        // Score detail header
+        var link = 'http://' + window.location.host + '/legends/stats/score_detail_header/' + id_parts[1] + '/';
+        $('#score_detail_header').load(link);
+
+        // Score detail body
+        link = 'http://' + window.location.host + '/legends/stats/score_detail/' + id_parts[1] + '/';
+        $('#score_detail .modal-body').load(link)
+        $('#score_detail').modal('show');
+    });
+
+    // Pop up score details for a bye
+$('#season_fixtures table tbody td.bye_season_results_score').on('click', function(event) {
+        var classes = $(this).attr('class').split(' ');
+        var id_parts = classes[0].split('_');
+
+        // Score detail header
+        var link = 'http://' + window.location.host + '/legends/stats/bye_score_detail_header/' + id_parts[1] + '/';
+        $('#score_detail_header').load(link);
+
+        // Score detail body
+        var link = 'http://' + window.location.host + '/legends/stats/bye_score_detail/' + id_parts[1] + '/';
+        $('#score_detail .modal-body').load(link);
+
+        $('#score_detail').modal('show');
+    });
+</script>
+

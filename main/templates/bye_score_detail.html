@@ -1,0 +1,55 @@
+{% comment %}
+    Template for displaying score details for individual clubs with a bye
+{% endcomment %}
+
+{% load humanize %}
+{% load chop %}
+
+{% for sub_tips in tips|chop:2 %}
+    <div class="container">
+        {% for tip in sub_tips %}
+            {% if tip %}
+                <div class=span6>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td class="score_detail_game">{{ tip.afl_fixture.home }} v {{ tip.afl_fixture.away }}</td>
+                                <td >{{ tip.winner }}</td>
+                                <td class="score_detail_score">{{ tip.winner_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tip.afl_fixture.home_score }} - {{ tip.afl_fixture.away_score }}</td>
+                                <td>{{ tip.margin }}</td>
+                                <td class="score_detail_score">{{ tip.margin_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tip.afl_fixture.venue }} ({{ tip.afl_fixture.crowd|intcomma }})</td>
+                                <td>{{ tip.crowd|intcomma }}</td>
+                                <td class="score_detail_score">{{ tip.crowd_score }}</td>
+                            </tr>
+                            <tr>
+                                <td class="score_detail_bog">
+                                    {% for bog in tip.afl_fixture.bogs.all %}
+                                        {{ bog.votes }} - {{ bog.player }}{% if not forloop.last %}</br>{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="score_detail_bog">
+                                    {% for bog in tip.bogtips.all %}
+                                        {{ bog.player }}{% if not forloop.last %}</br>{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="score_detail_score">{{ tip.bog_score }}</td>
+                            </tr>
+                            <tr class="score_detail_totals">
+                                <td></td>
+                                <td></td>
+                                <td class="score_detail_score">{{ tip.total }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+

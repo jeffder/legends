@@ -1,0 +1,23 @@
+{# The template for round navigation. #}
+
+<div id="round_nav" class="nav">
+    <ul>
+        <li>
+            <p>Season</p>
+        </li>
+        {% for season in seasons %}
+            {% if season.season == selected_season.season %}
+                <li>
+                    <a href="/legends/stats/past_years/{{ season.season }}/" class="selected">{{ season.season }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="/legends/stats/past_years/{{ season.season }}/">{{ season.season }}</a>
+                </li>
+            {%endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+
+

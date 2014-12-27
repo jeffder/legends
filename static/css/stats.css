@@ -1,0 +1,317 @@
+/* CSS for coach stats page */
+
+/* Rules */
+div#comp_rules {
+    font-size: 12px;
+    line-height: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#comp_rules h2 {
+    background-color: #b0c4de;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+#comp_rules h3 {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+#comp_rules .table_first_row {
+    border-top-width: 0px;
+}
+
+#comp_rules a {
+    font-size: 12px;
+}
+
+#comp_rules p {
+    font-size: 12px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.crowds_table {
+    margin-left: 0px;
+    margin-top: 10px;
+    text-align: center;
+    width: 25%;
+}
+
+.default_tips_table {
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 25%;
+}
+
+.prizes_table {
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 35%;
+}
+
+.margins_table {
+    float: left;
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 25%;
+}
+
+.margins_table_right {
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 25%;
+}
+
+.crowds_table th,
+.crowds_table td,
+.margins_table th,
+.margins_table td,
+.margins_table_right th,
+.margins_table_right td {
+    text-align: center;
+}
+
+
+/* Coach stats */
+div#coaches {
+    margin-left: 10px;
+}
+
+div#coaches .coaches_first_row {
+    border-top-width: 0px;
+}
+
+div#coaches p {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.coach_details {
+    margin-bottom: 0px;
+}
+
+.coach_club {
+    background-color: #b0deb3;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    padding-left: 10px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+/*    width: 110px;*/
+    border-radius: 5px;
+}
+
+.coach_coach {
+    font-size: 11px;
+    padding-left: 10px;
+    text-align: left;
+    margin-left: -30px;
+}
+
+/* Past winners stats */
+#past_winners {
+    font-size: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#past_winners p {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+#past_winners .club {
+    font-weight: bold;
+}
+
+#past_winners .season {
+    font-weight: bold;
+}
+
+.table thead {
+    font-weight: bold;
+    line-height: normal;
+    text-align: left;
+    padding-left: 3px;
+    padding-right:3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    background-color: #b0deb3;
+}
+
+.container {
+    width: 960px;
+}
+
+.table {
+    margin-bottom: 10px;
+}
+
+/* Past Years stats */
+
+#season_fixtures {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 40px;
+}
+
+div#season_results {
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+div#season_results .coaches_first_row {
+    border-top-width: 0px;
+}
+
+div#season_results p {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.coach_details {
+    margin-bottom: 0px;
+}
+
+.coach_club {
+    background-color: #b0deb3;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    padding-left: 10px;
+    padding-right:0px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    vertical-align: top;
+/*    width: 110px;*/
+    border-radius: 5px;
+}
+
+.coach_coach {
+    font-size: 11px;
+    padding-left: 10px;
+    text-align: left;
+    margin-left: -30px;
+}
+
+#season_results .season_results_score {
+    text-align: right;
+}
+
+/*
+#season_fixtures td.season_results_score:hover {
+    cursor: hand;
+}
+*/
+tr.game_score:hover,
+td.bye_season_results_score:hover {
+    cursor: pointer;
+}
+
+.season_bye {
+    margin-top: -10px;
+}
+
+.season_club_highlight {
+    background-color: #dddddd;
+}
+
+#season_results a {
+    color: #000000;
+}
+
+#ladder_round_selection .form-inline {
+    margin-bottom: 10px;
+}
+
+#ladder_round_selection {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+/** Score details pop-up **/
+
+
+#score_detail {
+    display: none;
+    height: auto;
+    margin-left: -450px;
+    width: 900px;
+}
+
+#score_detail h2 {
+    font-size: 24px;
+    margin-left: 10px;
+    width: auto;
+}
+
+#score_detail .table {
+    margin: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#score_detail .table td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#score_detail .modal-body {
+    max-height: 600px;
+}
+
+#score_detail .span6 {
+    margin: 0px;
+}
+
+#score_detail .container {
+    width: 800px;
+}
+
+#score_detail .score_detail_game {
+    background-color: #b0deb3;
+    font-weight: bold;
+}
+
+#score_detail .score_detail_score {
+    text-align: right;
+    width: 30px;
+}
+
+#score_detail .score_detail_bog {
+    width: 240px;
+}
+
+#score_detail .score_detail_totals {
+    background-color: #dddddd;
+    font-weight: bold;
+}
+
+/** Coach v Coach **/
+#coach_v_coach_selection,
+#coach_v_coach {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#coach_v_coach .no_top_border {
+    border-top: none;
+}
