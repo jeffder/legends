@@ -1,6 +1,14 @@
 // Legends specific javascript
 
+// Show tips/results for selected game
+function show_tips(button)
+    /*
+     *   Show tips and results for selected game in games list.
+     */
 
+{
+
+}
 function expand_collapse(button, hidden)
 {
     /*
@@ -29,14 +37,15 @@ function bind_click_to_expand_collapse(buttons, expand_part)
      * Bind the click event to expand/collapse elements in tab pane tables.
     */
     
-    buttons.live('click',
-                 function(evnt) 
-                 {
-                     evnt.preventDefault();
-                     var hidden = $(expand_part, $(this).parents().filter('table')[0]);
-                     expand_collapse($(this), hidden);
-                     //return false;
-                 });
+    buttons.live(
+        'click',
+         function(evnt)
+         {
+             evnt.preventDefault();
+             var hidden = $(expand_part, $(this).parents().filter('table')[0]);
+             expand_collapse($(this), hidden);
+             //return false;
+         });
 }
 
 

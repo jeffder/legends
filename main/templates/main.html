@@ -3,8 +3,6 @@
 <html lang="en">
     {% comment %}
         The main template for the Legends application.
-
-        It defines the look and feel for the application as well as common layout.
     {% endcomment %}
 
     <head>
@@ -13,12 +11,12 @@
 
         <title>Legends Footy Tipping {{ request.session.active_season }}</title>
 
-        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-2.1.1.min.js"></script>
         <!--        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.tools.min.js"></script>
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>  -->
-        <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/source/jquery.fancybox.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}fancybox/source/jquery.fancybox.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+        <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
         <script src="{{ STATIC_URL }}js/jquery/jquery.tablesorter.min.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/legends.js"></script>
 <!--
@@ -97,11 +95,41 @@
                         25: { sorter: false}
                     }
                 });
+
+                // Fancybox
+                $(".fancybox").fancybox({
+                    afterClose: function() {
+                        $('.form-group.has-success').removeClass('has-success');
+                        $('.form-group.has-error').removeClass('has-error');
+                        $('.form-group span.glyphicon-ok').removeClass('glyphicon-ok');
+                        $('.form-group span.glyphicon-remove').removeClass('glyphicon-remove');
+                    },
+                    autoSize: true,
+                    helpers : {
+                        overlay : null
+                    }
+                });
+
+                $('#login-form').submit(function(){
+                    submit_login($(this));
+                    return false;
+                });
+
+                $('#change-password-form').submit(function(){
+                    submit_change_password($(this));
+                    return false;
+                });
+
+                // Launch login dialog if not logged in
+                var fancy = $(".fancybox").eq(0);
+                if (fancy.attr('href') == '#login') {
+                    fancy.click();
+                }
             });
         </script>
 
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/fancybox/jquery.fancybox.css" >
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/fancybox/jquery.fancybox-buttons.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}fancybox/source/jquery.fancybox.css" >
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}fancybox/source/helpers/jquery.fancybox-buttons.css" >
 <!--
         <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap/bootstrap.min.css" media="screen">
 -->
@@ -190,9 +218,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
                             <li><a href="/accounts/logout" class="round-left">Logout</a></li>
-                            <li><a href="#change_password" class="round-right fancybox">Change Password</a></li>
+                            <li><a id="change-password-link" href="#change-password" class="round-right fancybox">Change Password</a></li>
                         {% else %}
-                            <li><a href="#login" class="round-all fancybox">Login</a></li>
+                            <li><a id="login-link" href="#login" class="round-all fancybox">Login</a></li>
                         {% endif %}
                     </ul>
                 </div>

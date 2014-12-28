@@ -12,10 +12,10 @@ from main.forms import LoginForm, ChangePasswordForm
 
 
 def render_auth_form(request):
-    '''
+    """
     Render the login form or change password form dependng on whether or not
     the user is logged in.
-    '''
+    """
 
     if request.user.is_authenticated():
         content = render(
@@ -37,12 +37,13 @@ class JSONResponse(HttpResponse):
 
     def __init__(self, data):
         HttpResponse.__init__(
-            self, content=json.dumps(data), mimetype='application/json')
+            self, content=json.dumps(data), content_type='application/json')
 
 
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
+
         if request.is_ajax():
             if form.is_valid():
                 auth_login(request, form.get_user())
@@ -56,7 +57,6 @@ def login(request):
 
             return JSONResponse(data)
 
-    form = LoginForm()
     data = {
         'logged_in': False,
     }
@@ -75,7 +75,7 @@ def change_password(request):
             else:
                 data = {
                     'changed': False,
-                    'errors': dict([(k, [unicode(e) for e in v])
+                    'errors': dict([(k, [e for e in v])
                                     for k, v in form.errors.items()])
                 }
 

@@ -1,26 +1,23 @@
 {# fancybox popup for login form #}
-<div style="display: None;">
-    <div id="login">
-        <div class="form_errors"></div>
 
-        <form id="login_form" method="post" action=".">
+<div class="hidden">
+    <div id="login">
+        <form id="login-form" method="post" action=".">
             {% csrf_token %}
 
-            <table>
-                <tr>
-                    <td colspan=2>Please log in:</td>
-                </tr>
-                <tr>
-                    <td><label for="id_username">Username:</label></td>
-                    <td>{{ login_form.username }}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_password">Password:</label></td>
-                    <td>{{ login_form.password }}</td>
-                </tr>
-            </table>
+            <div class="form-group has-feedback">
+                <label class="control-label" for="username">Username</label>
+                {{ login_form.username }}
+                <span class="glyphicon form-control-feedback"></span>
+            </div>
 
-            <p><input type="submit" name="login_submit" value="Login" ></p>
+            <div class="form-group has-feedback">
+                <label class="control-label" for="password">Password</label>
+                {{ login_form.password }}
+                <span class="glyphicon form-control-feedback"></span>
+            </div>
+
+            <button type="submit" class="btn btn-default" name="login_submit">Log in</button>
         </form>
     </div>
 </div>

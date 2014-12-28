@@ -370,8 +370,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot);
-  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix) format("embedded-opentype"), url(../fonts/bootstrap/glyphicons-halflings-regular.woff) format("woff"), url(../fonts/bootstrap/glyphicons-halflings-regular.ttf) format("truetype"), url(../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format("svg");
+  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?1417343055);
+  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?&1417343055#iefix) format("embedded-opentype"), url(../fonts/bootstrap/glyphicons-halflings-regular.woff?1417343055) format("woff"), url(../fonts/bootstrap/glyphicons-halflings-regular.ttf?1417343055) format("truetype"), url(../fonts/bootstrap/glyphicons-halflings-regular.svg?1417343055#glyphicons_halflingsregular) format("svg");
 }
 /* line 21, ../../../../../.rvm/gems/ruby-2.1.5/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon {
@@ -8494,15 +8494,4 @@ td.tips-table {
 /* line 271, ../sass/styles.scss */
 .foo {
   display: none;
-}
-
-/* line 275, ../sass/styles.scss */
-#form-success {
-  display: none;
-}
-
-/* line 279, ../sass/styles.scss */
-#form-errors ul {
-  list-style-type: none;
-  padding-left: 10px;
 }

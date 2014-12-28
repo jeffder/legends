@@ -29,21 +29,32 @@ class LoginForm(forms.Form):
     Log a user in using a username and password.
     '''
 
-    username = forms.CharField(label="Username", max_length=30)
-    password = forms.CharField(label="Password", widget=forms.PasswordInput)
-
-    error_messages = {
-        'invalid_login': "Please enter a correct username and password. "
-                         "Note that both fields are case-sensitive.",
-    }
+    username = forms.CharField(
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'username',
+                'placeholder': 'Username'
+            }
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'password',
+                'placeholder': 'Password'
+            }
+        )
+    )
 
     def __init__(self, *args, **kwargs):
-
-        self.user_cache = None
         super(LoginForm, self).__init__(*args, **kwargs)
 
-    def clean(self):
+        self.user_cache = None
 
+    def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
@@ -53,20 +64,23 @@ class LoginForm(forms.Form):
                 password=password
             )
             if self.user_cache is None:
-                raise forms.ValidationError(
-                    self.error_messages['invalid_login'])
+                # No need to be very informative since we're not going to
+                # actually use the error message
+                raise forms.ValidationError('Error')
+        else:
+            # No need to be very informative since we're not going to actually
+            # use the error message
+            raise forms.ValidationError('Error')
 
         return self.cleaned_data
 
     def get_user_id(self):
-
         if self.user_cache:
             return self.user_cache.id
 
         return None
 
     def get_user(self):
-
         return self.user_cache
 
 
@@ -75,49 +89,67 @@ class ChangePasswordForm(forms.Form):
     Let a user change set his password.
     '''
 
-    error_messages = {
-        'password_mismatch': "The two password fields didn't match.",
-        'password_incorrect': 'Your old password was entered incorrectly. '
-                              'Please enter it again.',
-    }
-
-    old_password = forms.CharField(label='Old password',
-                                   widget=forms.PasswordInput)
-    new_password1 = forms.CharField(label='New password',
-                                    widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label='Confirm new password',
-                                    widget=forms.PasswordInput)
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'old-password',
+                'placeholder': 'Old password'
+            }
+        )
+    )
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'new-password1',
+                'placeholder': 'New password'
+            }
+        )
+    )
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'new-password2',
+                'placeholder': 'Confirm new password'
+            }
+        )
+    )
 
     def __init__(self, user, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
 
         self.user = user
-        super(ChangePasswordForm, self).__init__(*args, **kwargs)
 
     def clean_old_password(self):
         '''
         Validates that the old_password field is correct.
         '''
-
         old_password = self.cleaned_data["old_password"]
         if not self.user.check_password(old_password):
-            raise forms.ValidationError(
-                self.error_messages['password_incorrect'])
+            # No need to be very informative since we're not going to actually
+            # use the error message
+            raise forms.ValidationError('Error')
 
         return old_password
 
     def clean_new_password2(self):
-
         password1 = self.cleaned_data.get('new_password1')
         password2 = self.cleaned_data.get('new_password2')
         if password1 and password2:
             if password1 != password2:
-                raise forms.ValidationError(
-                    self.error_messages['password_mismatch'])
+                # No need to be very informative since we're not going to
+                # actually use the error message
+                raise forms.ValidationError('Error')
+        else:
+            # No need to be very informative since we're not going to actually
+            # use the error message
+            raise forms.ValidationError('Error')
 
         return password2
 
     def save(self):
-
         self.user.set_password(self.cleaned_data['new_password1'])
         self.user.save()
 
