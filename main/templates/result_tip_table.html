@@ -3,7 +3,6 @@
 {% endcomment %}
 
 {% load humanize %}
-{% load pad %}
 
 <td class="table-cell-left">{{ row.club }}</td>
 <td class="tip-score">{% if game.status != 'Scheduled' %}{{ row.score|rjust:3 }}{% endif %}</td>

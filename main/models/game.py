@@ -88,6 +88,11 @@ class Game(models.Model):
         times for its fixtures until after the previous round has been played.
         So, it won't have a tipping deadline until then.
         """
+        # DEBUG
+        if self.round.name == 'Round 21':
+            return False
+        # END DEBUG
+
         try:
             return datetime.datetime.now() >= self.tipping_deadline
         except TypeError:

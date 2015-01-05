@@ -2,78 +2,88 @@
     The template for home and away tips submission.
 {% endcomment %}
 
-<div class="tip_form_container">
+<div class="tip-form-container">
     {% if round.is_finals %}
         <div id="finals_games">
             <div class="row">
                 <div class="span4">
-                    <table class="table">
+                    <table class="table table-condensed">
                         <thead>
                             <tr>
-                                <th class="game_left">Legends Games</th>
-                                <th></th>
-                                <th></th>
+                                <th colspan="3">Legends Games</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for fixture in afl_fixtures %}
+                            {% for game in round.games.all %}
                                 <tr>
-                                    <td class="game_left">{{ fixture.legends_fixture.home }}</td>
+                                    <td class="game_left">{{ game.legends_home }}</td>
                                     <td class="versus">v</td>
-                                    <td>{{ fixture.legends_fixture.away }}</td>
+                                    <td>{{ game.legends_away }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <div class="span8">
-                    {% if not club_can_tip %}
-                        <table class="table">
+                {% if not club_can_tip %}
+                    <div class="span8">
+                        <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="game_left">AFL Games</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th colspan="5">AFL Games</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for fixture in afl_fixtures %}
+                                {% for game in round.games.all %}
                                     <tr>
-                                        <td class="game_left">{{ fixture.home }}</td>
+                                        <td class="game_left">{{ game.home }}</td>
                                         <td class="versus">v</td>
-                                        <td>{{ fixture.away }}</td>
-                                        <td>{{ fixture.venue }}</td>
-                                        <td>{{ fixture.fixture_date|date:"D M d H:i"}}</td>
+                                        <td>{{ game.away }}</td>
+                                        <td>{{ game.venue }}</td>
+                                        <td>{{ game.game_date|date:"D M d H:i"}}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endif %}
 
     {% if club_can_tip %}
-        <div class="tip_submission_header">
-            <p>Submit Tips</p>
+        {% comment %}
+        <div class="tip-submission-header">
+            <h4>Submit Tips</h4>
         </div>
-        <div id="tip_submission">
-            <form method="post" action="/legends/{{ round.id }}/tips/">
-                <div>{% csrf_token %}</div>
-                {% if round.is_finals %}
-                    {% with columns=2 %}
-                        {% include "tip_forms.html" %}
-                    {% endwith %}
-                {% else %}
-                    {% with columns=3 %}
-                        {% include "tip_forms.html" %}
-                    {% endwith %}
-                {% endif %}
-                <input class="submit_button" type="submit" value = 'Submit Tips'>
+        {% endcomment %}
+        <div id="tip-submission">
+            <form class="form-inline" method="post" action="/legends/{{ round.id }}/tips/">
+                {% csrf_token %}
+                {% include "tip_forms.html" %}
             </form>
+            <!-- Global tip submission -->
+            <button type="submit" class="btn btn-default submit-btn" name="submit-all-tips">Submit All Tips</button>
+        </div>
+    {% else %}
+        <div class="span8">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th colspan="5">AFL Games</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for game in round.games.all %}
+                    <tr>
+                        <td class="game_left">{{ game.home }}</td>
+                        <td class="versus">v</td>
+                        <td>{{ game.away }}</td>
+                        <td>{{ game.venue }}</td>
+                        <td>{{ game.game_date|date:"D M d H:i"}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     {% endif %}
 </div>

@@ -8,7 +8,7 @@ from django.forms.util import ErrorList
 import main.models as models
 
 # Dummy club ID for draw tips
-DRAW_TIP = -99
+DRAW_TIP = '-99'
 
 
 class Errors(ErrorList):
@@ -24,6 +24,7 @@ class Errors(ErrorList):
         return ''.join([e for e in self])
 
 
+# Authorisation
 class LoginForm(forms.Form):
     '''
     Log a user in using a username and password.
@@ -156,31 +157,33 @@ class ChangePasswordForm(forms.Form):
         return self.user
 
 
+# Tips
 class TipForm(forms.Form):
-    '''
-        Submission form for tips
-    '''
+    """
+    Submission form for tips
+    """
 
     def __init__(self, clubs, *args, **kwargs):
-
         self.tip_instance = kwargs.pop('instance')
+
+        super(TipForm, self).__init__(*args, **kwargs)
 
         # Use customised error formatting
         kwargs['error_class'] = Errors
 
-        super(TipForm, self).__init__(*args, **kwargs)
+        self.home = self.tip_instance.game.afl_home
+        self.away = self.tip_instance.game.afl_away
+        self.ground = self.tip_instance.game.ground
+        self.date = self.tip_instance.game.game_date
 
-        self.home = clubs[0]
-        self.away = clubs[1]
-        self.ground = self.tip_instance.afl_fixture.venue
-        self.date = self.tip_instance.afl_fixture.fixture_date
+        clubs = (self.home, self.away)
 
         self.club_lookup = dict((c.id, c) for c in clubs)
 
         # Set options for fields
-        choices = [('', u'------')]
+        choices = [('', 'Winner')]
         choices.extend([(c.id, c.name) for c in clubs])
-        choices.append((DRAW_TIP, u'Draw'))
+        choices.append((DRAW_TIP, 'Draw'))
 
         self.fields['winner'].choices = choices
         if self.tip_instance.is_default:
@@ -198,11 +201,34 @@ class TipForm(forms.Form):
             self.fields['margin'].initial = self.tip_instance.margin
             self.fields['crowd'].initial = self.tip_instance.crowd
 
+        # Give form fields an id
+        for field in ('winner', 'margin', 'crowd'):
+            self.fields[field].widget.attrs['id'] = 'id-{}-{}'.format(self.tip_instance.id, field)
+
+
     winner = forms.ChoiceField(
-        widget=forms.Select(attrs={'class': 'tip_form_winner'})
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control-inline-select',
+            }
+        )
     )
-    margin = forms.IntegerField(widget=forms.TextInput(attrs={'size': 7}))
-    crowd = forms.IntegerField(widget=forms.TextInput(attrs={'size': 7}))
+    margin = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control-inline',
+                'placeholder': 'Margin'
+            }
+        )
+    )
+    crowd = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control-inline',
+                'placeholder': 'Crowd'
+            }
+        )
+    )
 
     def clean_crowd(self):
 
@@ -283,42 +309,37 @@ class TipForm(forms.Form):
         return self.tip_instance
 
 
-class BogForm(forms.Form):
-    '''
-        Class for BOG forms
-    '''
+class SupercoachForm(forms.Form):
+    """
+    Class for Supercoach forms
+    """
 
     def __init__(self, players, *args, **kwargs):
-
         self.instance = kwargs.pop('instance')
 
         # Use customised error formatting
         kwargs['error_class'] = Errors
 
-        super(BogForm, self).__init__(*args, **kwargs)
+        super(SupercoachForm, self).__init__(*args, **kwargs)
 
         # Set options for fields
-        choices = [('', '------')]
+        choices = [('', 'Supercoach')]
         choices.extend([(p.id, str(p)) for p in players])
 
         self.fields['player'].choices = choices
 
         # Find out if we have a default tip/result
-        if isinstance(self.instance, models.BogTip):
-            attr = getattr(self.instance, 'tip')
-
-        if attr.is_default:
+        if self.instance.tip.is_default:
             self.fields['player'].initial = ''
 
         else:
             self.fields['player'].initial = self.instance.player.id
 
     player = forms.ChoiceField(
-        widget=forms.Select(attrs={'class': 'tip_form_player'})
+        widget=forms.Select(attrs={'class': 'form-control-inline-select-supercoach'})
     )
 
     def clean_player(self):
-
         player = self.cleaned_data['player']
 
         if not player:
@@ -327,7 +348,6 @@ class BogForm(forms.Form):
         return int(player)
 
     def save(self):
-
         player = self.cleaned_data['player']
 
         self.instance.player = models.Player.objects.get(id=int(player))

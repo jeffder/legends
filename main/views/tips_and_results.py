@@ -64,7 +64,7 @@ def view_tips(request, round_id):
     # Render tip results/tips/forms
     content += render_results(request, selected_round, result_games)
     content += render_tips(request, selected_round, tip_games)
-#    content += render_tip_forms(request, selected_round, form_games)
+    content += render_tip_forms(request, selected_round, form_games)
 
     # Render login or change password form
     content += render_auth_form(request)
@@ -458,19 +458,18 @@ def render_tips(request, selected_round, games):
     return content.content
 
 
-def render_tip_forms(request, curr_round, fixtures):
+def render_tip_forms(request, selected_round, games):
     """
-        View for tip form
+    View for tip form
     """
-
-    if not fixtures:
+    if not games:
         return b''
 
     def _save(form):
 
         form[0].save()
 
-        # BOGs amd emergencies
+        # Supercoach
         for frm in form[1:]:
             for f in frm:
                 f.save()
@@ -481,18 +480,18 @@ def render_tip_forms(request, curr_round, fixtures):
         log_message = '%s: %s: %s: Winner: %s Margin: %s Crowd: %d' % (
             tip.club,
             curr_round,
-            tip.afl_fixture,
+            tip.game,
             tip.winner,
             tip.margin,
             tip.crowd
         )
         logger.info(log_message)
-        for bog in tip.bogtips.all():
+        for supercoach in tip.supercoach_tips.all():
             log_message = '%s: %s: %s: BOG: %s' % (
                 tip.club,
                 curr_round,
-                tip.afl_fixture,
-                bog.player
+                tip.game,
+                supercoach.player
             )
             logger.info(log_message)
 
@@ -504,24 +503,24 @@ def render_tip_forms(request, curr_round, fixtures):
             for f in frm:
                 f.errors.clear()
 
-    club = request.session['club']
-    club_can_tip_in_round = club.can_tip_in_round(curr_round)
+    club = Club.objects.get(id=request.session['club'])
+    club_can_tip = club in selected_round.tipping_clubs
 
     context = {
-        'round': curr_round,
-        'club_can_tip': club_can_tip_in_round,
-        'data_type': 'tip',
-        'show_form': True
+        'round': selected_round,
+        'club_can_tip': club_can_tip,
+#        'data_type': 'tip',
+#        'show_form': True
     }
 
     # Render the tip content
-    if curr_round.is_finals:
-        context['afl_fixtures'] = curr_round.afl_fixtures()
+#    if selected_round.is_finals:
+#        context['afl_games'] = selected_round.games()
 
-    if club_can_tip_in_round:
+    if club_can_tip:
         if request.method == 'POST':
-            frms = create_tip_forms(curr_round, club, fixtures, request.POST)
-            context['data'] = frms
+            frms = create_tip_forms(selected_round, club, games, request.POST)
+            context['forms'] = frms
 
             logger = logging.getLogger('tips')
             for form in frms:
@@ -530,12 +529,12 @@ def render_tip_forms(request, curr_round, fixtures):
                     _save(form)
 
         else:
-            frms = create_tip_forms(curr_round, club, fixtures)
-            context['data'] = frms
+            frms = create_tip_forms(selected_round, club, games)
+            context['forms'] = frms
     # Show AFL fixtures if club hasn't paid fees yet
-    else:
-        if not 'afl_fixtures' in context:
-            context['afl_fixtures'] = curr_round.afl_fixtures()
+#    else:
+#        if 'afl_games' not in context:
+#            context['afl_games'] = selected_round.games()
 
     content = render_to_response(
         'tip_form.html',
@@ -547,43 +546,40 @@ def render_tip_forms(request, curr_round, fixtures):
 
 
 # Utility functions
-def create_tip_forms(curr_round, club, fixtures, data=None):
+def create_tip_forms(selected_round, club, fixtures, data=None):
     """
-        Create a tip form for each game in the round.
+    Create a tip form for each game in the round.
     """
 
     form_list = []
 
-    tips = club.tips_for_round(curr_round, fixtures=fixtures)
+    tips = selected_round.club_tips(club)
 
     for tip in tips:
-        clubs = (tip.afl_fixture.home, tip.afl_fixture.away)
-
-        season = curr_round.season
         players = []
-
-        for club in clubs:
-            players.extend([p for p in club.get_players(season)])
+        for club in (tip.game.afl_home, tip.game.afl_away):
+            players.extend(
+                club.players.filter(season=selected_round.season)
+            )
 
         tip_form = forms.TipForm(
-            clubs,
             data,
             prefix=tip.id,
             instance=tip
         )
 
-        # BOG forms
-        bogs = tip.bogtips.all().order_by('id')
-        bog_forms = []
-        for bog in bogs:
-            form = forms.BogForm(
+        # Supercoach forms
+        supercoaches = tip.supercoach_tips.all().order_by('id')
+        supercoach_forms = []
+        for supercoach in supercoaches:
+            form = forms.SupercoachForm(
                 players,
                 data,
-                prefix='%0d.%0d' % (tip.id, bog.id),
-                instance=bog)
-            bog_forms.append(form)
+                prefix='%0d.%0d' % (tip.id, supercoach.id),
+                instance=supercoach)
+            supercoach_forms.append(form)
 
-        form_list.append((tip_form, bog_forms))
+        form_list.append((tip_form, supercoach_forms))
 
     return form_list
 

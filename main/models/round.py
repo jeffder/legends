@@ -1,9 +1,9 @@
 import collections
 import datetime
-import itertools
 
 from django.db import models
 
+from main import constants
 from main.models import Season
 
 
@@ -104,6 +104,9 @@ class Round(models.Model):
         If sort_by_game is True, sort tips by the order clubs appear in games
         with byes at the end.
         """
+        if games is None:
+            games = self.games.all()
+
         if sort_by_game:
             clubs = self.clubs_by_games(games)
 
@@ -117,6 +120,18 @@ class Round(models.Model):
 
         return tips_dict
 
+    def club_tips(self, club):
+        """
+        Get a club's tips for this round.
+
+        :param club: The club for which we want tips.
+        :return: All of the club's tips for this round.
+        """
+        return (
+            t for g, tips in self.tips().items()
+            for t in tips if t.club == club
+        )
+
     @property
     def bye_clubs(self):
         """
@@ -127,3 +142,29 @@ class Round(models.Model):
     @property
     def has_byes(self):
         return bool(self.byes.all())
+
+    @property
+    def tipping_clubs(self):
+        """
+        Get the clubs that can tip in this round. They will be the clubs that
+        are playing in this round. From constants.Round.FEES_BY, clubs
+        that haven't paid their fees are excluded.
+
+        :return: set of clubs that can tip in this round.
+        """
+        fees_deadline = Round.objects.get(
+            name=constants.Round.FEES_BY, season=self.season).start_time
+
+        clubs = []
+        for game in self.games.all():
+            for club in (game.legends_home, game.legends_away):
+                # Check if fees have been paid
+                if self.start_time >= fees_deadline:
+                    for coach in club.coaches.filter(season=self.season):
+                        if coach.has_paid_fees:
+                            clubs.append(club)
+                            break
+                else:
+                    clubs.append(club)
+
+        return set(clubs)

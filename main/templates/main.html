@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en">
-    {% comment %}
-        The main template for the Legends application.
-    {% endcomment %}
+{% comment %}
+    The main template for the Legends application.
+{% endcomment %}
 
+
+<html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Legends Footy Tipping {{ request.session.active_season }}</title>
+        <title>Legends Footy Tipping {{ request.session.live_season }}</title>
 
         <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-2.1.1.min.js"></script>
         <!--        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.tools.min.js"></script>
@@ -160,7 +161,9 @@
             </div>
 
             <div class="pull-left text-left base-div">
-                <span>Coach: {{ club }}</span>
+                {% if request.user.is_authenticated %}
+                    <span>Coach: {{ club }}</span>
+                {% endif %}
             </div>
 
             <div class="pull-right text-right base-div">
