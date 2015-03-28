@@ -2,14 +2,11 @@
     The template for coach selection for coach versus coach view
 {% endcomment %}
 
-<div id="coach_v_coach_selection">
+<div id="coach-v-coach_selection">
     <form class="form-inline" method="post" action="{{ url }}">
         {% csrf_token %}
-        
         {{ form.coach_1 }}
         {{ form.coach_2 }}
-
         <button class="btn" type="submit">Select Coaches</button>
-        
     </form>
 </div>

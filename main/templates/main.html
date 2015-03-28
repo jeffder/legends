@@ -13,8 +13,10 @@
         <title>Legends Footy Tipping {{ request.session.live_season }}</title>
 
         <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-2.1.1.min.js"></script>
-        <!--        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.tools.min.js"></script>
-        <script type="text/javascript" src="http://www.google.com/jsapi"></script>  -->
+        <!--
+        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.tools.min.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        -->
         <script type="text/javascript" src="{{ STATIC_URL }}fancybox/source/jquery.fancybox.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
         <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
@@ -111,14 +113,14 @@
                     }
                 });
 
-                $('#login-form').submit(function(){
+                $('#login-form').submit(function(e) {
                     submit_login($(this));
-                    return false;
+                    e.preventDefault();
                 });
 
-                $('#change-password-form').submit(function(){
+                $('#change-password-form').submit(function(e) {
                     submit_change_password($(this));
-                    return false;
+                    e.preventDefault();
                 });
 
                 // Launch login dialog if not logged in
@@ -126,6 +128,19 @@
                 if (fancy.attr('href') == '#login') {
                     fancy.click();
                 }
+
+                // Tip submission - selected games
+                $('#submit-selected').click(function(e) {
+                    submit_selected_tips($(this).parent());
+                    e.preventDefault();
+                });
+
+                // Tip submission - all games
+                $('#submit-all').click(function(e) {
+                    submit_all_tips($(this).parent());
+                    e.preventDefault();
+                });
+
             });
         </script>
 
@@ -167,9 +182,11 @@
             </div>
 
             <div class="pull-right text-right base-div">
+                {% if live_round.status != 'Final' and live_round.deadline_has_passed %}
+                    <span class="in-progress">In Progress </span>
+                {% endif %}
                 <span>
                     {{ live_round.name }}
-                    {% if live_round.status != 'Final' and live_round.deadline_has_passed %}In Progress {% endif %}
                     Deadline: {{ live_round.tipping_deadline|date:"l d M H:i" }}
                 </span>
             </div>
@@ -230,8 +247,10 @@
             </div>
         </nav>
 
-        {% block content %}
-            {{ content|safe }}
-        {% endblock content %}
+        <div class="main-content">
+            {% block content %}
+                {{ content|safe }}
+            {% endblock content %}
+        </div>
     </body>
 </html>

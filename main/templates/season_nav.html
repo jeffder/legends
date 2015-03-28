@@ -1,23 +1,40 @@
 {# The template for round navigation. #}
 
-<div id="round_nav" class="nav">
-    <ul>
-        <li>
-            <p>Season</p>
-        </li>
-        {% for season in seasons %}
-            {% if season.season == selected_season.season %}
-                <li>
-                    <a href="/legends/stats/past_years/{{ season.season }}/" class="selected">{{ season.season }}</a>
-                </li>
-            {% else %}
-                <li>
-                    <a href="/legends/stats/past_years/{{ season.season }}/">{{ season.season }}</a>
-                </li>
-            {%endif %}
-        {% endfor %}
-    </ul>
-</div>
+<nav id="season-nav" class="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="round-navbar-collapse-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="round-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% for season in seasons %}
+                    {% if season.season == selected_season.season %}
+                        <li>
+                            <a
+                                href="/legends/stats/past_years/{{ season.season }}/"
+                                class="selected"
+                            >
+                                {{ season.season }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a
+                                href="/legends/stats/past_years/{{ season.season }}/"
+                            >
+                                {{ season.season }}
+                            </a>
+                        </li>
+                    {%endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
 
 
 

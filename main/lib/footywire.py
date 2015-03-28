@@ -96,22 +96,4 @@ class Footywire(object):
                 'sc_scores': sc_scores
             }
 
-    def save_result(self, fixture):
-        '''
-        Save the fixture's result
-        '''
-        # We may already have the result or the game might not have been played
-        # yet
-        try:
-            result = self.data[(fixture.home.name, fixture.away.name)]
-        except KeyError:
-            return
-
-        fixture.home_score = result['home_score']
-        fixture.away_score = result['away_score']
-        fixture.crowd = result['crowd']
-        fixture.status = 'Provisional'
-        fixture.save()
-
-        # Save the AFL BOGs
-        fixture.save_bogs(result['sc_scores'])
+        return self.data

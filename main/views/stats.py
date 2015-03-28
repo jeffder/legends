@@ -8,16 +8,17 @@ from django.db.models import Q, Sum
 from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
+from main import constants
 from main.forms import (
     CoachVCoachForm, LadderForRoundForm, LadderForRoundFormPre2008
 )
 from main.models import (
     Club, Coach, Game, Bye, Round, Season, Tip,
-#    PrizeCategories, PastCoach, PastCategoryWinner,
-#    LegendsLadder, ColemanLadder, BrownlowLadder,
-#    CrowdsLadder, MarginsLadder,
-#    StreakLadder, PastLegendsLadder, PastColemanLadder, PastBrownlowLadder,
-#    PastCrowdsLadder, PastMarginsLadder
+    PastCoach, PastCategoryWinner,
+    LegendsLadder, ColemanLadder, BrownlowLadder,
+    CrowdsLadder, MarginsLadder,
+    StreakLadder, PastLegendsLadder, PastColemanLadder, PastBrownlowLadder,
+    PastCrowdsLadder, PastMarginsLadder
 )
 from main.views import ladders, tips_and_results
 #from main.utils import avg
@@ -48,7 +49,7 @@ def view_stats(request, **kwargs):
             'past_winners': render_past_winners,
             'past_years': render_past_years,
             'coach_v_coach': render_coach_v_coach,
-            'records': render_records,
+            #'records': render_records,
         }
 
         view_name = kwargs.pop('view_name', 'rules')
@@ -66,20 +67,32 @@ def view_stats(request, **kwargs):
         return render_to_response(
             'main.html',
             {'content': content,
+             'live_round': Round.objects.get(id=request.session['live_round']),
+             'club': Club.objects.get(id=request.session['club']),
              'selected_page': selected_page, },
             context_instance=RequestContext(request)
         )
 
 
 def render_stats_nav(request, active_stats):
-    '''
+    """
     Render the stats nav.
-    '''
+    """
+    stats_names = OrderedDict()
+    stats_names['rules'] = 'Rules'
+    stats_names['coaches'] = 'Coaches'
+    stats_names['past_winners'] = 'Past Winners'
+    stats_names['past_years'] = 'Past Years'
+    stats_names['coach_v_coach'] = 'Coach v Coach'
+    #stats_names['Records'] = 'records'
 
     stats_nav = render(
         request,
         'stats_nav.html',
-        {'active_stats': active_stats},
+        {
+            'active_stats': active_stats,
+            'stats_names': stats_names
+        },
     )
 
     return stats_nav.content
@@ -115,7 +128,7 @@ def render_coaches(request):
             if coach.club not in data[coach.season]:
                 data[coach.season][coach.club] = []
 
-            data[coach.season][coach.club].append(coach.name())
+            data[coach.season][coach.club].append(coach.name)
 
     seasons = sorted(data.keys(), key=sort_key_season)
     clubs = sorted(data[seasons[0]].keys(), key=sort_key_club)
@@ -173,13 +186,14 @@ def render_past_winners(request):
     past = PastCategoryWinner.objects.all()
     seasons = Season.objects.all().order_by('-season')
 
+    print(constants.PrizeCategories.categories)
     data = OrderedDict()
     for season in seasons:
-        if season == request.session['active_season']:
+        if season == request.session['live_season']:
             continue
 
         data[season] = {}
-        for category in PrizeCategories.categories:
+        for category in constants.PrizeCategories.categories:
             data[season][category] = []
             winners = past.filter(season=season, category=category)
             for winner in winners:
@@ -189,13 +203,14 @@ def render_past_winners(request):
                         qs = club.past_coaches.all()
                     else:
                         qs = club.coaches.all()
-                    coaches = [c.name() for c in qs.filter(season=season)]
+                    coaches = [c.name for c in qs.filter(season=season)]
                     data[season][category].append(
                         {'club': club, 'coaches': coaches})
                 else:
                     data[season][category].append(
                         {'club': '', 'coaches': ['']})
-
+    for d, s in data.items():
+        print('{} --> {}'.format(d, s))
     rendered = render(
         request,
         'view_past_winners.html',
@@ -211,7 +226,7 @@ def render_past_years(request, season_id=None, round_id=None, ladder=None):
     '''
 
     # Get the selected season
-    seasons = Season.objects.all().reverse()
+    seasons = Season.objects.all()
     if season_id:
         selected_season = Season.objects.get(season=season_id)
     else:
@@ -280,7 +295,7 @@ def render_coach_v_coach(request, coach_1=None, coach_2=None):
         first, last = name.split(' ', 1)
         return (last.lower(), first.lower())
 
-    coaches = sorted({c.name() for c in Coach.objects.all()}, key=_sort_key)
+    coaches = sorted({c.name for c in Coach.objects.all()}, key=_sort_key)
 
     # Render the view
     content = render_coach_v_coach_selector(request, coach_1, coach_2, coaches)
@@ -364,8 +379,7 @@ def render_coach_v_coach_selector(request, coach_1, coach_2, coaches):
     rendered = render(
         request,
         'coach_v_coach_form.html',
-        {'form': form,
-         'url': url}
+        {'form': form, 'url': url}
     )
 
     return rendered.content
@@ -380,7 +394,7 @@ def render_ladder(request, ladder_name, round=None, season=None, post_2008=True)
         rendered = ladders.render_ladder(
             request,
             ladder_name=ladder_name,
-            curr_round=round,
+            selected_round=round,
         )
     else:
         rendered = render_past_ladder(
@@ -420,9 +434,12 @@ def render_legends_fixtures(request, season, rounds):
     Render the legends fixtures/results for the selected season.
     '''
 
-    results = season.legends_fixtures()   \
-        .order_by('round', 'home')
-    byes = season.byes()
+    results = Game.objects \
+        .filter(round__in=rounds) \
+        .order_by('round', 'legends_home')
+    byes = Bye.objects   \
+        .filter(round__in=rounds) \
+        .order_by('round', 'club')
 
     fixture_data = {rnd.name: list(group)
                     for rnd, group in groupby(results, key=results_group_key)}
@@ -446,7 +463,7 @@ def score_detail_header(request, fixture_id):
     Return the header for a club's scoring details in a specified round.
     '''
 
-    fixture = LegendsFixture.objects.get(id=fixture_id)
+    fixture = Game.objects.get(id=fixture_id)
 
     return render_to_response(
         'score_detail_header.html',
@@ -479,12 +496,12 @@ def score_detail(request, fixture_id):
     Return scoring details for a club in a specified round.
     '''
 
-    fixture = LegendsFixture.objects.get(id=fixture_id)
+    fixture = Game.objects.get(id=fixture_id)
     rnd = Round.objects.get(id=fixture.round.id)
-    home = Club.objects.get(id=fixture.home.id)
+    home = Club.objects.get(id=fixture.legends_home.id)
     home_tips = home.tips_for_round(rnd)
 
-    away = Club.objects.get(id=fixture.away.id)
+    away = Club.objects.get(id=fixture.legends_away.id)
     away_tips = away.tips_for_round(rnd)
 
     tips = [(h, a) for h, a in zip(home_tips, away_tips)]
@@ -524,7 +541,7 @@ def render_coach_v_coach_results(request, coach_1, coach_2):
     '''
 
     if coach_1 is None or coach_2 is None:
-        return ''
+        return b''
 
     first_1, last_1 = coach_1.split(' ', 1)
     first_2, last_2 = coach_2.split(' ', 1)
@@ -535,19 +552,19 @@ def render_coach_v_coach_results(request, coach_1, coach_2):
     legends_results = [
         {
             'result': r,
-            'h_coach': c1.name if c1.club == r.home else c2.name,
-            'a_coach': c1.name if c1.club == r.away else c2.name
+            'h_coach': c1.name if c1.club == r.legends_home else c2.name,
+            'a_coach': c1.name if c1.club == r.legends_away else c2.name
         }
         for c1 in coaches_1
         for c2 in coaches_2
-        for r in LegendsFixture.objects
+        for r in Game.objects
             .filter(round__status__in=('Provisional', 'Final'))
             .filter(round__season=c1.season)
             .filter(round__season=c2.season)
             .filter(
-                Q(home=c1.club) & Q(away=c2.club) |
-                Q(home=c2.club) & Q(away=c1.club)
-            ).order_by('-round__season', '-round')
+                Q(legends_home=c1.club) & Q(legends_away=c2.club) |
+                Q(legends_home=c2.club) & Q(legends_away=c1.club)
+            ).order_by('round')
     ]
 
     # Summarise coach wins
@@ -559,21 +576,23 @@ def render_coach_v_coach_results(request, coach_1, coach_2):
         'draws': 0,
     }
     for result in legends_results:
-        winner = result['result'].winner()
+        winner = result['result'].legends_winner
 
-        if winner == 'Draw':
+        if winner is None:
             summary['draws'] += 1
             continue
 
         try:
-            coach_1 = coaches_1.get(club=winner, season=result['result'].round.season)
+            coaches_1.get(
+                club=winner, season=result['result'].round.season)
             summary['coach_1_wins'] += 1
         except Coach.DoesNotExist:
             summary['coach_2_wins'] += 1
 
-    context = {'results': legends_results}
+    context = {'results': reversed(legends_results)}
     if legends_results:
-        context.update({'summary': summary})
+        context['summary'] = summary
+
     results = render(
         request,
         'view_coach_v_coach.html',
@@ -650,12 +669,13 @@ def get_rounds(season):
         status__in=('Provisional', 'Final')
     )
 
-    # Make sure we got something - we might be at the start of a season where
-    # no games have been played
+    # Make sure we got something since we might be at the start of a season
+    # where no games have been played
     if not ladder_rounds:
-        prev_season = season.prev_season()
+        prev_season = Season.objects.get(season=season.season - 1)
         season, rounds, ladder_rounds = get_rounds(prev_season)
 
+    # TODO: Should be prev_season below???
     return season, rounds, ladder_rounds
 
 

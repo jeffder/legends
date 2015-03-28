@@ -31,12 +31,4 @@ class Coach(models.Model):
         """
         Can coach tip in this round?
         """
-        # Can always tip in home/away rounds
-        if not rnd.is_finals:
-            return True
-
-        for game in rnd.games:
-            if self.club == game.legends.home or self.club == game.legends_away:
-                return True
-
-        return False
+        return self.club in rnd.tipping_clubs

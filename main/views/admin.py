@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 
 from main.forms import LoginForm, ChangePasswordForm, ClubSelectionForm
-from main.models import Club
+from main.models import Club, Round
 from main.views import tips_and_results
 
 
@@ -20,9 +20,9 @@ selected_tab = 'manual_tips'
 
 @login_required
 def view_admin(request, **kwargs):
-    '''
+    """
     Display the various superuser views (only manual tips for now).
-    '''
+    """
     view = render_manual_tips(request, **kwargs)
 
     admin_nav = render_admin_nav(request, 'manual_tips')
@@ -34,6 +34,8 @@ def view_admin(request, **kwargs):
     return render_to_response(
         'main.html',
         {'content': content,
+         'live_round': Round.objects.get(id=request.session['live_round']),
+         'club': Club.objects.get(id=request.session['club']),
          'selected_page': selected_page,
          'selected_tab': selected_tab, },
         context_instance=RequestContext(request)
@@ -41,9 +43,9 @@ def view_admin(request, **kwargs):
 
 
 def render_admin_nav(request, active_admin):
-    '''
+    """
     Render the admin nav.
-    '''
+    """
 
     admin_nav = render(
         request,
@@ -55,12 +57,10 @@ def render_admin_nav(request, active_admin):
 
 
 def render_manual_tips(request, **kwargs):
-    '''
-        View for manual tips form
-    '''
-
+    """
+    View for manual tips form
+    """
     def _save(form):
-
         form[0].save()
 
         # BOGs
@@ -91,21 +91,19 @@ def render_manual_tips(request, **kwargs):
             logger.info(log_message)
 
     def _clear_errors(form):
-
         form[0].errors.clear()
 
         for frm in form[1:]:
             for f in frm:
                 f.errors.clear()
 
-    curr_round = request.session['active_round']
-    afl_fixtures = curr_round.afl_fixtures()
-    clubs = [c for c in curr_round.season.clubs()
-             if c.can_tip_in_round(curr_round)]
+    curr_round = Round.objects.get(id=request.session['live_round'])
+    games = curr_round.games.all()
+    clubs = [c for c in curr_round.tipping_clubs]
 
     context = {
         'round': curr_round,
-        'afl_fixtures': afl_fixtures,
+        'games': games,
     }
 
     # Render the content
@@ -115,7 +113,7 @@ def render_manual_tips(request, **kwargs):
             club = Club.objects.get(id=int(request.POST['club']))
 
             frms = tips_and_results.create_tip_forms(
-                curr_round, club, afl_fixtures)
+                curr_round, club)
             context['data'] = frms
             request.session['manual_user'] = club
         # Tips submitted
@@ -123,7 +121,7 @@ def render_manual_tips(request, **kwargs):
             club = request.session['manual_user']
 
             frms = tips_and_results.create_tip_forms(
-                curr_round, club, afl_fixtures, request.POST)
+                curr_round, club, request.POST)
             context['data'] = frms
             for form in frms:
                 if form[0].is_valid()   \
@@ -133,11 +131,10 @@ def render_manual_tips(request, **kwargs):
         club_form = render_club_selector(
             request, curr_round=curr_round, club=club, clubs=clubs)
     else:
-        club = request.session['club']
+        club = Club.objects.get(id=request.session['club'])
         club_form = render_club_selector(
             request, curr_round=curr_round, club=club, clubs=clubs)
-        frms = tips_and_results.create_tip_forms(
-            curr_round, club, afl_fixtures)
+        frms = tips_and_results.create_tip_forms(curr_round, club)
         context['data'] = frms
 
     content = render_to_response(
@@ -150,9 +147,9 @@ def render_manual_tips(request, **kwargs):
 
 
 def render_club_selector(request, curr_round, club, clubs):
-    '''
+    """
     Render the coach selector for the manual tips form.
-    '''
+    """
 
     form = ClubSelectionForm(
         curr_round=curr_round, club=club, clubs=clubs)
@@ -169,10 +166,10 @@ def render_club_selector(request, curr_round, club, clubs):
 
 
 def render_auth_form(request):
-    '''
+    """
     Render the login form or change password form dependng on whether or not
     the user is logged in.
-    '''
+    """
 
     if request.user.is_authenticated():
         content = render(

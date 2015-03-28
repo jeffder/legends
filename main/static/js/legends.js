@@ -213,6 +213,27 @@ function range(start, stop, step)
     return arr;
 }
 
+/*** Utility functions ***/
+
+// Alternative to builtin startsWith since it's only available in Firefox and
+// Chrome at the moment
+// Test if str starts with pattern
+function starts_with(str, pattern) {
+    var re = new RegExp('^' + pattern);
+
+    return re.test(str);
+}
+
+
+// Alternative to builtin endsWith since it's only available in Firefox and
+// Chrome at the moment
+// Test if str ends with pattern
+function ends_with(str, pattern) {
+    var re = new RegExp(pattern + '$');
+
+    return re.test(str);
+}
+
 /*** Form processing ***/
 
 function set_validation_styles(obj, is_valid) {
@@ -249,6 +270,7 @@ function set_validation_styles(obj, is_valid) {
     }
 }
 
+
 function submit_login(form) {
     var link = 'http://' + document.location.host + '/accounts/login';
 
@@ -260,10 +282,10 @@ function submit_login(form) {
 
     // Construct POST request
     $.ajax({
-        type: 'POST',
+        type: "POST",
         url: link,
         data: request_data,
-        dataType: 'json',
+        dataType: "json",
         success: function(response) {
             if (response.logged_in == true) {
                 window.location.reload();
@@ -277,6 +299,7 @@ function submit_login(form) {
     });
 }
 
+
 function submit_change_password(form) {
     var link = 'http://' + document.location.host + '/accounts/change_password';
 
@@ -289,10 +312,10 @@ function submit_change_password(form) {
 
     // Construct POST request
     $.ajax({
-        type: 'POST',
+        type: "POST",
         url: link,
         data: request_data,
-        dataType: 'json',
+        dataType: "json",
         success: function(response) {
             if (response.changed == true) {
                 set_validation_styles($('#old-password'), true);
@@ -300,7 +323,6 @@ function submit_change_password(form) {
                 set_validation_styles($('#new-password2'), true);
             }
             else {
-                // Set validation styles
                 if ('old_password' in errors) {
                     set_validation_styles($('#old-password'), false);
                 }
@@ -320,4 +342,118 @@ function submit_change_password(form) {
     });
 }
 
+
+function get_fieldset_data(fieldset){
+    var tmp_array = fieldset.serializeArray();
+    var mapping = {};
+
+    $.map(tmp_array, function(attr, i) {
+        if (ends_with(attr['name'], 'checkbox') == false) {
+            mapping[attr['name']] = attr['value'];
+        }
+    });
+    console.log('mapping = ' + mapping);
+    return mapping;
+}
+
+
+function fieldsets_to_json(form, get_all){
+    var fieldsets;
+    var mapping;
+    var tip_id;
+    var key;
+    var data = {};
+
+    // Get all the fieldsets or just the ones that have been checked
+    if (get_all) {
+        fieldsets = $('fieldset');
+    }
+    else {
+        fieldsets = $("input[type=checkbox]:checked").closest("fieldset");
+    }
+    console.log(fieldsets);
+    fieldsets.each(function() {
+        mapping = {};
+
+        $.map($(this).serializeArray(), function (attr, i) {
+            // Use tip ID as the key to the fieldset data but don't include it
+            if (attr['name'] == 'tip_id') {
+                key = attr['value'];
+            }
+            // Put everything else except the checkbox in the fieldset data
+            else if (!ends_with(attr['name'], 'checkbox')) {
+                mapping[attr['name']] = attr['value'];
+            }
+        });
+
+        data[key] = mapping;
+    });
+
+    console.log(JSON.stringify(data));
+    return JSON.stringify(data);
+}
+
+
+function post_tips(form, data) {
+    var link = form.attr('action');
+
+    // Grab the csrf token otherwise we won't get anywhere
+    var csrf = $("form input[name^='csrf']")[0].value;
+
+    // Construct Ajax request
+    $.ajax({
+        type: "POST",
+        url: link,
+        data: data,
+        dataType: "json",
+        "beforeSend": function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrf);
+        },
+        success: function(response) {
+            // Clear the validation states before we do anything else
+            $('[id$="icon"]').removeClass('glyphicon-ok glyphicon-remove');
+
+            $.each(response, function(index, value) {
+                var icon = '#' + index + '-icon';
+
+                if (value) {
+                    $(icon).removeClass("glyphicon-remove");
+                    $(icon).addClass("glyphicon-ok");
+                }
+                else {
+                    $(icon).removeClass("glyphicon-ok");
+                    $(icon).addClass("glyphicon-remove");
+                }
+            });
+        },
+        error: function(xhr, options, error) {
+            console.log('Form submission failure');
+            console.log(xhr);
+            console.log(options);
+            console.log(error);
+        }
+    });
+}
+
+function submit_selected_tips(form) {
+    var request_data = fieldsets_to_json(form, false);
+
+    console.log('request data = ' + request_data);
+
+    // Send the request
+    post_tips(form, request_data);
+
+    return false;
+}
+
+function submit_all_tips(form) {
+    var request_data = fieldsets_to_json(form, true);
+
+    console.log('request data = ' + request_data);
+
+    // Send the request
+    post_tips(form, request_data);
+
+    return false;
+}
 

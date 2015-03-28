@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from main import constants
 
@@ -22,6 +23,7 @@ class Season(models.Model):
     def __str__(self):
         return '{}'.format(self.season)
 
+    @property
     def live_round(self):
         """
         Return the round currently being played for this season.
@@ -38,3 +40,27 @@ class Season(models.Model):
         # All rounds have status of 'Final' so return the Grand Final round for
         # season
         return self.rounds.filter(name='Grand Final')[0]
+
+    @property
+    def games_played(self):
+        """
+        Return the number of games that have been played so far this season.
+        """
+        return self.games.exclude(status=constants.Game.SCHEDULED).count()
+
+    def club_games_played(self, club):
+        """
+        Return the number of games that have been played by the club so far this
+        season.
+        """
+        return self.games   \
+            .filter(Q(afl_away=self.club) | Q(afl_home=self.club))   \
+            .exclude(status=constants.Game.SCHEDULED)   \
+            .count()
+
+    @property
+    def clubs(self):
+        """
+        Return the clubs playing this season.
+        """
+        return set(c.club for c in self.coaches.all())

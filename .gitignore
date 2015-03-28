@@ -6,4 +6,4 @@ legends.db
 *.pyc
 __pycache__
 .sass-cache
-static_old
+static

@@ -74,7 +74,7 @@ body {
     }
 }
 .nav-item a {
-    width: 32px;
+    width: auto;
 }
 
 .round-nav > h4, .round-nav > .h4 {
@@ -82,26 +82,17 @@ body {
     color: $pill-bg;
 }
 
+#ladder-nav {
+    margin-bottom: 5px;
+    margin-left: -15px;
+    min-height: 30px;
+}
 // =============================
 // In progress banner
 // =============================
 
-.in_progress {
-    background-color: red;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.in_progress h4 {
-    color: #000000;
-    padding-bottom: 20px;
-    padding-top: 20px;
-}
-
-.in_progress .btn {
-    background-color: $nav-bg;
-    margin-right: 20px;
-    margin-top: -7px;
+.in-progress {
+    color: red;
 }
 
 // =============================
@@ -223,15 +214,21 @@ td.tips-table {
 
 .form-header {
     background-color: $pill-bg;
-//    border-radius: 5px;
+    //    border-radius: 5px;
     color: #000000;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 5px;
     margin-left: 0px;
     margin-right: 0px;
-    padding-bottom: 5px;
+    padding-bottom: 2px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-top: 5px;
+    padding-top: 2px;
+}
+
+.form-header .text-left {
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .form-header p {
@@ -242,36 +239,51 @@ td.tips-table {
     margin-bottom: 0px;
     margin-left: 0;
     margin-right: 0;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
     padding-top: 0px;
+    width: 300px;
 }
 
-.form-header p small {
+.tip-form .tip-time-ground {
     background-color: none;
-//    border-top-left-radius: 5px;
-//    border-top-right-radius: 5px;
-    color: pill-active-bg;
-    margin-bottom: 10px;
-    margin-left: 0;
-    margin-right: 0;
-    padding-bottom: 5px;
-    padding-top: 0px;
-}
-
-.tip-sub-form {
-    border-color: $nav-bg;
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 1px;
-    margin-bottom: 15px;
-    margin-left: 0px;
-    margin-right: 0;
+    //    border-top-left-radius: 5px;
+    //    border-top-right-radius: 5px;
+    color: $pill-active-bg;
+    margin-right: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
 }
 
-.tip-form-row {
-    margin-bottom: 10px;
+.tip-fieldset .tip-time-ground p {
+    background-color: none;
+//    border-top-left-radius: 5px;
+//    border-top-right-radius: 5px;
+    color: pill-active-bg;
+    margin-bottom: 0px;
+    margin-left: 0;
+    margin-right: 10px;
+    padding-bottom: 0px;
+    padding-top: -5px;
+}
+
+.tip-fieldset:nth-child(even) {
+    background-color: $fieldset-bg;
+}
+
+.tip-fieldset {
+    border-color: $fieldset-bg;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: 5px;
+    margin-left: 0px;
+    margin-right: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.tip-sub-form {
+    margin-bottom: 5px;
     margin-left: 0px;
     margin-right: 0;
     padding-bottom: 0px;
@@ -279,37 +291,184 @@ td.tips-table {
 }
 
 .form-control-inline {
+/*
     min-width: 150px;
-    width: auto;
-    display: inline;
     max-width: 175px;
-    margin-left: 15px;
+*/
+    border: 1px solid #a9a9a9;
+    width: 70px;
+    margin-left: 10px;
     padding-left: 5px;
+    padding-bottom: 3px;
+    padding-top: 3px;
 }
 
+/*
 .form-control-inline-select {
     min-width: 150px;
-    width: auto;
-    display: inline;
     max-width: 175px;
-    margin-left: 15px;
+    width: 140px;
+    margin-left: 10px;
     padding-left: 0px;
-    height: 26px;
 }
+*/
 
 .form-control-inline-select-supercoach {
+/*
     min-width: 150px;
-    width: auto;
-    display: inline;
     max-width: 175px;
-    margin-left: 15px;
-    padding-left: 0px;
-    height: 26px;
+*/
+    background-color: #ffffff;
+    width: 250px;
+    margin-left: 10px;
+    margin-top: 5px;
 }
 
-.submit-btn {
-    background-color: $pill-bg;
+.form-ok {
+    background-color: $form-ok;
+    border-color: $form-ok;
+    border-style: solid;
 }
+
+.form-error {
+    border-color: $form-error;
+    border-style: solid;
+}
+
+.form-inline .checkbox input[type="checkbox"] {
+    margin-left: 10px;
+//    height: 20px;
+//    width: 20px;
+    font-size: 20px;
+}
+
+.winner label {
+    vertical-align: top;
+}
+.winner {
+    margin-left: 10px;
+    width: 170px;
+}
+
+.winner input {
+    text-align: center;
+    width: 30px;
+}
+
+[id$="icon"] {
+    &.glyphicon-ok {
+        color: $form-ok;
+    }
+    &.glyphicon-remove {
+        color: $form-error;
+    }
+    font-size: 24px;
+    margin-left: 15px;
+    vertical-align: middle;
+    margin-top: -3px;
+}
+/*
+[id$="icon"].glyphicon-ok {
+        color: $form-ok;
+}
+
+[id$="icon"].glyphicon-remove {
+        color: $form-error;
+}
+*/
+.submit-btn {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+// =============================
+// Stats
+// =============================
+
+#comp_rules h2 {
+    background-color: $pill-bg;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#comp_rules h3 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#comp_rules .container-fluid {
+    margin-top: 10px;
+}
+
+.coaches-season {
+    background-color: $pill-bg;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#past-winners {
+    margin-top: 20px;
+}
+
+#past-winners .table tr th {
+    background-color: $pill-bg;
+    border-width: 0px;
+}
+
+#past-winners .table tr th:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+#past-winners .table tr th:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#past-winners .table tr:first-child td {
+    border-width: 0px;
+}
+
+#season-fixtures .round-detail > .table > thead > tr > th {
+    background-color: $pill-bg;
+    border-width: 0px;
+}
+
+#season-fixtures .round-detail > .table > thead > tr > th:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#season-fixtures .round-detail > .table > thead > tr > th:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#season-fixtures .round-detail > .table > thead > tr:first-child > td {
+    border-width: 0px;
+}
+
+#season-nav,
+#coach-v-coach,
+#coach-v-coach_selection {
+    margin-top: 20px;
+}
+
+#past-winners .club {
+    font-weight: bold;
+}
+
 // =============================
 // General
 // =============================
@@ -353,12 +512,28 @@ td.tips-table {
 //     margin-right: 15px;
 // }
 #tip-submission .form-group {
+    margin-bottom: 0px;
+}
+
+.tips-table td ul {
+    margin-bottom: 0;
+}
+
+#tip-submission ul {
+    margin-bottom: 0px;
+}
+
+#tip-submission ul li {
     margin-bottom: 5px;
 }
 
-.tips-table td ul,
-#tip-submission ul {
-    margin-bottom: 0;
+.tip-form-row .form-group {
+    vertical-align: middle;
+}
+
+.tip-form-row .form-group span {
+    vertical-align: bottom;
+    top: -4px;
 }
 
 .table-cell-number-left {
@@ -368,10 +543,6 @@ td.tips-table {
 }
 
 .hidden {
-    display: none;
-}
-
-.foo {
     display: none;
 }
 

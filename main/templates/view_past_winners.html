@@ -5,20 +5,20 @@
 {% load get %}
 
 
-<div id="past_winners">
+<div id="past-winners">
     <table class="table">
         <thead>
             <tr>
-                <th>Season</th>
-                <th>Premier</th>
-                <th>Runner Up</th>
-                <th>Minor Premier</th>
-                <th>Wooden Spoon</th>
-                <th>Points (Season)</th>
+                <th class="past-winner-header">Season</th>
+                <th class="past-winner-header">Premier</th>
+                <th class="past-winner-header">Runner Up</th>
+                <th class="past-winner-header">Minor Premier</th>
+                <th class="past-winner-header">Wooden Spoon</th>
+                <th class="past-winner-header">Points (Season)</th>
             </tr>
         </thead>
         <tbody>
-            {% for season, categories in data.iteritems %}
+            {% for season, categories in data.items %}
                 <tr>
                     <td class="season">{{ season }}</td>
                     <td>
@@ -69,16 +69,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Season</th>
-                <th>Coleman</th>
-                <th>Brownlow</th>
-                <th>Margins</th>
-                <th>Crowds</th>
-                <th>Points (Round)</th>
+                <th class="past-winner-header">Season</th>
+                <th class="past-winner-header">Coleman</th>
+                <th class="past-winner-header">Brownlow</th>
+                <th class="past-winner-header">Margins</th>
+                <th class="past-winner-header">Crowds</th>
+                <th class="past-winner-header">Points (Round)</th>
             </tr>
         </thead>
         <tbody>
-            {% for season, categories in data.iteritems %}
+            {% for season, categories in data.items %}
                 <tr>
                     <td class="season">{{ season }}</td>
                     <td>

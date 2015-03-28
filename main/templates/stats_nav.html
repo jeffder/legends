@@ -1,27 +1,31 @@
 {# The template for stats navigation. #}
 
-<div id="stats_nav" class="nav">
-    <ul>
-        <li>
-        <a href="/legends/stats/rules/"{% if active_stats == 'rules' %} class="selected"{%endif %}>Rules</a>
-        </li>
-        <li>
-        <a href="/legends/stats/coaches/"{% if active_stats == 'coaches' %} class="selected"{%endif %}>Coaches</a>
-        </li>
-        <li>
-            <a href="/legends/stats/past_winners/"{% if active_stats == 'past_winners' %} class="selected"{%endif %}>Past Winners</a>
-        </li>
-        <li>
-            <a href="/legends/stats/past_years/"{% if active_stats == 'past_years' %} class="selected"{%endif %}>Past Years</a>
-        </li>
-        <li>
-            <a href="/legends/stats/coach_v_coach/"{% if active_stats == 'coach_v_coach' %} class="selected"{%endif %}>Coach v Coach</a>
-        </li>
-        <li>
-            <a href="/legends/stats/records/"{% if active_stats == 'records' %} class="selected"{%endif %}>Records</a>
-        </li>
-    </ul>
-</div>
-
-
-
+<nav id="ladder-nav" class="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="round-navbar-collapse-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="round-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% for view_name, name in stats_names.items %}
+                    <li class="nav-item{% if active_stats == view_name %} active{% endif %}">
+                        <a
+                            {% if forloop.first %}
+                                class="round-left"
+                            {% elif forloop.last %}
+                                class="round-right"
+                            {% endif %}
+                            href="/legends/stats/{{ view_name }}/"
+                        >
+                            {{ name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

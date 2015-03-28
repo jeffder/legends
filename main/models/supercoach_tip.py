@@ -7,6 +7,7 @@ class SupercoachTip(models.Model):
 
     player = models.ForeignKey(
         Player, related_name='supercoach_tips', null=True)
+    score = models.IntegerField(null=True, default=0)
     tip = models.ForeignKey(Tip, related_name='supercoach_tips')
 
     class Meta:

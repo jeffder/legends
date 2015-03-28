@@ -28,7 +28,7 @@ def index(request):
 
     request.session['live_season'] = season.season
 
-    live_round = season.live_round()
+    live_round = season.live_round
     request.session['live_round'] = live_round.id
 
     # Set the tipping deadline - needed for "split" rounds and rounds with games

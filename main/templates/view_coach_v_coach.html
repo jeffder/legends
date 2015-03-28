@@ -3,9 +3,9 @@
 {% endcomment %}
 
 
-<div id="coach_v_coach">
+<div id="coach-v-coach" class="container-fluid">
     {% if results %}
-        <div class="span_4">
+        <div class="col-md-4">
             <table class="table">
                 <tbody>
                     <tr>
@@ -42,11 +42,11 @@
                 <tr>
                     <td>{{ result.result.round.season }}</td>
                     <td>{{ result.result.round.name }}</td>
-                    <td>{{ result.result.home }}<br>{{ result.h_coach }}</td>
-                    <td class="score">{{ result.result.home_score }}</td>
-                    <td class="score">{{ result.result.away_score }}</td>
-                    <td>{{ result.result.away }}<br>{{ result.a_coach }}</td>
-                    <td>{{ result.result.winner }}</td>
+                    <td>{{ result.result.legends_home }}<br>{{ result.h_coach }}</td>
+                    <td class="score">{{ result.result.legends_home_score }}</td>
+                    <td class="score">{{ result.result.legends_away_score }}</td>
+                    <td>{{ result.result.legends_away }}<br>{{ result.a_coach }}</td>
+                    <td>{{ result.result.legends_winner }}</td>
                 </tr>
             {% endfor %}
         </tbody>

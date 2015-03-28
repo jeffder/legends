@@ -8,6 +8,7 @@ INLINE_MODEL = admin.TabularInline
 admin.site.register(models.Season)
 admin.site.register(models.Club)
 admin.site.register(models.Ground)
+admin.site.register(models.LegendsLadder)
 
 
 class CoachAdmin(admin.ModelAdmin):
@@ -149,7 +150,7 @@ class TipAdmin(admin.ModelAdmin):
             {'fields': (('winner', 'margin', 'crowd'), )}),
         ('Tip Scores',
             {'fields': (
-                ('winner_score', 'margin_score', 'crowd_score',
+                ('winners_score', 'margins_score', 'crowds_score',
                  'supercoach_score'),
             )}),
     ]

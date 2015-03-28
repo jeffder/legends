@@ -165,29 +165,6 @@ function ladder_header_click()
                 request_context.html(html);
             }
         });
-
-//        var ladder_re = /.*_(\[a-zA-Z]+)/;
-//
-//        var ladder_name = link.match(ladder_re)[1];
-//        
-//        if (ladder_name == 'legends')
-//        {
-//            var round_re = /(\d+)/;
-//            var round_id = link.match(round_re)[1];
-//            var id = 'gviz_ladder_' + round_id;
-//
-//            var table = new Table(document.getElementById(id));
-//            var data_table = new google.visualization.DataTable(data, 0.6);
-//            var options = {
-//                           showRowNumber : true,
-//                           allowHtml : true,
-//        //                   sortAscending : false,
-//        //                   sortColumn : 10,
-//                           sort : 'event'
-//                          };
-//
-//            table.draw(data_table, options);
-//        }
     });
 }
 
@@ -236,115 +213,247 @@ function range(start, stop, step)
     return arr;
 }
 
-/*** Form procesing ***/
+/*** Utility functions ***/
 
-function display_errors(errors) {
-    $(".form_errors").empty();
-    for (var key in errors) {
-        var field = errors[key];
-        var error_msg = '<ul class="form_error">';
-        for(var i=0; i < field.length; i++) {
-            error_msg += '<li>' + field[i] + '</li>';
+// Alternative to builtin startsWith since it's only available in Firefox and
+// Chrome at the moment
+// Test if str starts with pattern
+function starts_with(str, pattern) {
+    var re = new RegExp('^' + pattern);
+
+    return re.test(str);
+}
+
+
+// Alternative to builtin endsWith since it's only available in Firefox and
+// Chrome at the moment
+// Test if str ends with pattern
+function ends_with(str, pattern) {
+    var re = new RegExp(pattern + '$');
+
+    return re.test(str);
+}
+
+/*** Form processing ***/
+
+function set_validation_styles(obj, is_valid) {
+    var group = obj.parent();
+    var span = obj.next();
+
+    if (is_valid == true) {
+        if (group.hasClass('has-error')) {
+            group.removeClass('has-error');
         }
-        error_msg += '</ul>'
-        $('.form_errors').append(error_msg);
+        if (!group.hasClass('has-success')) {
+            group.addClass('has-success');
+        }
+        if (span.hasClass('glyphicon-remove')) {
+            span.removeClass('glyphicon-remove');
+        }
+        if (!span.hasClass('glyphicon-ok')) {
+            span.addClass('glyphicon-ok');
+        }
+    }
+    else {
+        if (group.hasClass('has-success')) {
+            group.removeClass('has-success');
+        }
+        if (!group.hasClass('has-error')) {
+            group.addClass('has-error');
+        }
+        if (span.hasClass('glyphicon-ok')) {
+            span.removeClass('glyphicon-ok');
+        }
+        if (!span.hasClass('glyphicon-remove')) {
+            span.addClass('glyphicon-remove');
+        }
     }
 }
 
-$(function() {
-    $(".fancybox").fancybox({
-        autoSize      : true,
-        helpers : {
-            overlay : null,
+
+function submit_login(form) {
+    var link = 'http://' + document.location.host + '/accounts/login';
+
+    var request_data = {
+        'csrfmiddlewaretoken': form.find('input[name$="csrfmiddlewaretoken"]').val(),
+        'username': form.find('input[name="username"]').val(),
+        'password': form.find('input[name="password"]').val()
+    };
+
+    // Construct POST request
+    $.ajax({
+        type: "POST",
+        url: link,
+        data: request_data,
+        dataType: "json",
+        success: function(response) {
+            if (response.logged_in == true) {
+                window.location.reload();
+            }
+            else {
+                // Set validation styles
+                set_validation_styles($('#username'), false);
+                set_validation_styles($('#password'), false);
+            }
+        }
+    });
+}
+
+
+function submit_change_password(form) {
+    var link = 'http://' + document.location.host + '/accounts/change_password';
+
+    var request_data = {
+        'csrfmiddlewaretoken': form.find('input[name="csrfmiddlewaretoken"]').val(),
+        'old_password': form.find('input[name="old_password"]').val(),
+        'new_password1': form.find('input[name="new_password1"]').val(),
+        'new_password2': form.find('input[name="new_password2"]').val()
+    };
+
+    // Construct POST request
+    $.ajax({
+        type: "POST",
+        url: link,
+        data: request_data,
+        dataType: "json",
+        success: function(response) {
+            if (response.changed == true) {
+                set_validation_styles($('#old-password'), true);
+                set_validation_styles($('#new-password1'), true);
+                set_validation_styles($('#new-password2'), true);
+            }
+            else {
+                if ('old_password' in errors) {
+                    set_validation_styles($('#old-password'), false);
+                }
+                else {
+                    set_validation_styles($('#old-password'), true);
+                }
+                if ('new_password2' in errors) {
+                    set_validation_styles($('#new-password1'), false);
+                    set_validation_styles($('#new-password2'), false);
+                }
+                else {
+                    set_validation_styles($('#new-password1'), true);
+                    set_validation_styles($('#new-password2'), true);
+                }
+            }
+        }
+    });
+}
+
+
+function get_fieldset_data(fieldset){
+    var tmp_array = fieldset.serializeArray();
+    var mapping = {};
+
+    $.map(tmp_array, function(attr, i) {
+        if (ends_with(attr['name'], 'checkbox') == false) {
+            mapping[attr['name']] = attr['value'];
+        }
+    });
+    console.log('mapping = ' + mapping);
+    return mapping;
+}
+
+
+function fieldsets_to_json(form, get_all){
+    var fieldsets;
+    var mapping;
+    var tip_id;
+    var key;
+    var data = {};
+
+    // Get all the fieldsets or just the ones that have been checked
+    if (get_all) {
+        fieldsets = $('fieldset');
+    }
+    else {
+        fieldsets = $("input[type=checkbox]:checked").closest("fieldset");
+    }
+    console.log(fieldsets);
+    fieldsets.each(function() {
+        mapping = {};
+
+        $.map($(this).serializeArray(), function (attr, i) {
+            // Use tip ID as the key to the fieldset data but don't include it
+            if (attr['name'] == 'tip_id') {
+                key = attr['value'];
+            }
+            // Put everything else except the checkbox in the fieldset data
+            else if (!ends_with(attr['name'], 'checkbox')) {
+                mapping[attr['name']] = attr['value'];
+            }
+        });
+
+        data[key] = mapping;
+    });
+
+    console.log(JSON.stringify(data));
+    return JSON.stringify(data);
+}
+
+
+function post_tips(form, data) {
+    var link = form.attr('action');
+
+    // Grab the csrf token otherwise we won't get anywhere
+    var csrf = $("form input[name^='csrf']")[0].value;
+
+    // Construct Ajax request
+    $.ajax({
+        type: "POST",
+        url: link,
+        data: data,
+        dataType: "json",
+        "beforeSend": function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrf);
         },
-    });
+        success: function(response) {
+            // Clear the validation states before we do anything else
+            $('[id$="icon"]').removeClass('glyphicon-ok glyphicon-remove');
 
-    $('#login_form').submit(function(){
-        submit_login($(this));
-        return false;
-    });
+            $.each(response, function(index, value) {
+                var icon = '#' + index + '-icon';
 
-    function submit_login(form) {
-        var link = 'http://' + document.location.host + '/accounts/login';
-        var csrfmiddlewaretoken = form.find('input[name$="csrfmiddlewaretoken"]');
-        var username = form.find('input[name$="username"]');
-        var password = form.find('input[name$="password"]');
-
-        var fields = {
-            'csrfmiddlewaretoken' : csrfmiddlewaretoken,
-            'username': username,
-            'password': password,
-        };
-
-        var request_data = {}
-        for (var key in fields) {
-            request_data[key] = fields[key].val();
-        };
-
-        // Construct POST request
-        $.ajax({
-            type: 'POST',
-            url: link,
-            data: request_data,
-            dataType: 'json',
-            success: function(response) {
-                if (response.logged_in == true) {
-                    window.location.reload();
+                if (value) {
+                    $(icon).removeClass("glyphicon-remove");
+                    $(icon).addClass("glyphicon-ok");
                 }
                 else {
-                    display_errors(response.errors);
+                    $(icon).removeClass("glyphicon-ok");
+                    $(icon).addClass("glyphicon-remove");
                 }
-            }
-        });
-    }
-
-    $('#change_password_form').submit(function(){
-        submit_change_password($(this));
-        return false;
+            });
+        },
+        error: function(xhr, options, error) {
+            console.log('Form submission failure');
+            console.log(xhr);
+            console.log(options);
+            console.log(error);
+        }
     });
+}
 
-    function submit_change_password(form) {
-        link = 'http://' + document.location.host + '/accounts/change_password';
-        var csrfmiddlewaretoken = form.find('input[name$="csrfmiddlewaretoken"]');
-        var old_password = form.find('input[name$="old_password"]');
-        var new_password1 = form.find('input[name$="new_password1"]');
-        var new_password2 = form.find('input[name$="new_password2"]');
+function submit_selected_tips(form) {
+    var request_data = fieldsets_to_json(form, false);
 
-        var fields = {
-            'csrfmiddlewaretoken' : csrfmiddlewaretoken,
-            'old_password': old_password,
-            'new_password1': new_password1,
-            'new_password2': new_password2,
-        };
+    console.log('request data = ' + request_data);
 
-        var request_data = {}
-        for (var key in fields) {
-            request_data[key] = fields[key].val();
-        };
+    // Send the request
+    post_tips(form, request_data);
 
-        // Construct POST request
-        $.ajax({
-            type: 'POST',
-            url: link,
-            data: request_data,
-            dataType: 'json',
-            success: function(response) {
-                if (response.changed == true) {
-                    var msg = '<p>Your password has been changed.</p>';
-                    $('#change_password').replaceWith(msg);
-                }
-                else {
-                    display_errors(response.errors);
-                }
-            }
-        });
-    }
-    // Pop up score details
-//    $('td.season_results_score').click(function() {
-//        var id_parts = $(this).attr('id').split('_');
-//        var link = 'http://' + document.location.host + '/legends/stats/scores/' + id_parts[1] + '/' + id_parts[2] + '/';
-//        $('#score_detail').load(link);
-//        $('#score_detail').click();
-//    });
-});
+    return false;
+}
+
+function submit_all_tips(form) {
+    var request_data = fieldsets_to_json(form, true);
+
+    console.log('request data = ' + request_data);
+
+    // Send the request
+    post_tips(form, request_data);
+
+    return false;
+}
 

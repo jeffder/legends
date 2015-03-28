@@ -9,7 +9,7 @@ import main.models as models
 
 # Dummy club ID for draw tips
 DRAW_TIP = '-99'
-
+EMPTY_VALUE = ''
 
 class Errors(ErrorList):
     '''
@@ -158,65 +158,22 @@ class ChangePasswordForm(forms.Form):
 
 
 # Tips
-class TipForm(forms.Form):
+class TipForm(forms.ModelForm):
     """
     Submission form for tips
     """
 
-    def __init__(self, clubs, *args, **kwargs):
-        self.tip_instance = kwargs.pop('instance')
-
-        super(TipForm, self).__init__(*args, **kwargs)
-
-        # Use customised error formatting
-        kwargs['error_class'] = Errors
-
-        self.home = self.tip_instance.game.afl_home
-        self.away = self.tip_instance.game.afl_away
-        self.ground = self.tip_instance.game.ground
-        self.date = self.tip_instance.game.game_date
-
-        clubs = (self.home, self.away)
-
-        self.club_lookup = dict((c.id, c) for c in clubs)
-
-        # Set options for fields
-        choices = [('', 'Winner')]
-        choices.extend([(c.id, c.name) for c in clubs])
-        choices.append((DRAW_TIP, 'Draw'))
-
-        self.fields['winner'].choices = choices
-        if self.tip_instance.is_default:
-            self.fields['winner'].initial = ''
-            self.fields['margin'].initial = ''
-            self.fields['crowd'].initial = ''
-
-        else:
-            if self.tip_instance.winner is None:
-                self.fields['winner'].initial = DRAW_TIP
-
-            else:
-                self.fields['winner'].initial = self.tip_instance.winner.id
-
-            self.fields['margin'].initial = self.tip_instance.margin
-            self.fields['crowd'].initial = self.tip_instance.crowd
-
-        # Give form fields an id
-        for field in ('winner', 'margin', 'crowd'):
-            self.fields[field].widget.attrs['id'] = 'id-{}-{}'.format(self.tip_instance.id, field)
-
-
     winner = forms.ChoiceField(
         widget=forms.Select(
             attrs={
-                'class': 'form-control-inline-select',
-            }
+                'class': 'form-control-inline-select input-sm',
+                }
         )
     )
     margin = forms.IntegerField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control-inline',
+                'class': 'form-control-inline input-sm',
                 'placeholder': 'Margin'
             }
         )
@@ -224,14 +181,29 @@ class TipForm(forms.Form):
     crowd = forms.IntegerField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control-inline',
+                'class': 'form-control-inline input-sm',
                 'placeholder': 'Crowd'
             }
         )
     )
 
-    def clean_crowd(self):
+    def __init__(self, *args, **kwargs):
+        super(TipForm, self).__init__(*args, **kwargs)
+        clubs = (self.instance.game.afl_home, self.instance.game.afl_away)
+        self.club_lookup = {c.id: c for c in clubs}
 
+#        # Set options for fields
+#        choices = [(EMPTY_VALUE, '--- Select winner')]
+#        choices.extend([(c.id, c.name) for c in clubs])
+#        choices.append((DRAW_TIP, 'Draw'))
+#
+#        self.fields['winner'].choices = choices
+
+    class Meta:
+        model = models.Tip
+        fields = ['winner', 'margin', 'crowd']
+
+    def clean_crowd(self):
         crowd = self.cleaned_data['crowd']
 
         if crowd < 1000 or crowd > 110000:
@@ -245,15 +217,15 @@ class TipForm(forms.Form):
         return crowd
 
     def clean_winner(self):
-
         winner = self.cleaned_data['winner']
 
-        if not winner:
-            raise forms.ValidationError('Winner must not be blank')
+        if winner == EMPTY_VALUE:
+            raise forms.ValidationError('You have not selected a winner')
 
-        return int(winner)
+        return self.club_lookup.get(int(winner), None)
 
     def clean(self):
+        super(TipForm, self).clean()
 
         cleaned_data = self.cleaned_data
 
@@ -264,7 +236,7 @@ class TipForm(forms.Form):
             return cleaned_data
 
         if winner:
-            if winner != DRAW_TIP:
+            if winner.id != DRAW_TIP:
                 if margin == 0:
                     del cleaned_data['winner']
                     del cleaned_data['margin']
@@ -273,7 +245,7 @@ class TipForm(forms.Form):
                         'Margin must be at least 1.'
                     )
 
-            if margin != 0 and winner == DRAW_TIP:
+            if margin != 0 and winner.id == DRAW_TIP:
                 del cleaned_data['winner']
                 del cleaned_data['margin']
                 raise forms.ValidationError(
@@ -282,79 +254,265 @@ class TipForm(forms.Form):
 
         return cleaned_data
 
-    def save(self):
-
-        cleaned_data = self.cleaned_data
-
-        if not cleaned_data:
-            return self.tip_instance
-
-        winner = self.cleaned_data['winner']
-        try:
-            winner = self.club_lookup[winner]
-
-        except:
-            winner = None
-
-        self.tip_instance.winner = winner
-        self.tip_instance.margin = cleaned_data['margin']
-        self.tip_instance.crowd = cleaned_data['crowd']
-        if cleaned_data['crowd'] == 0 and cleaned_data['margin'] == 1:
-            self.tip_instance.is_default = True
-        else:
-            self.tip_instance.is_default = False
-
-        self.tip_instance.save()
-
-        return self.tip_instance
+#    def save(self, *args, **kwargs):
+#        cleaned_data = self.cleaned_data
+#
+#        if not cleaned_data:
+#            return self.instance
+#
+#        winner = self.cleaned_data['winner']
+#
+#        self.instance.winner = winner
+#        self.instance.margin = cleaned_data['margin']
+#        self.instance.crowd = cleaned_data['crowd']
+#        if cleaned_data['crowd'] == 0 and cleaned_data['margin'] == 1:
+#            self.instance.is_default = True
+#        else:
+#            self.instance.is_default = False
+#
+#        self.instance.save()
+#
+#        return self.instance
 
 
-class SupercoachForm(forms.Form):
+class SupercoachForm(forms.ModelForm):
     """
     Class for Supercoach forms
     """
 
+    player = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={'class': 'form-control-inline-select-supercoach input-sm'}
+        )
+    )
+
     def __init__(self, players, *args, **kwargs):
-        self.instance = kwargs.pop('instance')
-
-        # Use customised error formatting
-        kwargs['error_class'] = Errors
-
         super(SupercoachForm, self).__init__(*args, **kwargs)
 
         # Set options for fields
-        choices = [('', 'Supercoach')]
+        choices = [(EMPTY_VALUE, '--- Select player')]
         choices.extend([(p.id, str(p)) for p in players])
 
         self.fields['player'].choices = choices
 
-        # Find out if we have a default tip/result
-        if self.instance.tip.is_default:
-            self.fields['player'].initial = ''
-
-        else:
-            self.fields['player'].initial = self.instance.player.id
-
-    player = forms.ChoiceField(
-        widget=forms.Select(attrs={'class': 'form-control-inline-select-supercoach'})
-    )
+    class Meta:
+        model = models.SupercoachTip
+        fields = ['player']
 
     def clean_player(self):
         player = self.cleaned_data['player']
 
-        if not player:
-            raise forms.ValidationError('Player must not be blank')
+        if player == EMPTY_VALUE:
+            raise forms.ValidationError('You have not selected a player')
 
-        return int(player)
+        return models.Player.objects.get(id=int(player))
 
-    def save(self):
-        player = self.cleaned_data['player']
+#    def save(self, *args, **kwargs):
+#        player = self.cleaned_data['player']
+#
+#        self.instance.player = models.Player.objects.get(id=player)
+#
+#        self.instance.save()
+#
+#        return self.instance
 
-        self.instance.player = models.Player.objects.get(id=int(player))
-
-        self.instance.save()
-
-        return self.instance
+#class TipForm(forms.ModelForm):
+#    """
+#    Submission form for tips
+#    """
+#
+#    winner = forms.ChoiceField(
+#        widget=forms.Select(
+#            attrs={
+#                'class': 'form-control-inline-select',
+#                }
+#        )
+#    )
+#    margin = forms.IntegerField(
+#        widget=forms.TextInput(
+#            attrs={
+#                'class': 'form-control-inline',
+#                'placeholder': 'Margin'
+#            }
+#        )
+#    )
+#    crowd = forms.IntegerField(
+#        widget=forms.TextInput(
+#            attrs={
+#                'class': 'form-control-inline',
+#                'placeholder': 'Crowd'
+#            }
+#        )
+#    )
+#
+#    def __init__(self, *args, **kwargs):
+#
+#        super(TipForm, self).__init__(*args, **kwargs)
+#
+#        # Use customised error formatting
+#        kwargs['error_class'] = Errors
+#
+#        print('In form.__init__: instance =', self.instance)
+#        self.home = self.instance.game.afl_home
+#        self.away = self.instance.game.afl_away
+#        self.ground = self.instance.game.ground
+#        self.date = self.instance.game.game_date
+#
+#        clubs = (self.home, self.away)
+#
+#        self.club_lookup = dict((c.id, c) for c in clubs)
+#
+#        # Set options for fields
+#        choices = [('', 'Winner')]
+#        choices.extend([(c.id, c.name) for c in clubs])
+#        choices.append((DRAW_TIP, 'Draw'))
+#
+#        self.fields['winner'].choices = choices
+#
+#        # Give form fields an id
+#        for field in self.fields:
+#            self.fields[field].widget.attrs['id'] = 'id-{}-{}'.format(self.instance.id, field)
+#
+#    class Meta:
+#        model = models.Tip
+#        fields = ['winner', 'margin', 'crowd']
+#
+#    def clean_crowd(self):
+#
+#        print('Cleaning margin')
+#        crowd = self.cleaned_data['crowd']
+#
+#        if crowd < 1000 or crowd > 110000:
+#            raise forms.ValidationError(
+#                'Crowd must be between 1,000 and 110,000'
+#            )
+#
+#        if crowd % 1000:
+#            raise forms.ValidationError('Crowd must be a multiple of 1,000')
+#        print('Crowd valid')
+#        return crowd
+#
+#    def clean_winner(self):
+#        print('Cleaning winner')
+#        winner = self.cleaned_data['winner']
+#
+#        if not winner:
+#            raise forms.ValidationError('Winner must not be blank')
+#        print('Winner valid')
+#
+#        return int(winner)
+#
+#    def clean(self):
+#
+#        super(TipForm, self).clean()
+#        print('Cleaning winner/margin')
+#        cleaned_data = self.cleaned_data
+#
+#        winner = cleaned_data.get('winner')
+#        margin = cleaned_data.get('margin')
+#        print('cleaned_data =', cleaned_data)
+#        print('winner =', winner)
+#        print('margin =', margin)
+#        if margin is None:
+#            return cleaned_data
+#
+#        if winner:
+#            if winner != DRAW_TIP:
+#                if margin == 0:
+#                    del cleaned_data['winner']
+#                    del cleaned_data['margin']
+#                    raise forms.ValidationError(
+#                        'You have not tipped a draw. '
+#                        'Margin must be at least 1.'
+#                    )
+#
+#            if margin != 0 and winner == DRAW_TIP:
+#                del cleaned_data['winner']
+#                del cleaned_data['margin']
+#                raise forms.ValidationError(
+#                    'You have tipped a draw. Margin must be 0'
+#                )
+#
+#        print('Margin valid')
+#        return cleaned_data
+#
+#    def save(self):
+#
+#        cleaned_data = self.cleaned_data
+#
+#        if not cleaned_data:
+#            return self.instance
+#
+#        winner = self.cleaned_data['winner']
+#        try:
+#            winner = self.club_lookup[winner]
+#
+#        except:
+#            winner = None
+#
+#        self.instance.winner = winner
+#        self.instance.margin = cleaned_data['margin']
+#        self.instance.crowd = cleaned_data['crowd']
+#        if cleaned_data['crowd'] == 0 and cleaned_data['margin'] == 1:
+#            self.instance.is_default = True
+#        else:
+#            self.instance.is_default = False
+#
+#        self.instance.save()
+#
+#        return self.instance
+#
+#
+#class SupercoachForm(forms.Form):
+#    """
+#    Class for Supercoach forms
+#    """
+#
+#    def __init__(self, players, *args, **kwargs):
+#        self.instance = kwargs.pop('instance')
+#
+##        if 'sc_data' in kwargs:
+##            self.instance.player = kwargs['sc_data']['player']
+#
+#        # Use customised error formatting
+#        kwargs['error_class'] = Errors
+#
+#        super(SupercoachForm, self).__init__(*args, **kwargs)
+#
+#        # Set options for fields
+#        choices = [('', 'Supercoach')]
+#        choices.extend([(p.id, str(p)) for p in players])
+#
+#        self.fields['player'].choices = choices
+#
+#        # Find out if we have a default tip/result
+#        if self.instance.tip.is_default:
+#            self.fields['player'].initial = ''
+#        else:
+#            self.fields['player'].initial = self.instance.player.id
+#
+#    player = forms.ChoiceField(
+#        widget=forms.Select(
+#            attrs={'class': 'form-control-inline-select-supercoach'}
+#        )
+#    )
+#
+#    def clean_player(self):
+#        player = self.cleaned_data['player']
+#
+#        if not player:
+#            raise forms.ValidationError('Player must not be blank')
+#
+#        return int(player)
+#
+#    def save(self):
+#        player = self.cleaned_data['player']
+#
+#        self.instance.player = models.Player.objects.get(id=int(player))
+#
+#        self.instance.save()
+#
+#        return self.instance
 
 
 class LadderForRoundForm(forms.Form):
@@ -456,7 +614,7 @@ class CoachVCoachForm(forms.Form):
                 return (last.lower(), first.lower())
 
             self.coaches = sorted(
-                {c.name() for c in models.Coach.objects.all()},
+                {c.name for c in models.Coach.objects.all()},
                 key=_sort_key
             )
 

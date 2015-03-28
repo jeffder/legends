@@ -8276,7 +8276,7 @@ body {
 
 /* line 76, ../sass/styles.scss */
 .nav-item a {
-  width: 32px;
+  width: auto;
 }
 
 /* line 80, ../sass/styles.scss */
@@ -8285,33 +8285,24 @@ body {
   color: #c7c7c7;
 }
 
-/* line 89, ../sass/styles.scss */
-.in_progress {
-  background-color: red;
-  border-radius: 5px;
-  margin-bottom: 20px;
+/* line 85, ../sass/styles.scss */
+#ladder-nav {
+  margin-bottom: 5px;
+  margin-left: -15px;
+  min-height: 30px;
 }
 
-/* line 95, ../sass/styles.scss */
-.in_progress h4 {
-  color: #000000;
-  padding-bottom: 20px;
-  padding-top: 20px;
+/* line 94, ../sass/styles.scss */
+.in-progress {
+  color: red;
 }
 
-/* line 101, ../sass/styles.scss */
-.in_progress .btn {
-  background-color: #8f8f8f;
-  margin-right: 20px;
-  margin-top: -7px;
-}
-
-/* line 111, ../sass/styles.scss */
+/* line 102, ../sass/styles.scss */
 .tab-content {
   padding-left: 15px;
 }
 
-/* line 115, ../sass/styles.scss */
+/* line 106, ../sass/styles.scss */
 .game-header {
   background-color: #585858;
   border-radius: 5px;
@@ -8323,43 +8314,43 @@ body {
   padding-top: 10px;
 }
 
-/* line 126, ../sass/styles.scss */
+/* line 117, ../sass/styles.scss */
 .table-header {
   padding-left: 10px;
   font-weight: bold;
 }
 
-/* line 131, ../sass/styles.scss */
+/* line 122, ../sass/styles.scss */
 .table-cell-left {
   margin-bottom: 0px;
   text-align: left;
   white-space: pre;
 }
 
-/* line 137, ../sass/styles.scss */
+/* line 128, ../sass/styles.scss */
 .table-cell-right {
   margin-bottom: 0px;
   padding-right: 20px;
   text-align: right;
 }
 
-/* line 143, ../sass/styles.scss */
+/* line 134, ../sass/styles.scss */
 .table-cell-center {
   margin-bottom: 0px;
   text-align: center;
 }
 
-/* line 148, ../sass/styles.scss */
+/* line 139, ../sass/styles.scss */
 .game-row-1 {
   background-color: #ffffff;
 }
 
-/* line 151, ../sass/styles.scss */
+/* line 142, ../sass/styles.scss */
 .game-row-2 {
   background-color: #c7c7c7;
 }
 
-/* line 156, ../sass/styles.scss */
+/* line 147, ../sass/styles.scss */
 .legends_results {
   margin: 0 -15px;
   padding-left: 0px;
@@ -8371,45 +8362,45 @@ body {
     border-bottom: 1px solid #dcdcdc;
 }
 */
-/* line 168, ../sass/styles.scss */
+/* line 159, ../sass/styles.scss */
 .game-footer {
   background-color: #585858;
   border-radius: 5px;
   font-weight: 100;
 }
 
-/* line 174, ../sass/styles.scss */
+/* line 165, ../sass/styles.scss */
 .game-footer ul li:first-child {
   font-weight: bold;
 }
 
-/* line 178, ../sass/styles.scss */
+/* line 169, ../sass/styles.scss */
 .game-footer ul li.player-sub-cell {
   font-weight: 100;
 }
 
-/* line 182, ../sass/styles.scss */
+/* line 173, ../sass/styles.scss */
 .player-sub-cell {
   margin-left: 20px;
 }
 
-/* line 186, ../sass/styles.scss */
+/* line 177, ../sass/styles.scss */
 .table-splitter {
   background-color: #585858;
 }
 
-/* line 190, ../sass/styles.scss */
+/* line 181, ../sass/styles.scss */
 .bye-splitter {
   background-color: #c7c7c7;
 }
 
-/* line 194, ../sass/styles.scss */
+/* line 185, ../sass/styles.scss */
 p.supercoach-result {
   padding-left: 15px;
   padding-right: 15px;
 }
 
-/* line 199, ../sass/styles.scss */
+/* line 190, ../sass/styles.scss */
 span.tip-score {
   font-weight: bold;
   text-align: right;
@@ -8417,135 +8408,321 @@ span.tip-score {
   padding-right: 10px;
 }
 
-/* line 206, ../sass/styles.scss */
+/* line 197, ../sass/styles.scss */
 .tips-table span.summary-tip-score {
   float: right;
   text-align: right;
   padding-right: 10px;
 }
 
-/* line 212, ../sass/styles.scss */
+/* line 203, ../sass/styles.scss */
 .tips-table td {
   margin-bottom: 0;
 }
 
-/* line 216, ../sass/styles.scss */
+/* line 207, ../sass/styles.scss */
 td.tips-table {
   padding-bottom: 0;
 }
 
-/* line 224, ../sass/styles.scss */
+/* line 215, ../sass/styles.scss */
 .form-header {
   background-color: #c7c7c7;
   color: #000000;
-  margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 5px;
   margin-left: 0px;
   margin-right: 0px;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 5px;
+  padding-top: 2px;
 }
 
-/* line 237, ../sass/styles.scss */
+/* line 229, ../sass/styles.scss */
+.form-header .text-left {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/* line 234, ../sass/styles.scss */
 .form-header p {
   background-color: #c7c7c7;
   color: #000000;
   margin-bottom: 0px;
   margin-left: 0;
   margin-right: 0;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
   padding-top: 0px;
+  width: 300px;
 }
 
-/* line 249, ../sass/styles.scss */
-.form-header p small {
+/* line 247, ../sass/styles.scss */
+.tip-form .tip-time-ground {
   background-color: none;
-  color: pill-active-bg;
-  margin-bottom: 10px;
-  margin-left: 0;
-  margin-right: 0;
-  padding-bottom: 5px;
-  padding-top: 0px;
-}
-
-/* line 261, ../sass/styles.scss */
-.tip-sub-form {
-  border-color: #8f8f8f;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  margin-bottom: 15px;
-  margin-left: 0px;
-  margin-right: 0;
+  color: #585858;
+  margin-right: 10px;
   padding-bottom: 0px;
   padding-top: 0px;
 }
 
+/* line 257, ../sass/styles.scss */
+.tip-fieldset .tip-time-ground p {
+  background-color: none;
+  color: pill-active-bg;
+  margin-bottom: 0px;
+  margin-left: 0;
+  margin-right: 10px;
+  padding-bottom: 0px;
+  padding-top: -5px;
+}
+
+/* line 269, ../sass/styles.scss */
+.tip-fieldset:nth-child(even) {
+  background-color: #eeeeee;
+}
+
 /* line 273, ../sass/styles.scss */
-.tip-form-row {
-  margin-bottom: 10px;
+.tip-fieldset {
+  border-color: #eeeeee;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 5px;
+  margin-left: 0px;
+  margin-right: 0;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+/* line 285, ../sass/styles.scss */
+.tip-sub-form {
+  margin-bottom: 5px;
   margin-left: 0px;
   margin-right: 0;
   padding-bottom: 0px;
   padding-top: 5px;
 }
 
-/* line 281, ../sass/styles.scss */
+/* line 293, ../sass/styles.scss */
 .form-control-inline {
-  min-width: 150px;
-  width: auto;
-  display: inline;
-  max-width: 175px;
-  margin-left: 15px;
+  /*
+      min-width: 150px;
+      max-width: 175px;
+  */
+  border: 1px solid #a9a9a9;
+  width: 70px;
+  margin-left: 10px;
   padding-left: 5px;
+  padding-bottom: 3px;
+  padding-top: 3px;
 }
 
-/* line 290, ../sass/styles.scss */
+/*
 .form-control-inline-select {
-  min-width: 150px;
-  width: auto;
-  display: inline;
-  max-width: 175px;
-  margin-left: 15px;
-  padding-left: 0px;
-  height: 26px;
+    min-width: 150px;
+    max-width: 175px;
+    width: 140px;
+    margin-left: 10px;
+    padding-left: 0px;
 }
-
-/* line 300, ../sass/styles.scss */
+*/
+/* line 316, ../sass/styles.scss */
 .form-control-inline-select-supercoach {
-  min-width: 150px;
-  width: auto;
-  display: inline;
-  max-width: 175px;
+  /*
+      min-width: 150px;
+      max-width: 175px;
+  */
+  background-color: #ffffff;
+  width: 250px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+/* line 327, ../sass/styles.scss */
+.form-ok {
+  background-color: #3c763d;
+  border-color: #3c763d;
+  border-style: solid;
+}
+
+/* line 333, ../sass/styles.scss */
+.form-error {
+  border-color: #a94442;
+  border-style: solid;
+}
+
+/* line 338, ../sass/styles.scss */
+.form-inline .checkbox input[type="checkbox"] {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+/* line 345, ../sass/styles.scss */
+.winner label {
+  vertical-align: top;
+}
+
+/* line 348, ../sass/styles.scss */
+.winner {
+  margin-left: 10px;
+  width: 170px;
+}
+
+/* line 353, ../sass/styles.scss */
+.winner input {
+  text-align: center;
+  width: 30px;
+}
+
+/* line 358, ../sass/styles.scss */
+[id$="icon"] {
+  font-size: 24px;
   margin-left: 15px;
-  padding-left: 0px;
-  height: 26px;
+  vertical-align: middle;
+  margin-top: -3px;
+}
+/* line 359, ../sass/styles.scss */
+[id$="icon"].glyphicon-ok {
+  color: #3c763d;
+}
+/* line 362, ../sass/styles.scss */
+[id$="icon"].glyphicon-remove {
+  color: #a94442;
 }
 
-/* line 310, ../sass/styles.scss */
+/*
+[id$="icon"].glyphicon-ok {
+        color: $form-ok;
+}
+
+[id$="icon"].glyphicon-remove {
+        color: $form-error;
+}
+*/
+/* line 379, ../sass/styles.scss */
 .submit-btn {
-  background-color: #c7c7c7;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
-/* line 317, ../sass/styles.scss */
+/* line 388, ../sass/styles.scss */
+#comp_rules h2 {
+  background-color: #c7c7c7;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* line 398, ../sass/styles.scss */
+#comp_rules h3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* line 403, ../sass/styles.scss */
+#comp_rules .container-fluid {
+  margin-top: 10px;
+}
+
+/* line 407, ../sass/styles.scss */
+.coaches-season {
+  background-color: #c7c7c7;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* line 418, ../sass/styles.scss */
+#past-winners {
+  margin-top: 20px;
+}
+
+/* line 422, ../sass/styles.scss */
+#past-winners .table tr th {
+  background-color: #c7c7c7;
+  border-width: 0px;
+}
+
+/* line 427, ../sass/styles.scss */
+#past-winners .table tr th:first-child {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+/* line 432, ../sass/styles.scss */
+#past-winners .table tr th:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* line 437, ../sass/styles.scss */
+#past-winners .table tr:first-child td {
+  border-width: 0px;
+}
+
+/* line 441, ../sass/styles.scss */
+#season-fixtures .round-detail > .table > thead > tr > th {
+  background-color: #c7c7c7;
+  border-width: 0px;
+}
+
+/* line 446, ../sass/styles.scss */
+#season-fixtures .round-detail > .table > thead > tr > th:first-child {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* line 453, ../sass/styles.scss */
+#season-fixtures .round-detail > .table > thead > tr > th:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* line 458, ../sass/styles.scss */
+#season-fixtures .round-detail > .table > thead > tr:first-child > td {
+  border-width: 0px;
+}
+
+/* line 462, ../sass/styles.scss */
+#season-nav,
+#coach-v-coach,
+#coach-v-coach_selection {
+  margin-top: 20px;
+}
+
+/* line 468, ../sass/styles.scss */
+#past-winners .club {
+  font-weight: bold;
+}
+
+/* line 476, ../sass/styles.scss */
 .round-all {
   border-radius: 5px;
 }
 
-/* line 321, ../sass/styles.scss */
+/* line 480, ../sass/styles.scss */
 .round-left {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-/* line 326, ../sass/styles.scss */
+/* line 485, ../sass/styles.scss */
 .round-right {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 331, ../sass/styles.scss */
+/* line 490, ../sass/styles.scss */
 .tips-table .tip-score {
   color: #585858;
   margin-bottom: 0px;
@@ -8554,7 +8731,7 @@ td.tips-table {
   white-space: pre;
 }
 
-/* line 339, ../sass/styles.scss */
+/* line 498, ../sass/styles.scss */
 .tips-table .summary-tip-score {
   margin-bottom: 0px;
   padding-right: 20px;
@@ -8562,46 +8739,61 @@ td.tips-table {
   white-space: pre;
 }
 
-/* line 346, ../sass/styles.scss */
+/* line 505, ../sass/styles.scss */
 .summary-header {
   text-align: left;
   font-weight: bold;
 }
 
-/* line 355, ../sass/styles.scss */
+/* line 514, ../sass/styles.scss */
 #tip-submission .form-group {
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
-/* line 359, ../sass/styles.scss */
-.tips-table td ul,
-#tip-submission ul {
+/* line 518, ../sass/styles.scss */
+.tips-table td ul {
   margin-bottom: 0;
 }
 
-/* line 364, ../sass/styles.scss */
+/* line 522, ../sass/styles.scss */
+#tip-submission ul {
+  margin-bottom: 0px;
+}
+
+/* line 526, ../sass/styles.scss */
+#tip-submission ul li {
+  margin-bottom: 5px;
+}
+
+/* line 530, ../sass/styles.scss */
+.tip-form-row .form-group {
+  vertical-align: middle;
+}
+
+/* line 534, ../sass/styles.scss */
+.tip-form-row .form-group span {
+  vertical-align: bottom;
+  top: -4px;
+}
+
+/* line 539, ../sass/styles.scss */
 .table-cell-number-left {
   margin-bottom: 0px;
   text-align: right;
   padding-right: 20px;
 }
 
-/* line 370, ../sass/styles.scss */
+/* line 545, ../sass/styles.scss */
 .hidden {
   display: none;
 }
 
-/* line 374, ../sass/styles.scss */
-.foo {
-  display: none;
-}
-
-/* line 378, ../sass/styles.scss */
+/* line 549, ../sass/styles.scss */
 #form-success {
   display: none;
 }
 
-/* line 382, ../sass/styles.scss */
+/* line 553, ../sass/styles.scss */
 #form-errors ul {
   list-style-type: none;
   padding-left: 10px;

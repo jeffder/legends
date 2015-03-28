@@ -4,9 +4,9 @@ from main.models import Club, Round
 
 
 class Bye(models.Model):
-    '''
+    """
     Bye games
-    '''
+    """
 
     club = models.ForeignKey(Club, related_name='byes')
     crowds_score = models.IntegerField(default=0)

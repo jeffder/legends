@@ -10,13 +10,13 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>Votes</th>
-                <th>Five</th>
-                <th>Four</th>
-                <th>Three</th>
-                <th>Two</th>
-                <th>One</th>
-                <th>Nothing</th>
+                <th>Score</th>
+                <th>1st</th>
+                <th>2nd</th>
+                <th>3rd</th>
+                <th>4th</th>
+                <th>5th</th>
+                <th>Duds</th>
                 <th>%</th>
                 <th>Min</th>
                 <th>Max</th>
@@ -36,11 +36,11 @@
                     </td>
                     <td class="club">{{ row.club }}</td>
                     <td>{{ row.score }}</td>
-                    <td>{{ row.five }}</td>
-                    <td>{{ row.four }}</td>
-                    <td>{{ row.three }}</td>
-                    <td>{{ row.two }}</td>
-                    <td>{{ row.one }}</td>
+                    <td>{{ row.rank_1 }}</td>
+                    <td>{{ row.rank_2 }}</td>
+                    <td>{{ row.rank_3 }}</td>
+                    <td>{{ row.rank_4 }}</td>
+                    <td>{{ row.rank_5 }}</td>
                     <td>{{ row.nothing }}</td>
                     <td>{{ row.strike_rate|floatformat:2 }}%</td>
                     <td>{{ row.min_score }}</td>

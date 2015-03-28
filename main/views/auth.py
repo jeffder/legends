@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from main.forms import LoginForm, ChangePasswordForm
+from main.views import JSONResponse
 
 
 def render_auth_form(request):
@@ -33,18 +34,10 @@ def render_auth_form(request):
     return content.content
 
 
-class JSONResponse(HttpResponse):
-
-    def __init__(self, data):
-        HttpResponse.__init__(
-            self, content=json.dumps(data), content_type='application/json')
-
-
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-
         if request.is_ajax():
+            form = LoginForm(request.POST)
             if form.is_valid():
                 auth_login(request, form.get_user())
                 data = {'logged_in': True}
@@ -52,7 +45,8 @@ def login(request):
                 data = {
                     'logged_in': False,
                     'errors': {
-                        k: [e for e in v] for k, v in form.errors.items()}
+                        k: [e for e in v] for k, v in form.errors.items()
+                    }
                 }
 
             return JSONResponse(data)

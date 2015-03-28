@@ -5,7 +5,7 @@
 {% load split %}
 
 {% if round.status != 'Scheduled' %}
-    {% if data_type = 'result' %}
+    {% if data_type == 'result' %}
         {% include "legends_result.html" %}
     {% endif %}
     {% include "tips.html" %}

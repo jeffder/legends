@@ -51,18 +51,84 @@
     {% endif %}
 
     {% if club_can_tip %}
-        {% comment %}
-        <div class="tip-submission-header">
-            <h4>Submit Tips</h4>
-        </div>
-        {% endcomment %}
         <div id="tip-submission">
-            <form class="form-inline" method="post" action="/legends/{{ round.id }}/tips/">
+            <form class="form-inline" method="post" id="tip-form" action="/legends/submit_tips/">
                 {% csrf_token %}
-                {% include "tip_forms.html" %}
+                {% for form in forms %}
+                    <fieldset id="{{ form.0.prefix }}-tip-fieldset" class="tip-fieldset clearfix">
+                        <input type="hidden" name="tip_id" value="{{ form.0.instance.id }}">
+
+                        <div class="pull-right text-right tip-time-ground">
+                            <p>
+                                <small>{{ form.0.instance.game.game_date|date:"D M d H:i" }}</small>
+                            </p>
+                            <p>
+                                <small>{{ form.0.instance.game.ground }}</small>
+                            </p>
+                        </div>
+                        <div class="checkbox pull-left">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    id="{{ form.0.prefix }}-checkbox"
+                                    name="{{ form.0.prefix }}-checkbox"
+                                >
+                            </label>
+                        </div>
+
+                        <div class="form-group winner">
+                            <div class="radio">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        id="{{ form.0.prefix }}-home"
+                                        name="{{ form.0.prefix }}-winner"
+                                        value="{{ form.0.instance.game.afl_home.id }}"
+                                    >
+                                    {{ form.0.instance.game.afl_home }}
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        id="{{ form.0.prefix }}-away"
+                                        name="{{ form.0.prefix }}-winner"
+                                        value="{{ form.0.instance.game.afl_away.id }}"
+                                    >
+                                    {{ form.0.instance.game.afl_away }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.0.margin }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.0.crowd }}
+                        </div>
+
+                        <div class="form-group">
+                            <ul class="list-unstyled ">
+                                {% for supercoach in form.1 %}
+                                    <li>{{ supercoach.player }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div id="{{ form.0.prefix }}-icon" class="glyphicon"></div>
+                    </fieldset>
+                {% endfor %}
+                <button type="submit" class="btn btn-default submit-btn pull-right"
+                        id="submit-all" name="submit-all">
+                    Submit All
+                </button>
+                <button type="submit" class="btn btn-default submit-btn pull-right"
+                        id="submit-selected" name="submit-selected">
+                    Submit Selected
+                </button>
             </form>
-            <!-- Global tip submission -->
-            <button type="submit" class="btn btn-default submit-btn" name="submit-all-tips">Submit All Tips</button>
         </div>
     {% else %}
         <div class="span8">

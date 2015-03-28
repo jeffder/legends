@@ -7,12 +7,12 @@
 
 <div id="coaches">
     {% for sub_seasons in seasons|chop:3 %}
-        <div class="row coach_details">
+        <div class="row coach_details container-fluid">
             {% for season in sub_seasons %}
-                <div class="span4">
+                <div class="col-md-4">
                     {% with data|get:season as d_season %}
                         {% if d_season %}
-                            <div class="coach_club">{{ season }}</div>
+                            <div class="coaches-season">{{ season }}</div>
                             <table class="table">
                                 <tbody>
                                     {% for club in d_season.keys %}

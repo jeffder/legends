@@ -5,36 +5,36 @@
 {% load chop %}
 {% load get %}
 
-<div id="season_fixtures">
+<div id="season-fixtures container-fluid">
     {% for rnds in rounds|chop:3 %}
         <div class="row coach_details">
             {% for rnd in rnds %}
                 {% if rnd %}
-                    {% with rnd.name as name %}
-                        {% if forloop.counter == 1 %}
-                            <div class="span4">
-                        {% else %}
-                            <div class="span4">
-                        {% endif %}
-                        <div class="coach_club">{{ name }}</div>
+                    <div class="col-md-4">
+                        {% with rnd.name as name %}
                             <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="round-detail" colspan="4">{{ name }}</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     {% for fixture in fixture_data|get:name %}
                                         <tr
                                             id="score_{{ fixture.id }}"
-                                            class="game_score {% if club == fixture.home or club == fixture.away %}season_club_highlight"{% endif %}""
+                                            class="game_score {% if club == fixture.legends_home or club == fixture.legends_away %}season_club_highlight{% endif %}"
                                         >
                                             <td {% if forloop.counter == 1 %}class="coaches_first_row"{% endif %}>
-                                                {{ fixture.home }}
+                                                {{ fixture.legends_home }}
                                             </td>
                                             <td class="season_results_score {% if forloop.counter == 1 %}coaches_first_row{% endif %}">
-                                                {{ fixture.home_score}}
+                                                {{ fixture.legends_home_score}}
                                             </td>
                                             <td class="season_results_score {% if forloop.counter == 1 %}coaches_first_row{% endif %}">
-                                                {{ fixture.away_score }}
+                                                {{ fixture.legends_away_score }}
                                             </td>
                                             <td {% if forloop.counter == 1 %}class="coaches_first_row"{% endif %}>
-                                                {{ fixture.away }}
+                                                {{ fixture.legends_away }}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -67,8 +67,8 @@
                                     </tbody>
                                 </table>
                             {% endif %}
-                        </div>
-                    {% endwith %}
+                        {% endwith %}
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>

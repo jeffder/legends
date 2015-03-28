@@ -98,13 +98,62 @@ class Game(models.Model):
         except TypeError:
             return False
 
-    def create_default_tip(self, game):
+    def initialise_legends_scores(self):
         """
-        Create a default tip for this club for game.
+        Initialise legends scores
         """
-        tip = Tip(
-            club=self,
-            game=game,
-            is_default=True
+        score_types = (
+            'crowds_score', 'margins_score', 'score',
+            'supercoach_score', 'winners_bonus', 'winners_score'
         )
-        tip.save()
+
+        for team in ('away', 'home'):
+            for score_type in score_types:
+                attr = 'legends_{}_{}'.format(team, score_type)
+                setattr(self, attr, 0)
+
+    def _winner(self, kind):
+        away = getattr(self, '{}_away'.format(kind))
+        away_score = getattr(self, '{}_away_score'.format(kind))
+        home = getattr(self, '{}_home'.format(kind))
+        home_score = getattr(self, '{}_home_score'.format(kind))
+
+        if home_score > away_score:
+            return home
+        elif home_score < away_score:
+            return away
+        else:
+            return None
+
+    @property
+    def afl_winner(self):
+        return self._winner('afl')
+
+    @property
+    def legends_winner(self):
+        return self._winner('legends')
+
+    def _loser(self, kind):
+        away = getattr(self, '{}_away'.format(kind))
+        away_score = getattr(self, '{}_away_score'.format(kind))
+        home = getattr(self, '{}_home'.format(kind))
+        home_score = getattr(self, '{}_home_score'.format(kind))
+
+        if home_score > away_score:
+            return away
+        elif home_score < away_score:
+            return home
+        else:
+            return None
+
+    @property
+    def afl_loser(self):
+        return self._loser('afl')
+
+    @property
+    def legends_loser(self):
+        return self._loser('legends')
+
+    @property
+    def margin(self):
+        return abs(self.afl_home_score - self.afl_away_score)

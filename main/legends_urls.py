@@ -12,7 +12,9 @@ urlpatterns = patterns('legends.views',
 
     # Tips views
     (r'^(?P<round_id>\d+)/tips/$',
-        'tips_and_results.view_tips'),
+     'tips_and_results.view_tips'),
+    (r'^submit_tips/$',
+        'tips_and_results.submit_tips'),
 
     # Results views
     (r'^(?P<round_id>\d+)/submit_results/$',

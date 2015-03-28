@@ -3,6 +3,7 @@
 import collections
 import datetime
 from itertools import groupby
+import json
 import logging
 from statistics import mean
 
@@ -10,17 +11,19 @@ import numpy
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
 from main.models import (
 #    Round, Bye, Points, CrowdPoints, MarginPoints, LegendsFixture, Tip,
 #    LegendsLadder, FinalLadder
-    Bye, Club, Game, Round, Tip,
+    Club, Round, SupercoachRanking, Tip
 )
-from main import forms
+from main import constants, forms
 from main.lib.footywire import Footywire
 from main.utils.misc import chunks
+from main.views import JSONResponse
 from main.views.auth import render_auth_form
 
 # Log tips by default
@@ -34,12 +37,14 @@ def view_tips(request, round_id):
     """
     Display the Legends tips and results for the round.
 
-    Show results, tips and tip forms depending on the state of play.
+    Show results, tips and tip forms depending on the state of play. Handle tip
+    submission via ajax.
     """
     if round_id:
         selected_round = Round.objects.get(id=round_id)
     else:
         selected_round = Round.objects.get(id=request.session['live_round'])
+    request.session['selected_round'] = selected_round.id
 
     selected_round.set_tipping_deadline()
 
@@ -93,7 +98,6 @@ def render_round_nav(request, selected_round=None):
 
     rounds = Round.objects.filter(season=season)
     if selected_round.is_finals:
-        # TODO: Check if later rounds are final
         rounds = rounds.filter(start_time__lte=selected_round.start_time)
     else:
         rounds = rounds.filter(is_finals=False)
@@ -140,24 +144,21 @@ def get_results(request, round_id):
         for result in results:
             log_message = '%s: %s %s - %s %s (%d)' %   \
                 (
-                    curr_round, result.home, result.home_score,
-                    result.away_score, result.away, result.crowd
+                    curr_round, result.afl_home, result.afl_home_score,
+                    result.afl_away_score, result.afl_away, result.crowd
                 )
             logger.info(log_message)
 
-            for bog in result.bogs.all():
-                log_message = '\t%s - %s' % (bog.player, bog.votes)
+            for sc in result.supercoach_rankings.all():
+                log_message = '\t%s - %s' % (sc.player, sc.ranking)
                 logger.info(log_message)
 
     curr_round = Round.objects.get(id=round_id)
-    results = curr_round.aflfixtures.all()
-
-    # Wait until 4 hours after the game is due to start to allow for slack
-    # website updating:)
-    all_results_provisional = all(r.status == 'Provisional' for r in results)
+    games = curr_round.games.all()
 
     if not curr_round.status == 'Final':
-        # Don't get results until 4 hours after game starts
+        # Wait until 4 hours after the game is due to start to allow for slack
+        # website updating:)
         delta = datetime.timedelta(seconds=4 * 60 * 60)
         now = datetime.datetime.today()
         available_results = []
@@ -165,56 +166,65 @@ def get_results(request, round_id):
         # Get the available AFL results
         # Start with the Footywire fixture data for the round
         # Do finals manually until I can sort out Footywire's format
-        if not curr_round.is_finals:
-            footywire = Footywire(curr_round)
-            footywire.get_results()
+        if curr_round.is_finals:
+            return
 
-        for result in results:
-            if result.status == 'Scheduled':
-                if result.fixture_date + delta <= now:
-                    footywire.save_result(result)
-                    available_results.append(result)
-            else:
-                available_results.append(result)
+#        footywire = Footywire(curr_round)
+#        results = footywire.get_results()
 
-        # Set up the Legends results for the round
-        legends_results = {}
-        for result in curr_round.legendsfixtures.all():
-            result.away_score = 0
-            result.home_score = 0
+        for game in games:
+            # This picks up all of the available results so we'll be refreshing
+            # results we already have. This is intentional since something might
+            # have changed since the last time we got results (usually this will
+            # be supercoach rankings and adding previously missing crowds). As a
+            # consequence, we need to initialise the legends scores again and
+            # clear the Supercoach ranking table
+#            game.initialise_legends_scores()
+#            SupercoachRanking.objects.filter(game=game).delete()
 
-            for club in (result.away, result.home):
-                legends_results[club] = result
+            if game.game_date + delta <= now:
+#                result = results[(game.afl_home.name, game.afl_away.name)]
+#                set_afl_result(game, result)
+                available_results.append(game)
 
+        # Set up the bye results for the round
         byes = dict((b.club, b) for b in curr_round.byes.all())
-        for club in byes:
-            byes[club].score = 0
+#        for club in byes:
+#            byes[club].score = 0
 
-        calculate_tip_scores(available_results, legends_results, byes)
+#        calculate_tip_scores(curr_round, available_results)
 
         # Update the ladders for home/away rounds
         if not curr_round.is_finals:
-            create_legends_ladders(curr_round)
-            create_afl_ladders(curr_round)
-            create_streak_ladders(curr_round)
-
-        # Update status for round
-        if curr_round.status == 'Scheduled':
-            curr_round.set_status('Provisional')
-            curr_round.set_tipping_deadline()
-        elif all_results_provisional:
-            for res in results:
-                res.status = 'Final'
-                res.save()
-            curr_round.set_status('Final')
-            finalise_round(request, curr_round)
-        curr_round.save()
+            # We need all games for the round for the legends ladder because we
+            # will have legends scores for games where the actual AFL game
+            # hasn't been played yet. We can ignore byes because they don't
+            # affect the ladder.
+            create_legends_ladders(curr_round, games)
+            create_non_premiership_ladders(curr_round, available_results)
+            create_afl_ladders(curr_round, available_results)
+            create_streak_ladders(curr_round, available_results)
+#
+#        # Update status for round
+#        if curr_round.status == 'Scheduled':
+#            for res in results:
+#                res.status = 'Provisional'
+#                res.save()
+#            curr_round.set_status('Provisional')
+#            curr_round.set_tipping_deadline()
+#        elif all_results_provisional:
+#            for res in results:
+#                res.status = 'Final'
+#                res.save()
+#            curr_round.set_status('Final')
+#            finalise_round(request, curr_round)
+#        curr_round.save()
 
         # Log the results we got
-        _log_results(available_results)
+#        _log_results(available_results)
 
         # Create/update a projected final ladder
-        project_final_ladder(curr_round)
+#        project_final_ladder(curr_round)
 
     # Redirect to the tips page when we're done
     return redirect('/legends/%s/tips/' % round_id)
@@ -259,7 +269,7 @@ def render_results(request, selected_round, games):
         'score'
     )
 
-    tips_dict = selected_round.tips(games, sort_by_game=True)
+    tips_dict = selected_round.tips_by_game(games)
 
     for game, tips in tips_dict.items():
         # Group tips according to legends games and byes
@@ -327,6 +337,10 @@ def render_results(request, selected_round, games):
         size, remainder = divmod(selected_round.num_games, 2)
         if remainder:
             size += 1
+    elif selected_round.has_byes:
+        size, remainder = divmod(len(selected_round.bye_clubs), 2)
+        if remainder:
+            size += 1
     else:
         size = 5
     grouped_games = chunks(games, size)
@@ -359,13 +373,13 @@ def render_results(request, selected_round, games):
 
 def render_tips(request, selected_round, games):
     """
-        View tips
+    View tips
     """
     if not games:
         return b''
 
 #    club = Club.objects.get(id=request.session['club'])
-    tips_dict = selected_round.tips(games, sort_by_game=True)
+    tips_dict = selected_round.tips_by_game(games)   #, sort_by_game=True)
 
     # Summarise tips for each game
     data = []
@@ -458,12 +472,43 @@ def render_tips(request, selected_round, games):
     return content.content
 
 
-def render_tip_forms(request, selected_round, games):
+def render_tip_forms(request, selected_round, games=None):
     """
     View for tip form
     """
     if not games:
         return b''
+
+    club = Club.objects.get(id=request.session['club'])
+    club_can_tip = club in selected_round.tipping_clubs
+
+    context = {
+        'round': selected_round,
+        'club_can_tip': club_can_tip,
+        }
+
+    if club_can_tip:
+        # Post data is handled via Ajax in submit_tips()
+        frms = create_tip_forms(selected_round, club)
+        context['forms'] = frms
+
+    # Show AFL fixtures if club hasn't paid fees yet or can't otherwise tip
+    else:
+        context['afl_games'] = selected_round.games()
+
+    content = render_to_response(
+        'tip_form.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+    return content.content
+
+
+def submit_tips(request):
+    """
+    View for handling tip submission.
+    """
 
     def _save(form):
 
@@ -475,11 +520,11 @@ def render_tip_forms(request, selected_round, games):
                 f.save()
 
         # Log tip input
-        tip = form[0].tip_instance
+        tip = form[0].instance
 
         log_message = '%s: %s: %s: Winner: %s Margin: %s Crowd: %d' % (
             tip.club,
-            curr_round,
+            selected_round,
             tip.game,
             tip.winner,
             tip.margin,
@@ -489,71 +534,76 @@ def render_tip_forms(request, selected_round, games):
         for supercoach in tip.supercoach_tips.all():
             log_message = '%s: %s: %s: BOG: %s' % (
                 tip.club,
-                curr_round,
+                selected_round,
                 tip.game,
                 supercoach.player
             )
             logger.info(log_message)
 
-    def _clear_errors(form):
+    def _parse_post_data(request):
+        """
+        The keys in the post data include the form prefix so we need to clean
+        them up and group them by tip.
+        """
+        field_data = json.loads(request.body.decode(request.encoding))
 
-        form[0].errors.clear()
+        # Group post items by tip
+        form_data = {}
+        for tip_id, data in field_data.items():
+            tip = Tip.objects.get(id=int(tip_id))
 
-        for frm in form[1:]:
-            for f in frm:
-                f.errors.clear()
+            tip_data = {}
+            # Finals rounds have more than one supercoach tip
+            players = {}
 
+            for key, value in data.items():
+                if key.endswith('player'):
+                    players[key] = value
+                else:
+                    tip_data[key] = value
+            tip_data['players'] = players
+            form_data[tip] = tip_data
+
+        return form_data
+
+    # We should get here only if we have an ajax request and the coach can tip.
+    # But just in case someone does something interesting...
+    selected_round = Round.objects.get(id=request.session['selected_round'])
     club = Club.objects.get(id=request.session['club'])
     club_can_tip = club in selected_round.tipping_clubs
 
-    context = {
-        'round': selected_round,
-        'club_can_tip': club_can_tip,
-#        'data_type': 'tip',
-#        'show_form': True
-    }
+    if not (request.method == 'POST' and request.is_ajax() and club_can_tip):
+        return HttpResponseNotFound(
+            'The requested page does not exist: {}'.format(request.path_info))
 
-    # Render the tip content
-#    if selected_round.is_finals:
-#        context['afl_games'] = selected_round.games()
-
-    if club_can_tip:
-        if request.method == 'POST':
-            frms = create_tip_forms(selected_round, club, games, request.POST)
-            context['forms'] = frms
-
-            logger = logging.getLogger('tips')
-            for form in frms:
-                if form[0].is_valid()   \
-                        and all([b.is_valid() for b in form[1]]):
-                    _save(form)
-
+    # Process the form
+    post_data = _parse_post_data(request)
+    frms = create_tip_forms(selected_round, club, post_data)
+    is_valid = {}
+    for form in frms:
+        if form[0].is_valid()   \
+                and all([f.is_valid() for f in form[1]]):
+            _save(form)
+            is_valid[form[0].instance.id] = True
         else:
-            frms = create_tip_forms(selected_round, club, games)
-            context['forms'] = frms
-    # Show AFL fixtures if club hasn't paid fees yet
-#    else:
-#        if 'afl_games' not in context:
-#            context['afl_games'] = selected_round.games()
+            is_valid[form[0].instance.id] = False
 
-    content = render_to_response(
-        'tip_form.html',
-        context,
-        context_instance=RequestContext(request)
-    )
-
-    return content.content
+    return JSONResponse(is_valid)
 
 
 # Utility functions
-def create_tip_forms(selected_round, club, fixtures, data=None):
+def create_tip_forms(selected_round, club, data=None):
     """
-    Create a tip form for each game in the round.
+    Create a tip form for each tip in data.
     """
-
     form_list = []
 
-    tips = selected_round.club_tips(club)
+    # Get all of the coach's tips for the round if we have no data
+    print('data =', data)
+    if data is None:
+        tips = selected_round.club_tips(club)
+    else:
+        tips = data.keys()
 
     for tip in tips:
         players = []
@@ -562,21 +612,33 @@ def create_tip_forms(selected_round, club, fixtures, data=None):
                 club.players.filter(season=selected_round.season)
             )
 
+        if data is not None:
+            player_tips = data[tip].pop('players')
+            tip_data = data[tip]
+        else:
+            player_tips = None
+            tip_data = None
+
         tip_form = forms.TipForm(
-            data,
+            tip_data,
             prefix=tip.id,
             instance=tip
         )
 
         # Supercoach forms
-        supercoaches = tip.supercoach_tips.all().order_by('id')
         supercoach_forms = []
-        for supercoach in supercoaches:
+        for sc in tip.supercoach_tips.all():
+            if data is not None:
+                key = '{}-{}-player'.format(tip.id, sc.id)
+                sc_data = {key: player_tips[key]}
+            else:
+                sc_data = None
+
             form = forms.SupercoachForm(
                 players,
-                data,
-                prefix='%0d.%0d' % (tip.id, supercoach.id),
-                instance=supercoach)
+                sc_data,
+                prefix='%0d-%0d' % (tip.id, sc.id),
+                instance=sc)
             supercoach_forms.append(form)
 
         form_list.append((tip_form, supercoach_forms))
@@ -584,100 +646,171 @@ def create_tip_forms(selected_round, club, fixtures, data=None):
     return form_list
 
 
-def calculate_tip_scores(afl_results, legends_results, byes):
+def set_afl_result(game, result):
     """
-        Calculate tip scores for this result.
+    Set the AFL game's result. We don't save the game here since we're going
+    to be updating the game's tip scores later.
     """
+    game.afl_home_score = result['home_score']
+    game.afl_away_score = result['away_score']
+    game.crowd = result['crowd']
+    game.status = 'Provisional'
 
-    current_round = afl_results[0].round
+    # Save the Supercoach scores and rankings
+    save_supercoach_results(game, result['sc_scores'])
 
-    legends_fixtures = {}
-    winners_count = {}
-    for club in legends_results:
-        legends_fixtures[club] = legends_results[club]
-        winners_count[club] = 0
 
-    for club in byes:
-        winners_count[club] = 0
+def save_supercoach_results(game, results):
+    """
+    Save the Supercoach scores.
+    """
+    curr_round = game.round
 
-    # Get points values
-    season = current_round.season
-    points_obj = Points.objects.get(season=season)
-    crowd_points = CrowdPoints.objects.filter(season=season)
-    margin_points = MarginPoints.objects.filter(season=season)
+    # Save all Supercoach scores
+    players = {}
+    sc_scores = []
+    for club_name in results.keys():
+        club = Club.objects.get(name=club_name)
+        players.update({
+            p.supercoach_name.lower(): p for p in club.players_by_season(
+                curr_round.season
+            )
+        })
+        sc_scores.extend(results[club_name])
 
-    for afl_result in afl_results:
-        # Create lookup for BOGs
-        bog_lookup = create_bog_lookup(afl_result)
+    scores = reversed(sorted(sc_scores, key=lambda x: x['score']))
 
-        winner = afl_result.winner()
-        margin = afl_result.margin()
-        crowd = int(1000 * round(afl_result.crowd / 1000.0))
+    # Get the top 5 scoring players in the game and rank from 5 down to 1.
+    # Due to ties we might get more than 5 players
+    player_count = 0
+    previous = 0
+    rank = 5
+    for score in scores:
+        if previous != score['score']:
+            rank = 5 - player_count
+            if rank <= 0:
+                break
+            previous = score['score']
 
+        sc_rank = SupercoachRanking(
+            game=game,
+            player=players[score['player'].lower()],
+            ranking=rank
+        )
+        sc_rank.save()
+        player_count += 1
+
+
+def calculate_tip_scores(current_round, results):
+    """
+    Calculate tip scores for the given games.
+    """
+    if not results:
+        return
+
+    # Initialise the game scores for each club. We need to map clubs to the
+    # game they're playing in or bye so that we can update game scores with
+    # tip scores when they're calculated. As well as the game, we also need
+    # to know whether they're the home or away team or if they've got a bye
+    # in this round
+    club_games = {}
+
+    score_types = (
+        'crowds_score', 'margins_score', 'score', 'supercoach_score',
+        'winners_score'
+    )
+
+    games = current_round.games.all()
+    for game in games:
+        club_games[game.legends_away] = (game, False, False)
+        club_games[game.legends_home] = (game, True, False)
+        for score_type in score_types:
+            setattr(game, 'legends_away_{}'.format(score_type), 0)
+            setattr(game, 'legends_home_{}'.format(score_type), 0)
+
+    # Add the byes
+    for bye in current_round.byes.all():
+        club_games[bye.club] = (bye, False, True)
+        for score_type in score_types:
+            setattr(bye, score_type, 0)
+
+    for result in results:
+        winner = result.afl_winner
+        margin = result.margin
+        crowd = int(1000 * round(result.crowd / 1000.0))
+
+        # We need to keep track of default tips since they get one less than the
+        # lowest score for the AFL game
         default_tips = []
-        tips = Tip.objects.filter(afl_fixture=afl_result)
-        lowest_score = 999   # We'll never get a score this high
+
+        # We'll never get a score this high
+        lowest_score = 999
+
+        score_types = (
+            'crowds_score', 'margins_score', 'score', 'supercoach_score',
+            'winners_score'
+        )
+
+        # Create lookup for the top ranked Supercoach players in game
+        sc_lookup = {
+            sc.player: constants.TipPoints.SUPERCOACH[sc.ranking]
+            for sc in result.supercoach_rankings.filter(game=result)
+        }
+
+        # Calculate scores for each tip
+        tips = result.tips.all()
         for tip in tips:
             if tip.is_default:
                 default_tips.append(tip)
                 continue
 
-            # Winner score
-            tip.winner_score = 0
+            # Winner and margins scores
             if winner == tip.winner:
-                tip.winner_score = points_obj.correct_win
-                winners_count[tip.club] += 1
+                tip.winners_score = constants.TipPoints.WINNER
 
-            # Margin score
-            tip.margin_score = 0
-            if tip.winner_score:
-                difference = abs(tip.margin - margin)
-                if winner:
-                    try:
-                        margin_obj = margin_points.get(difference=difference)
-                        tip.margin_score = margin_obj.points
-                    except MarginPoints.DoesNotExist:
-                        pass
-
+                diff = abs(tip.margin - margin)
+                if diff in constants.TipPoints.MARGINS:
+                    tip.margins_score = constants.TipPoints.MARGINS[diff]
                 else:
-                    if tip.margin == 0:
-                        tip.margin_score = margin_points.get(difference=0)
+                    tip.margins_score = 0
+            else:
+                tip.winners_score = 0
+                tip.margins_score = 0
 
             # Crowd score
-            tip.crowd_score = 0
-            difference = abs(tip.crowd - crowd)
-            try:
-                crowd_obj = crowd_points.get(difference=difference)
-                tip.crowd_score = crowd_obj.points
+            diff = abs(tip.crowd - crowd)
+            if diff in constants.TipPoints.CROWDS:
+                tip.crowds_score = constants.TipPoints.CROWDS[diff]
+            else:
+                tip.crowd_score = 0
 
-            except CrowdPoints.DoesNotExist:
-                pass
-
-            # BOG score
-            tip.bog_score = 0
-            bogs = tip.bogtips.all()
-            for bog in bogs:
-                if bog.player in bog_lookup:
-                    tip.bog_score += points_obj.vote * bog_lookup[bog.player]
+            # Supercoach score
+            tip.supercoach_score = 0
+            for sc in tip.supercoach_tips.all():
+                if sc.player in sc_lookup:
+                    sc.score = sc_lookup[sc.player]
+                    tip.supercoach_score += sc.score
+                else:
+                    sc.score = 0
+                sc.save()
 
             # Total score
-            tip.total = tip.winner_score + tip.margin_score +   \
-                tip.crowd_score + tip.bog_score
-
+            tip.total = tip.winners_score + tip.margins_score +   \
+                tip.crowds_score + tip.supercoach_score
             tip.save()
 
-            # Update the Legends fixture
-            club = tip.club
-            try:
-                fixture = legends_fixtures[club]
-                if club == fixture.away:
-                    fixture.away_score += tip.total
-
+            # Update the round scores
+            game, is_home, is_bye = club_games[tip.club]
+            for score_type in score_types:
+                if is_bye:
+                    attr = score_type
                 else:
-                    fixture.home_score += tip.total
-
-            except KeyError:
-                byes[club].score += tip.total
+                    if is_home:
+                        attr = 'legends_home_{}'.format(score_type)
+                    else:
+                        attr = 'legends_away_{}'.format(score_type)
+                setattr(
+                    game, attr, getattr(game, attr) + getattr(tip, score_type))
 
             lowest_score = min(lowest_score, tip.total)
 
@@ -685,90 +818,118 @@ def calculate_tip_scores(afl_results, legends_results, byes):
             # Default tips get 0 for each category but the total is the lowest
             # score for the game less 1 so that percentage isn't blown up too
             # much
-            tip.winner_score = 0
-            tip.margin_score = 0
-            tip.crowd_score = 0
-            tip.bog_score = 0
-            tip.total = max(0, lowest_score - 1)
+            tip.winners_score = 0
+            tip.margins_score = 0
+            tip.crowds_score = 0
+            tip.supercoach_score = 0
+            tip.score = max(0, lowest_score - 1)
             tip.save()
 
-            # Update legends fixture
-            fixture = legends_fixtures[tip.club]
-            if tip.club == fixture.away:
-                fixture.away_score += tip.total
+            # Update round scores. We don't need to worry about anything except
+            # the total score
+            game, is_home, is_bye = club_games[tip.club]
+            if is_bye:
+                game.score += tip.score
             else:
-                fixture.home_score += tip.total
+                if is_home:
+                    game.legends_home_score += tip.score
+                else:
+                    game.legends_away_score += tip.score
 
-    # Include the winners bonus for home/away rounds
-    if not current_round.is_finals:
-        if current_round.num_games == 9:
-            bonus = points_obj.winner_bonus
-        else:
-            bonus = 0
+    # Include the winners bonus for home/away rounds with 9 games
+    bonus_games = constants.TipPoints.WINNERS_BONUS_GAME_COUNT
+    if not current_round.is_finals and current_round.num_games == bonus_games:
+        bonus_score = bonus_games * constants.TipPoints.WINNER
 
-        for result in set(legends_results.values()):
-            result.away_winners_bonus = 0
-            result.home_winners_bonus = 0
-            for club in (result.away, result.home):
-                if winners_count[club] == current_round.num_games:
-                    if club == result.away:
-                        result.away_winners_bonus = bonus
-                        legends_results[club].away_score += bonus
+        for game, is_home, is_bye in club_games.values():
+            if is_bye:
+                if game.winners_score == bonus_score:
+                    game.winners_bonus = constants.TipPoints.WINNERS_BONUS
+                    game.score += game.winners_bonus
+                else:
+                    game.winners_bonus = 0
+            else:
+                if is_home:
+                    if game.legends_home_winners_score == bonus_score:
+                        game.legends_home_winners_bonus = constants.TipPoints.WINNERS_BONUS
+                        game.legends_home_score += game.legends_home_winners_bonus
                     else:
-                        result.home_winners_bonus = bonus
-                        legends_results[club].home_score += bonus
-                legends_results[club].save()
+                        game.legends_home_winners_bonus = 0
+                else:
+                    if game.legends_away_winners_score == bonus_score:
+                        game.legends_away_winners_bonus = constants.TipPoints.WINNERS_BONUS
+                        game.legends_away_score += game.legends_away_winners_bonus
+                    else:
+                        game.legends_away_winners_bonus = 0
 
-        for club, result in byes.items():
-            result.winners_bonus = 0
-            if winners_count[club] == current_round.num_games:
-                result.winners_bonus = bonus
-                result.score += bonus
-
-            result.save()
+            game.save()
     else:
-        for result in set(legends_results.values()):
-            result.save()
+        for game, is_home, is_bye in club_games.values():
+            if is_bye:
+                game.winners_bonus = 0
+            else:
+                if is_home:
+                    game.legends_home_winners_bonus = 0
+                else:
+                    game.legends_away_winners_bonus = 0
+
+            game.save()
 
 
-def create_legends_ladders(curr_round):
+def create_legends_ladders(curr_round, games):
     """
-        Create the ladders for each club for round
+    Create the Legends ladder for each club for round
     """
+    print('Creating Legendsa ladders')
+    ladders = curr_round.legends_ladders()
 
-    ladder_names = ('brownlow', 'coleman', 'crowds', 'legends', 'margins')
+    round_ladders = []
 
+    for game in games:
+        for club in (game.legends_away, game.legends_home):
+            ladder = ladders[club]
+            # Clear the existing ladders since we don't know which games are
+            # already included
+            ladder.clear()
+
+            # Update the ladder contents
+            ladder.update_columns(game)
+            ladder.finalise()
+            round_ladders.append(ladder)
+
+    sorted_ladder = curr_round.sort_ladder(round_ladders, reverse=False)
+    for index, row in enumerate(sorted_ladder):
+        row.position = index + 1
+        row.save()
+
+
+def create_non_premiership_ladders(curr_round, games):
+    """
+    Create the non-premiership Legends ladders for each club for round
+    """
+    ladder_names = ('brownlow', 'coleman', 'crowds', 'margins')
     round_ladders = dict((name, []) for name in ladder_names)
 
-    tips = curr_round.tips()
+    clubs = curr_round.tipping_clubs
+    tips = curr_round.tips_by_club(games)
 
-    for result in curr_round.legendsfixtures.all():
-        for club in (result.away, result.home):
-            ladders = curr_round.club_ladders(club)
+    for club in clubs:
+        ladders = curr_round.club_ladders(club)
+        del ladders['legends']
 
-            club_tips = tips.filter(club=club)
+        # Clear the existing ladders since we don't know which games are already
+        # included
+        for ladder in ladders.values():
+            ladder.clear()
 
-            for name in ladder_names:
-                if name == 'legends':
-                    ladders[name].create(result)
+        # Update the ladder contents
+        for tip in tips[club]:
+            for ladder in ladders.values():
+                ladder.update_columns(tip)
 
-                else:
-                    ladders[name].create(club_tips)
-
-                round_ladders[name].append(ladders[name])
-
-    # Handle the byes
-    for bye in curr_round.byes.all():
-        ladders = curr_round.club_ladders(bye.club)
-
-        club_tips = tips.filter(club=bye.club)
-
-        for name in ladder_names:
-            if name == 'legends':
-                ladders[name].create_for_bye(bye)
-            else:
-                ladders[name].create(club_tips)
-            round_ladders[name].append(ladders[name])
+        for name, ladder in ladders.items():
+            ladder.finalise()
+            round_ladders[name].append(ladder)
 
     for ladder in round_ladders.values():
         sorted_ladder = curr_round.sort_ladder(ladder, reverse=False)
@@ -777,71 +938,60 @@ def create_legends_ladders(curr_round):
             row.save()
 
 
-def create_afl_ladders(curr_round):
+def create_afl_ladders(curr_round, games):
     """
-        Create the AFL ladders for each club for round
+    Create the AFL ladder for each club for round
     """
 
     ladders = curr_round.afl_ladders()
 
     round_ladders = []
 
-    for result in curr_round.aflfixtures.all():
-        for club in (result.away, result.home):
-            ladder = ladders.get(club=club)
+    for game in games:
+        for club in (game.afl_away, game.afl_home):
+            ladder = ladders[club]
+            # Clear the existing ladders since we don't know which games are
+            # already included
+            ladder.clear()
 
-            if result.status == 'Scheduled':
-                ladder.create_for_bye(result)
-            else:
-                ladder.create(result)
-
+            # Update the ladder contents
+            ladder.update_columns(game)
+            ladder.finalise()
             round_ladders.append(ladder)
 
-    # Handle the byes
-    byes = curr_round.byes.all()
-    for bye in byes:
-        ladder = ladders.get(club=bye.club)
+    # If there are still games to be played in the round or the round has byes,
+    # we need to copy the previous round's ladder for the affected clubs
+    played = [r.club for r in round_ladders]
+    for ladder in ladders.values():
+        if ladder.club not in played:
+            # Clear the existing ladders since we don't know which games are
+            # already included
+            ladder.clear()
 
-        ladder.create_for_bye(result)
-        round_ladders.append(ladder)
+            # Update the ladder contents
+            ladder.finalise()
+            round_ladders.append(ladder)
 
     sorted_ladder = curr_round.sort_ladder(round_ladders, reverse=False)
-
     for index, row in enumerate(sorted_ladder):
         row.position = index + 1
         row.save()
 
-    # Adjust the 2013 ladder for rounds 22 and 23 to allow for Essendon's
-    # transgressions. They are deemed to finish 9th.
-    if curr_round.season.season == 2013   \
-            and curr_round.name in ('Round 22', 'Round 23'):
-        ess_ladder = curr_round.afl_ladders().get(club__name='Essendon')
-        ess_pos = ess_ladder.position
-        ess_ladder.position = 9
-        ess_ladder.save()
 
-        for ladder in sorted_ladder[ess_pos:9]:
-            ladder.position = ess_pos
-            ladder.save()
-            ess_pos += 1
-
-
-def create_streak_ladders(curr_round):
+def create_streak_ladders(curr_round, games):
     """
-        Create the streak ladders for each club for round
+    Create the streak ladders for each club for round
     """
-
     ladders = curr_round.get_streak_ladders()
-
     round_ladders = []
 
-    for result in curr_round.legendsfixtures.all():
-        for club in (result.away, result.home):
-            ladder = ladders.get(club=club)
+    for game in games:
+        for club in (game.legends_away, game.legends_home):
+            ladder = ladders[club]
 
-            if club == result.winner():
+            if club == game.legends_winner:
                 outcome = 'W'
-            elif club == result.loser():
+            elif club == game.legends_loser:
                 outcome = 'L'
             else:
                 outcome = 'D'
@@ -852,13 +1002,12 @@ def create_streak_ladders(curr_round):
     # Handle the byes
     byes = curr_round.byes.all()
     for bye in byes:
-        ladder = ladders.get(club=bye.club)
+        ladder = ladders[bye.club]
         ladder.create('B')
         round_ladders.append(ladder)
 
     reverse = False
     sorted_ladder = curr_round.sort_ladder(round_ladders, reverse)
-
     for index, row in enumerate(sorted_ladder):
         row.position = index + 1
         row.save()
@@ -888,9 +1037,7 @@ def project_final_ladder(rnd):
 
     # It seems pointless to do a projection too early so wait until after the
     # byes
-    rounds = [
-        r for r in Round.objects.filter(season=rnd.season) if r.has_byes()
-    ]
+    rounds = [r for r in Round.objects.filter(season=rnd.season) if r.has_byes]
     if rnd.round_number() <= rounds[-1].round_number():
         return
 
