@@ -192,12 +192,10 @@ class TipForm(forms.ModelForm):
         clubs = (self.instance.game.afl_home, self.instance.game.afl_away)
         self.club_lookup = {c.id: c for c in clubs}
 
-#        # Set options for fields
-#        choices = [(EMPTY_VALUE, '--- Select winner')]
-#        choices.extend([(c.id, c.name) for c in clubs])
-#        choices.append((DRAW_TIP, 'Draw'))
-#
-#        self.fields['winner'].choices = choices
+        # Set options for fields
+        choices = [(c.id, c.name) for c in clubs]
+
+        self.fields['winner'].choices = choices
 
     class Meta:
         model = models.Tip
