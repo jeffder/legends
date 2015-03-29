@@ -19,7 +19,7 @@ TEST_DB_NAME = os.path.join(PROJECT_DIR, 'test_legends3.fdb')
 DATABASES = {
     'default': {
         'ENGINE': 'firebird',
-        'NAME': 'legends3',           # Path to database or db alias
+        'NAME': 'legends',           # Path to database or db alias
         'USER': 'legends',            # Your db user
         'PASSWORD': 'saintssaints',   # db user password
         'HOST': '127.0.0.1',          # Your host machine
