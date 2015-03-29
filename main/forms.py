@@ -164,7 +164,7 @@ class TipForm(forms.ModelForm):
     """
 
     winner = forms.ChoiceField(
-        widget=forms.Select(
+        widget=forms.RadioSelect(
             attrs={
                 'class': 'form-control-inline-select input-sm',
                 }

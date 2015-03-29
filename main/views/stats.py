@@ -186,7 +186,6 @@ def render_past_winners(request):
     past = PastCategoryWinner.objects.all()
     seasons = Season.objects.all().order_by('-season')
 
-    print(constants.PrizeCategories.categories)
     data = OrderedDict()
     for season in seasons:
         if season == request.session['live_season']:
@@ -209,8 +208,7 @@ def render_past_winners(request):
                 else:
                     data[season][category].append(
                         {'club': '', 'coaches': ['']})
-    for d, s in data.items():
-        print('{} --> {}'.format(d, s))
+
     rendered = render(
         request,
         'view_past_winners.html',

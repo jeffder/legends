@@ -498,7 +498,7 @@ def render_tip_forms(request, selected_round, games=None):
 
     # Show AFL fixtures if club hasn't paid fees yet or can't otherwise tip
     else:
-        context['afl_games'] = selected_round.games()
+        context['afl_games'] = selected_round.games
 
     content = render_to_response(
         'tip_form.html',
@@ -603,7 +603,6 @@ def create_tip_forms(selected_round, club, data=None):
     form_list = []
 
     # Get all of the coach's tips for the round if we have no data
-    print('data =', data)
     if data is None:
         tips = selected_round.club_tips(club)
     else:
@@ -884,7 +883,6 @@ def create_legends_ladders(curr_round, games):
     """
     Create the Legends ladder for each club for round
     """
-    print('Creating Legendsa ladders')
     ladders = curr_round.legends_ladders()
 
     round_ladders = []
