@@ -625,7 +625,8 @@ def create_tip_forms(selected_round, club, data=None):
         tip_form = forms.TipForm(
             tip_data,
             prefix=tip.id,
-            instance=tip
+            instance=tip,
+            initial={'winner': tip.winner}
         )
 
         # Supercoach forms

@@ -8566,27 +8566,33 @@ td.tips-table {
 /* line 348, ../sass/styles.scss */
 .winner {
   margin-left: 10px;
-  width: 170px;
+  width: 180px;
 }
 
 /* line 353, ../sass/styles.scss */
+.winner ul {
+  -webkit-padding-start: 10px;
+  margin-right: 10px;
+}
+
+/* line 358, ../sass/styles.scss */
 .winner input {
   text-align: center;
   width: 30px;
 }
 
-/* line 358, ../sass/styles.scss */
+/* line 363, ../sass/styles.scss */
 [id$="icon"] {
   font-size: 24px;
   margin-left: 15px;
   vertical-align: middle;
   margin-top: -3px;
 }
-/* line 359, ../sass/styles.scss */
+/* line 364, ../sass/styles.scss */
 [id$="icon"].glyphicon-ok {
   color: #3c763d;
 }
-/* line 362, ../sass/styles.scss */
+/* line 367, ../sass/styles.scss */
 [id$="icon"].glyphicon-remove {
   color: #a94442;
 }
@@ -8600,13 +8606,13 @@ td.tips-table {
         color: $form-error;
 }
 */
-/* line 379, ../sass/styles.scss */
+/* line 384, ../sass/styles.scss */
 .submit-btn {
   margin-left: 10px;
   margin-top: 10px;
 }
 
-/* line 388, ../sass/styles.scss */
+/* line 393, ../sass/styles.scss */
 #comp_rules h2 {
   background-color: #c7c7c7;
   border-radius: 5px;
@@ -8617,18 +8623,18 @@ td.tips-table {
   padding-bottom: 5px;
 }
 
-/* line 398, ../sass/styles.scss */
+/* line 403, ../sass/styles.scss */
 #comp_rules h3 {
   font-size: 14px;
   font-weight: bold;
 }
 
-/* line 403, ../sass/styles.scss */
+/* line 408, ../sass/styles.scss */
 #comp_rules .container-fluid {
   margin-top: 10px;
 }
 
-/* line 407, ../sass/styles.scss */
+/* line 412, ../sass/styles.scss */
 .coaches-season {
   background-color: #c7c7c7;
   border-radius: 5px;
@@ -8640,41 +8646,41 @@ td.tips-table {
   padding-bottom: 5px;
 }
 
-/* line 418, ../sass/styles.scss */
+/* line 423, ../sass/styles.scss */
 #past-winners {
   margin-top: 20px;
 }
 
-/* line 422, ../sass/styles.scss */
+/* line 427, ../sass/styles.scss */
 #past-winners .table tr th {
   background-color: #c7c7c7;
   border-width: 0px;
 }
 
-/* line 427, ../sass/styles.scss */
+/* line 432, ../sass/styles.scss */
 #past-winners .table tr th:first-child {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-/* line 432, ../sass/styles.scss */
+/* line 437, ../sass/styles.scss */
 #past-winners .table tr th:last-child {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 437, ../sass/styles.scss */
+/* line 442, ../sass/styles.scss */
 #past-winners .table tr:first-child td {
   border-width: 0px;
 }
 
-/* line 441, ../sass/styles.scss */
+/* line 446, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr > th {
   background-color: #c7c7c7;
   border-width: 0px;
 }
 
-/* line 446, ../sass/styles.scss */
+/* line 451, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr > th:first-child {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
@@ -8682,47 +8688,47 @@ td.tips-table {
   border-top-right-radius: 5px;
 }
 
-/* line 453, ../sass/styles.scss */
+/* line 458, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr > th:last-child {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 458, ../sass/styles.scss */
+/* line 463, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr:first-child > td {
   border-width: 0px;
 }
 
-/* line 462, ../sass/styles.scss */
+/* line 467, ../sass/styles.scss */
 #season-nav,
 #coach-v-coach,
 #coach-v-coach_selection {
   margin-top: 20px;
 }
 
-/* line 468, ../sass/styles.scss */
+/* line 473, ../sass/styles.scss */
 #past-winners .club {
   font-weight: bold;
 }
 
-/* line 476, ../sass/styles.scss */
+/* line 481, ../sass/styles.scss */
 .round-all {
   border-radius: 5px;
 }
 
-/* line 480, ../sass/styles.scss */
+/* line 485, ../sass/styles.scss */
 .round-left {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-/* line 485, ../sass/styles.scss */
+/* line 490, ../sass/styles.scss */
 .round-right {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 490, ../sass/styles.scss */
+/* line 495, ../sass/styles.scss */
 .tips-table .tip-score {
   color: #585858;
   margin-bottom: 0px;
@@ -8731,7 +8737,7 @@ td.tips-table {
   white-space: pre;
 }
 
-/* line 498, ../sass/styles.scss */
+/* line 503, ../sass/styles.scss */
 .tips-table .summary-tip-score {
   margin-bottom: 0px;
   padding-right: 20px;
@@ -8739,61 +8745,61 @@ td.tips-table {
   white-space: pre;
 }
 
-/* line 505, ../sass/styles.scss */
+/* line 510, ../sass/styles.scss */
 .summary-header {
   text-align: left;
   font-weight: bold;
 }
 
-/* line 514, ../sass/styles.scss */
+/* line 519, ../sass/styles.scss */
 #tip-submission .form-group {
   margin-bottom: 0px;
 }
 
-/* line 518, ../sass/styles.scss */
+/* line 523, ../sass/styles.scss */
 .tips-table td ul {
   margin-bottom: 0;
 }
 
-/* line 522, ../sass/styles.scss */
+/* line 527, ../sass/styles.scss */
 #tip-submission ul {
   margin-bottom: 0px;
 }
 
-/* line 526, ../sass/styles.scss */
+/* line 531, ../sass/styles.scss */
 #tip-submission ul li {
   margin-bottom: 5px;
 }
 
-/* line 530, ../sass/styles.scss */
+/* line 535, ../sass/styles.scss */
 .tip-form-row .form-group {
   vertical-align: middle;
 }
 
-/* line 534, ../sass/styles.scss */
+/* line 539, ../sass/styles.scss */
 .tip-form-row .form-group span {
   vertical-align: bottom;
   top: -4px;
 }
 
-/* line 539, ../sass/styles.scss */
+/* line 544, ../sass/styles.scss */
 .table-cell-number-left {
   margin-bottom: 0px;
   text-align: right;
   padding-right: 20px;
 }
 
-/* line 545, ../sass/styles.scss */
+/* line 550, ../sass/styles.scss */
 .hidden {
   display: none;
 }
 
-/* line 549, ../sass/styles.scss */
+/* line 554, ../sass/styles.scss */
 #form-success {
   display: none;
 }
 
-/* line 553, ../sass/styles.scss */
+/* line 558, ../sass/styles.scss */
 #form-errors ul {
   list-style-type: none;
   padding-left: 10px;

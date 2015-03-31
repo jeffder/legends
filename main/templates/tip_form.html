@@ -35,10 +35,10 @@
                             <tbody>
                                 {% for game in round.games.all %}
                                     <tr>
-                                        <td class="game_left">{{ game.home }}</td>
+                                        <td class="game_left">{{ game.afl_home }}</td>
                                         <td class="versus">v</td>
-                                        <td>{{ game.away }}</td>
-                                        <td>{{ game.venue }}</td>
+                                        <td>{{ game.afl_away }}</td>
+                                        <td>{{ game.ground }}</td>
                                         <td>{{ game.game_date|date:"D M d H:i"}}</td>
                                     </tr>
                                 {% endfor %}
@@ -77,29 +77,38 @@
                         </div>
 
                         <div class="form-group winner">
-                            <div class="radio">
+                            <ul>
+
+                            <li class="radio">
                                 <label>
                                     <input
                                         type="radio"
                                         id="{{ form.0.prefix }}-home"
                                         name="{{ form.0.prefix }}-winner"
                                         value="{{ form.0.instance.game.afl_home.id }}"
+                                        {% if form.0.instance.winner == form.0.instance.game.afl_home %}
+                                            checked
+                                        {% endif %}
                                     >
                                     {{ form.0.instance.game.afl_home }}
                                 </label>
-                            </div>
+                            </li>
 
-                            <div class="radio">
+                            <li class="radio">
                                 <label>
                                     <input
                                         type="radio"
                                         id="{{ form.0.prefix }}-away"
                                         name="{{ form.0.prefix }}-winner"
                                         value="{{ form.0.instance.game.afl_away.id }}"
+                                        {% if form.0.instance.winner == form.0.instance.game.afl_away %}
+                                            checked
+                                        {% endif %}
                                     >
                                     {{ form.0.instance.game.afl_away }}
                                 </label>
-                            </div>
+                            </li>
+                            </ul>
                         </div>
 
                         <div class="form-group">
@@ -141,10 +150,10 @@
                 <tbody>
                 {% for game in round.games.all %}
                     <tr>
-                        <td class="game_left">{{ game.home }}</td>
+                        <td class="game_left">{{ game.afl_home }}</td>
                         <td class="versus">v</td>
-                        <td>{{ game.away }}</td>
-                        <td>{{ game.venue }}</td>
+                        <td>{{ game.afl_away }}</td>
+                        <td>{{ game.ground }}</td>
                         <td>{{ game.game_date|date:"D M d H:i"}}</td>
                     </tr>
                 {% endfor %}
