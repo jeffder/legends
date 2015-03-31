@@ -347,7 +347,12 @@ td.tips-table {
 }
 .winner {
     margin-left: 10px;
-    width: 170px;
+    width: 180px;
+}
+
+.winner ul {
+    -webkit-padding-start: 10px;
+    margin-right: 10px;
 }
 
 .winner input {

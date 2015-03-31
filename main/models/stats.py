@@ -29,7 +29,7 @@ class PastCategoryWinner(models.Model):
 
         app_label = 'main'
         db_table = 'main_past_category_winner'
-        ordering = ('-season', 'category', 'club')
+        ordering = ('-season__season', 'category', 'club')
         verbose_name_plural = 'Past Winners'
 
 

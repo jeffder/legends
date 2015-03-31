@@ -169,8 +169,8 @@ def get_results(request, round_id):
         if curr_round.is_finals:
             return
 
-#        footywire = Footywire(curr_round)
-#        results = footywire.get_results()
+        footywire = Footywire(curr_round)
+        results = footywire.get_results()
 
         for game in games:
             # This picks up all of the available results so we'll be refreshing
@@ -179,20 +179,20 @@ def get_results(request, round_id):
             # be supercoach rankings and adding previously missing crowds). As a
             # consequence, we need to initialise the legends scores again and
             # clear the Supercoach ranking table
-#            game.initialise_legends_scores()
-#            SupercoachRanking.objects.filter(game=game).delete()
+            game.initialise_legends_scores()
+            SupercoachRanking.objects.filter(game=game).delete()
 
             if game.game_date + delta <= now:
-#                result = results[(game.afl_home.name, game.afl_away.name)]
-#                set_afl_result(game, result)
+                result = results[(game.afl_home.name, game.afl_away.name)]
+                set_afl_result(game, result)
                 available_results.append(game)
 
         # Set up the bye results for the round
         byes = dict((b.club, b) for b in curr_round.byes.all())
-#        for club in byes:
-#            byes[club].score = 0
+        for club in byes:
+            byes[club].score = 0
 
-#        calculate_tip_scores(curr_round, available_results)
+        calculate_tip_scores(curr_round, available_results)
 
         # Update the ladders for home/away rounds
         if not curr_round.is_finals:
@@ -204,24 +204,24 @@ def get_results(request, round_id):
             create_non_premiership_ladders(curr_round, available_results)
             create_afl_ladders(curr_round, available_results)
             create_streak_ladders(curr_round, available_results)
-#
-#        # Update status for round
-#        if curr_round.status == 'Scheduled':
-#            for res in results:
-#                res.status = 'Provisional'
-#                res.save()
-#            curr_round.set_status('Provisional')
-#            curr_round.set_tipping_deadline()
-#        elif all_results_provisional:
-#            for res in results:
-#                res.status = 'Final'
-#                res.save()
-#            curr_round.set_status('Final')
-#            finalise_round(request, curr_round)
-#        curr_round.save()
+
+        # Update status for round
+        if curr_round.status == 'Scheduled':
+            for res in results:
+                res.status = 'Provisional'
+                res.save()
+            curr_round.set_status('Provisional')
+            curr_round.set_tipping_deadline()
+        elif all_results_provisional:
+            for res in results:
+                res.status = 'Final'
+                res.save()
+            curr_round.set_status('Final')
+            finalise_round(request, curr_round)
+        curr_round.save()
 
         # Log the results we got
-#        _log_results(available_results)
+        _log_results(available_results)
 
         # Create/update a projected final ladder
 #        project_final_ladder(curr_round)
@@ -426,7 +426,11 @@ def render_tips(request, selected_round, games):
 
         # Crowds
         crowds = [t.crowd for t in tips if t.crowd is not None]
-        min_max = {'max': max(crowds), 'min': min(crowds), 'avg': mean(crowds)}
+        if crowds:
+            min_max = {
+                'max': max(crowds), 'min': min(crowds), 'avg': mean(crowds)}
+        else:
+            min_max = {'max': 0, 'min': 0, 'avg': 0}
         summary['crowd'] = min_max
 
         # Supercoach
@@ -494,7 +498,7 @@ def render_tip_forms(request, selected_round, games=None):
 
     # Show AFL fixtures if club hasn't paid fees yet or can't otherwise tip
     else:
-        context['afl_games'] = selected_round.games()
+        context['afl_games'] = selected_round.games
 
     content = render_to_response(
         'tip_form.html',
@@ -599,7 +603,6 @@ def create_tip_forms(selected_round, club, data=None):
     form_list = []
 
     # Get all of the coach's tips for the round if we have no data
-    print('data =', data)
     if data is None:
         tips = selected_round.club_tips(club)
     else:
@@ -622,7 +625,8 @@ def create_tip_forms(selected_round, club, data=None):
         tip_form = forms.TipForm(
             tip_data,
             prefix=tip.id,
-            instance=tip
+            instance=tip,
+            initial={'winner': tip.winner}
         )
 
         # Supercoach forms
@@ -880,7 +884,6 @@ def create_legends_ladders(curr_round, games):
     """
     Create the Legends ladder for each club for round
     """
-    print('Creating Legendsa ladders')
     ladders = curr_round.legends_ladders()
 
     round_ladders = []

@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models.loading import get_model
 
 from main import constants
-from main.models import Season
+from main.models import Coach, Season
 
 
 class Round(models.Model):
@@ -95,11 +95,10 @@ class Round(models.Model):
 
         # Check if fees have been paid
         if self.start_time >= fees_deadline:
-            for club in clubs:
-                for coach in club.coaches.filter(season=self.season):
-                    if not coach.has_paid_fees:
-                        clubs.remove(club)
-                        break
+            for coach in Coach.objects.filter(season=self.season):
+                if not coach.has_paid_fees:
+                    if coach.club in clubs:
+                        clubs.remove(coach.club)
 
         return set(clubs)
 

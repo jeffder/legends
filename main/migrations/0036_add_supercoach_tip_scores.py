@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from south.db import dbs
 from south.v2 import DataMigration
-
-from main.utils import migration
 
 
 class Migration(DataMigration):
