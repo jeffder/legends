@@ -242,7 +242,7 @@ def finalise_round(request, curr_round):
         next_round.set_tipping_deadline()
         next_round.save()
 
-        request.session['active_round'] = next_round
+        request.session['live_round'] = next_round.id
 
 
 def render_results(request, selected_round, games):
