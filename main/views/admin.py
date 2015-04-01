@@ -98,6 +98,7 @@ def render_manual_tips(request, **kwargs):
                 f.errors.clear()
 
     curr_round = Round.objects.get(id=request.session['live_round'])
+
     games = curr_round.games.all()
     clubs = [c for c in curr_round.tipping_clubs]
 
@@ -115,10 +116,10 @@ def render_manual_tips(request, **kwargs):
             frms = tips_and_results.create_tip_forms(
                 curr_round, club)
             context['data'] = frms
-            request.session['manual_user'] = club
+            request.session['manual_user'] = club.id
         # Tips submitted
         else:
-            club = request.session['manual_user']
+            club = Club.objects.get(id=request.session['manual_user'])
 
             frms = tips_and_results.create_tip_forms(
                 curr_round, club, request.POST)

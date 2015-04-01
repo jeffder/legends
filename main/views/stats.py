@@ -185,10 +185,11 @@ def render_past_winners(request):
 
     past = PastCategoryWinner.objects.all()
     seasons = Season.objects.all().order_by('-season')
+    live_season == Season.objects.get(season=request.session['live_season'])
 
     data = OrderedDict()
     for season in seasons:
-        if season == request.session['live_season']:
+        if season == live_season:
             continue
 
         data[season] = {}
@@ -435,9 +436,10 @@ def render_legends_fixtures(request, season, rounds):
     results = Game.objects \
         .filter(round__in=rounds) \
         .order_by('round', 'legends_home')
-    byes = Bye.objects   \
+    byes = Bye.objects \
         .filter(round__in=rounds) \
         .order_by('round', 'club')
+    club = Club.objects.get(id=request.session['club'])
 
     fixture_data = {rnd.name: list(group)
                     for rnd, group in groupby(results, key=results_group_key)}
@@ -447,7 +449,7 @@ def render_legends_fixtures(request, season, rounds):
     results = render(
         request,
         'season_fixtures.html',
-        {'club': request.session['club'],
+        {'club': club,
          'fixture_data': fixture_data,
          'bye_data': bye_data,
          'rounds': rounds},
