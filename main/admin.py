@@ -160,7 +160,9 @@ class TipAdmin(admin.ModelAdmin):
     ]
 
     inlines = [SupercoachTipInline]
-    list_display = ('season', 'club', 'round', 'game', 'winner', 'margin', 'crowd')
+    list_display = (
+        'season', 'club', 'round', 'game', 'winner', 'margin', 'crowd',
+        'is_default')
     list_display_links = list_display
     list_filter = ('game__round__season', 'club', 'game__round')
     ordering = ('club', )

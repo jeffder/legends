@@ -55,9 +55,6 @@ class Footywire(object):
         away = teams[1]
 
         url = 'http://www.footywire.com/afl/footy/{}'.format(link)
-        # DEBUG
-        url = 'file:/home/jeff/src/legends_site/tmp/carl_rich.html'
-        # END DEBUG
         soup = self._get_soup(url)
 
         start_tags = soup.find_all(attrs={'name': 't1'})
@@ -86,9 +83,6 @@ class Footywire(object):
             start_str = ' '.join((_day, _date[1], _month))
 
         url = 'http://www.footywire.com/afl/footy/ft_match_list'
-        # DEBUG
-        url = 'file:/home/jeff/src/legends_site/tmp/fw_fixtures.html'
-        # END DEBUG
         soup = self._get_soup(url)
 
         start = soup.find(attrs={'class': 'data'}, text=start_str)

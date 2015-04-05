@@ -126,6 +126,9 @@ def render_manual_tips(request, **kwargs):
             for form in frms:
                 if form[0].is_valid()   \
                         and all([b.is_valid() for b in form[1]]):
+                    # Default tips are not valid
+                    if form[0].tip_instance.is_default:
+                        form[0].tip_instance.is_default = False
                     _save(form)
 
         club_form = render_club_selector(

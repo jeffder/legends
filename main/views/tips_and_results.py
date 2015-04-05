@@ -186,24 +186,22 @@ def get_results(request, round_id):
             game.initialise_legends_scores()
             SupercoachRanking.objects.filter(game=game).delete()
             if game.game_date + delta <= now:
-                try:
-                    result = results[(game.afl_home.name, game.afl_away.name)]
-                    set_afl_result(game, result)
-                    available_results.append(game)
-                except KeyError:
-                    pass
+                result = results[(game.afl_home.name, game.afl_away.name)]
+                set_afl_result(game, result)
+                available_results.append(game)
 
-        # Set up the bye results for the round
         score_types = (
             'crowds_score', 'margins_score', 'score',
             'supercoach_score', 'winners_bonus', 'winners_score'
         )
+
+        # Set up the bye results for the round
         byes = dict((b.club, b) for b in curr_round.byes.all())
         for club in byes:
             for attr in score_types:
                 setattr(byes[club], attr, 0)
 
-        calculate_tip_scores(curr_round, available_results)
+        calculate_tip_scores(curr_round, games, byes)
 
         # Update the ladders for home/away rounds
         if not curr_round.is_finals:
@@ -271,8 +269,6 @@ def render_results(request, selected_round, games):
         'winners_score': [],
     }
 
-    legends_games = selected_round.games.all()
-
     score_attrs = (
         'winners_score', 'margins_score', 'crowds_score', 'supercoach_score',
         'score'
@@ -326,6 +322,7 @@ def render_results(request, selected_round, games):
             size += 1
     else:
         size = 5
+    legends_games = selected_round.games.all()
     grouped_games = chunks((g for g in legends_games), size)
 
     # Split byes into two chunks
@@ -589,7 +586,8 @@ def set_afl_result(game, result):
     game.afl_home_score = result['home_score']
     game.afl_away_score = result['away_score']
     game.crowd = result['crowd']
-    game.status = 'Provisional'
+    game.status = constants.Game.PROVISIONAL
+    game.save()
 
     # Save the Supercoach scores and rankings
     save_supercoach_results(game, result['sc_scores'])
@@ -636,40 +634,17 @@ def save_supercoach_results(game, results):
         player_count += 1
 
 
-def calculate_tip_scores(current_round, results):
+def calculate_tip_scores(current_round, results, byes):
     """
     Calculate tip scores for the given games.
     """
     if not results:
         return
 
-    # Initialise the game scores for each club. We need to map clubs to the
-    # game they're playing in or bye so that we can update game scores with
-    # tip scores when they're calculated. As well as the game, we also need
-    # to know whether they're the home or away team or if they've got a bye
-    # in this round
-    club_games = {}
-
-    score_types = (
-        'crowds_score', 'margins_score', 'score', 'supercoach_score',
-        'winners_score'
-    )
-
-    games = current_round.games.all()
-    for game in games:
-        club_games[game.legends_away] = (game, False, False)
-        club_games[game.legends_home] = (game, True, False)
-        for score_type in score_types:
-            setattr(game, 'legends_away_{}'.format(score_type), 0)
-            setattr(game, 'legends_home_{}'.format(score_type), 0)
-
-    # Add the byes
-    for bye in current_round.byes.all():
-        club_games[bye.club] = (bye, False, True)
-        for score_type in score_types:
-            setattr(bye, score_type, 0)
-
     for result in results:
+        if result.status == constants.Game.SCHEDULED:
+            continue
+
         winner = result.afl_winner
         margin = result.margin
         crowd = int(1000 * round(result.crowd / 1000.0))
@@ -680,11 +655,6 @@ def calculate_tip_scores(current_round, results):
 
         # We'll never get a score this high
         lowest_score = 999
-
-        score_types = (
-            'crowds_score', 'margins_score', 'score', 'supercoach_score',
-            'winners_score'
-        )
 
         # Create lookup for the top ranked Supercoach players in game
         sc_lookup = {
@@ -734,19 +704,6 @@ def calculate_tip_scores(current_round, results):
                 tip.crowds_score + tip.supercoach_score
             tip.save()
 
-            # Update the round scores
-            game, is_home, is_bye = club_games[tip.club]
-            for score_type in score_types:
-                if is_bye:
-                    attr = score_type
-                else:
-                    if is_home:
-                        attr = 'legends_home_{}'.format(score_type)
-                    else:
-                        attr = 'legends_away_{}'.format(score_type)
-                setattr(
-                    game, attr, getattr(game, attr) + getattr(tip, score_type))
-
             lowest_score = min(lowest_score, tip.score)
 
         for tip in default_tips:
@@ -760,30 +717,33 @@ def calculate_tip_scores(current_round, results):
             tip.score = max(0, lowest_score - 1)
             tip.save()
 
-            # Update round scores. We don't need to worry about anything except
-            # the total score
-            game, is_home, is_bye = club_games[tip.club]
-            if is_bye:
-                game.score += tip.score
-            else:
-                if is_home:
-                    game.legends_home_score += tip.score
-                else:
-                    game.legends_away_score += tip.score
-
+    # Update the scores for the round
     # Include the winners bonus for home/away rounds with 9 games
+    # TODO: This is a bit clunky so maybe try a query of some sort
     bonus_games = constants.TipPoints.WINNERS_BONUS_GAME_COUNT
-    if not current_round.is_finals and current_round.num_games == bonus_games:
-        bonus_score = bonus_games * constants.TipPoints.WINNER
+    bonus_score = bonus_games * constants.TipPoints.WINNER
 
-        for game, is_home, is_bye in club_games.values():
-            if is_bye:
-                if game.winners_score == bonus_score:
-                    game.winners_bonus = constants.TipPoints.WINNERS_BONUS
-                    game.score += game.winners_bonus
+    score_types = (
+        'crowds_score', 'margins_score', 'score', 'supercoach_score',
+        'winners_score'
+    )
+
+    for game in results:
+        for team in ('legends_home', 'legends_away'):
+            club = getattr(game, team)
+            is_home = team == 'legends_home'
+            tips = Tip.objects \
+                .filter(club=club) \
+                .filter(game__round=game.round) \
+                .exclude(game__status=constants.Game.SCHEDULED)
+            for score_type in score_types:
+                if is_home:
+                    attr = 'legends_home_{}'.format(score_type)
                 else:
-                    game.winners_bonus = 0
-            else:
+                    attr = 'legends_away_{}'.format(score_type)
+                setattr(game, attr, sum(getattr(t, score_type) for t in tips))
+
+                # Winners bonus
                 if is_home:
                     if game.legends_home_winners_score == bonus_score:
                         game.legends_home_winners_bonus = constants.TipPoints.WINNERS_BONUS
@@ -796,19 +756,22 @@ def calculate_tip_scores(current_round, results):
                         game.legends_away_score += game.legends_away_winners_bonus
                     else:
                         game.legends_away_winners_bonus = 0
+        game.save()
 
-            game.save()
-    else:
-        for game, is_home, is_bye in club_games.values():
-            if is_bye:
-                game.winners_bonus = 0
+    # Handle the byes
+    for bye in byes:
+        tips = Tip.objects \
+            .filter(club=bye.club) \
+            .filter(game__round=game.round) \
+            .exclude(game__status=constants.Game.SCHEDULED)
+        for score_type in score_types:
+            setattr(bye, score_type, sum(getattr(t, score_type) for t in tips))
+            if game.winners_score == bonus_score:
+                game.winners_bonus = constants.TipPoints.WINNERS_BONUS
+                game.score += game.winners_bonus
             else:
-                if is_home:
-                    game.legends_home_winners_bonus = 0
-                else:
-                    game.legends_away_winners_bonus = 0
-
-            game.save()
+                game.winners_bonus = 0
+        bye.save()
 
 
 def tip_summary(game, tips):

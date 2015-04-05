@@ -166,3 +166,9 @@ class Game(models.Model):
         tips = sorted(self.tips.all(), key=lambda x: clubs.index(x.club))
 
         return tips
+
+    def is_legends_home_club(self, club):
+        """
+        Is the club the legends home team?
+        """
+        return club == self.legends_home
