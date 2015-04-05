@@ -6,13 +6,16 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 
-from main.forms import LoginForm, ChangePasswordForm, ClubSelectionForm
-from main.models import Club, Round
+from main.forms import (
+    LoginForm, ChangePasswordForm, ClubSelectionForm, ManualTipForm,
+    ManualSupercoachForm
+)
+from main.models import Club, Player, Round, Tip
 from main.views import tips_and_results
 
 
 # Log tips by default
-logger = logging.getLogger('tips')
+logger = logging.getLogger('legends.tips')
 
 selected_page = 'admin'
 selected_tab = 'manual_tips'
@@ -71,21 +74,19 @@ def render_manual_tips(request, **kwargs):
         # Log tip input
         tip = form[0].tip_instance
 
-        log_message = '%s: %s: %s: Winner: %s Margin: %s Crowd: %d' % (
+        log_message = '%s: %s: Winner: %s Margin: %s Crowd: %d' % (
             tip.club,
-            curr_round,
-            tip.afl_fixture,
+            tip.game,
             tip.winner,
             tip.margin,
             tip.crowd
         )
         logger = logging.getLogger('tips')
         logger.info(log_message)
-        for bog in tip.bogtips.all():
-            log_message = '%s: %s: %s: BOG: %s' % (
+        for bog in tip.supercoach_tips.all():
+            log_message = '%s: %s: Supercoach: %s' % (
                 tip.club,
-                curr_round,
-                tip.afl_fixture,
+                tip.game,
                 bog.player
             )
             logger.info(log_message)
@@ -113,20 +114,21 @@ def render_manual_tips(request, **kwargs):
         if 'club' in request.POST:
             club = Club.objects.get(id=int(request.POST['club']))
 
-            frms = tips_and_results.create_tip_forms(
-                curr_round, club)
+            frms = create_tip_forms(curr_round, club)
             context['data'] = frms
             request.session['manual_user'] = club.id
         # Tips submitted
         else:
             club = Club.objects.get(id=request.session['manual_user'])
 
-            frms = tips_and_results.create_tip_forms(
-                curr_round, club, request.POST)
+            frms = create_tip_forms(curr_round, club, request.POST)
             context['data'] = frms
             for form in frms:
                 if form[0].is_valid()   \
                         and all([b.is_valid() for b in form[1]]):
+                    # Default tips are not valid
+                    if form[0].tip_instance.is_default:
+                        form[0].tip_instance.is_default = False
                     _save(form)
 
         club_form = render_club_selector(
@@ -135,7 +137,7 @@ def render_manual_tips(request, **kwargs):
         club = Club.objects.get(id=request.session['club'])
         club_form = render_club_selector(
             request, curr_round=curr_round, club=club, clubs=clubs)
-        frms = tips_and_results.create_tip_forms(curr_round, club)
+        frms = create_tip_forms(curr_round, club)
         context['data'] = frms
 
     content = render_to_response(
@@ -186,3 +188,48 @@ def render_auth_form(request):
         )
 
     return content.content
+
+
+def create_tip_forms(curr_round, club, data=None):
+    """
+    Create a tip form for each game in the round.
+    """
+
+    form_list = []
+
+    tips = Tip.objects.filter(
+        game__round=curr_round, club=club).order_by('game__game_date')
+
+    for tip in tips:
+        clubs = (tip.game.afl_home, tip.game.afl_away)
+
+        season = curr_round.season
+        players = []
+
+        for club in clubs:
+            players.extend(
+                [p for p in Player.objects.filter(season=season, club=club)])
+
+        tip_form = ManualTipForm(
+            clubs,
+            data,
+            prefix=tip.id,
+            instance=tip
+        )
+
+        # BOG forms
+        supercoaches = tip.supercoach_tips.all().order_by('id')
+        sc_forms = []
+        for sc in supercoaches:
+            form = ManualSupercoachForm(
+                players,
+                data,
+                prefix='%0d.%0d' % (tip.id, sc.id),
+                instance=sc)
+            sc_forms.append(form)
+
+        form_list.append((tip_form, sc_forms))
+
+    return form_list
+
+

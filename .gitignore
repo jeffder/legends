@@ -7,3 +7,4 @@ legends.db
 __pycache__
 .sass-cache
 static
+log/*

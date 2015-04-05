@@ -22,6 +22,7 @@ class CoachAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Coach, CoachAdmin)
 
+
 class PlayerAdmin(admin.ModelAdmin):
 
     list_display = ('season', 'club', 'player_name', 'supercoach_name')
@@ -41,6 +42,7 @@ class PlayerAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Player, PlayerAdmin)
 
+
 class RoundAdmin(admin.ModelAdmin):
 
     list_filter = ('season', )
@@ -56,6 +58,7 @@ class RoundAdmin(admin.ModelAdmin):
         return ', '.join(b.club.name for b in byes)
 
 admin.site.register(models.Round, RoundAdmin)
+
 
 class SupercoachRankingInline(admin.TabularInline):
 
@@ -77,10 +80,10 @@ class GameAdmin(admin.ModelAdmin):
         ),
         ('AFL Teams',
             {'fields': (('afl_home', 'afl_away'), )}),
-        ('Legends Teams',
-            {'fields': (('legends_home', 'legends_away'), )}),
         ('AFL Results',
             {'fields': (('afl_home_score', 'afl_away_score', 'crowd'), )}),
+        ('Legends Teams',
+         {'fields': (('legends_home', 'legends_away'), )}),
         ('Legends Results - Home',
             {
                 'fields': (
@@ -123,6 +126,7 @@ class GameAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Game, GameAdmin)
 
+
 class SupercoachRankingAdmin(admin.ModelAdmin):
 
     list_filter = ('game__round__season', 'player__club')
@@ -143,7 +147,7 @@ class TipAdmin(admin.ModelAdmin):
     fieldsets = [
         (
             None, {
-                'fields': (('game', 'club'), )
+                'fields': (('game', 'club', 'is_default'), )
             }
         ),
         ('Tips',
@@ -151,12 +155,14 @@ class TipAdmin(admin.ModelAdmin):
         ('Tip Scores',
             {'fields': (
                 ('winners_score', 'margins_score', 'crowds_score',
-                 'supercoach_score'),
+                 'supercoach_score', 'score'),
             )}),
     ]
 
     inlines = [SupercoachTipInline]
-    list_display = ('season', 'club', 'round', 'game')
+    list_display = (
+        'season', 'club', 'round', 'game', 'winner', 'margin', 'crowd',
+        'is_default')
     list_display_links = list_display
     list_filter = ('game__round__season', 'club', 'game__round')
     ordering = ('club', )

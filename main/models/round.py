@@ -40,7 +40,7 @@ class Round(models.Model):
 
     class Meta:
         app_label = 'main'
-        ordering = ('-season', 'start_time')
+        ordering = ('season', 'start_time')
 
     def __str__(self):
         return '{} {}'.format(self.season, self.name)
@@ -70,6 +70,16 @@ class Round(models.Model):
         Find the clubs who have a bye in this round.
         """
         return [b.club for b in self.byes.order_by('club').all()]
+
+    @property
+    def has_started(self):
+        if self.status != constants.Round.SCHEDULED:
+            return True
+
+        if self.deadline_has_passed:
+            return True
+
+        return False
 
     @property
     def has_byes(self):
@@ -174,7 +184,6 @@ class Round(models.Model):
         default). If `games` hasn't been provided, get tips for all games in the
         round. `key` should be something like 'club' or 'game__start_time' (see
         order_by in the Django docs).
-        We use raw SQL to avoid a circular import with the Tip model.
         """
         if not games:
             games = self.games.all()
@@ -223,15 +232,14 @@ class Round(models.Model):
 
         return tips_dict
 
-    def club_tips(self, club):
+    def club_tips(self, club, games=None):
         """
         Get a club's tips for this round.
 
         :param club: The club for which we want tips.
         :return: All of the club's tips for this round.
         """
-#        return (t for t in self._tips(key='game__game_date') if t.club == club)
-        return self._tips(key='game__game_date').filter(club=club)
+        return self._tips(games=games, key='game__game_date').filter(club=club)
 
     def club_ladders(self, club):
         """

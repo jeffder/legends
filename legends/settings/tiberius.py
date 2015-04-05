@@ -10,6 +10,8 @@ from legends.settings.base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+INTERNAL_IPS = ('127.0.0.1', '192.168.1.103', '192.168.1.116')
+
 # Project paths
 SQLITE_DB_NAME = os.path.join(PROJECT_DIR, 'legends.db')
 TEST_DB_NAME = os.path.join(PROJECT_DIR, 'test_legends3.fdb')

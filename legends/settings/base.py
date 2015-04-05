@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
+import logging
 import os
 
 from django.core.exceptions import ImproperlyConfigured
@@ -49,9 +50,52 @@ TEMPLATE_DIR = os.path.abspath(os.path.join(MAIN_DIR, 'templates'))
 LOG_DIR = os.path.join(PROJECT_DIR, 'log')
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
-LOG_FILES = {
-    'results': os.path.join(LOG_DIR, 'results.log'),
-    'tips': os.path.join(LOG_DIR, 'tips.log'),
+LOG_LEGENDS_FILE = os.path.join(LOG_DIR, 'legends.log')
+LOG_RESULTS_FILE = os.path.join(LOG_DIR, 'results.log')
+LOG_TIPS_FILE = os.path.join(LOG_DIR, 'tips.log')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOG_LEGENDS_FILE
+        },
+        'tip_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': LOG_TIPS_FILE
+        },
+        'result_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': LOG_RESULTS_FILE
+        }
+    },
+    'loggers': {
+        'legends': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+        'legends.tip': {
+            'handlers': ['tip_file'],
+            'level': 'INFO',
+        },
+        'legends.result': {
+            'handlers': ['result_file'],
+            'level': 'INFO',
+        },
+    }
 }
 
 # Application definition

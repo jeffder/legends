@@ -32,7 +32,10 @@
                         {% for game in group %}
                             {% if game %}
                                 {% cycle game_rows %}
+                                {% comment %}
                                 <tr class="{{ game_rows }}">
+                                {% endcomment %}
+                                <tr>
                                     <td class="table-cell-left">{{ game.legends_home }}</td>
                                     <td class="table-cell-right">{{ game.legends_home_winners_score }}</td>
                                     <td class="table-cell-right">{{ game.legends_home_margins_score }}</td>
@@ -41,7 +44,10 @@
                                     <td class="table-cell-right">{{ game.legends_home_winners_bonus }}</td>
                                     <td class="table-cell-right">{{ game.legends_home_score }}</td>
                                 </tr>
+                                {% comment %}
                                 <tr class="{{ game_rows }}">
+                                {% endcomment %}
+                                <tr>
                                     <td class="table-cell-left">{{ game.legends_away }}</td>
                                     <td class="table-cell-right">{{ game.legends_away_winners_score }}</td>
                                     <td class="table-cell-right">{{ game.legends_away_margins_score }}</td>

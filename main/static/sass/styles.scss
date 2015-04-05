@@ -87,6 +87,13 @@ body {
     margin-left: -15px;
     min-height: 30px;
 }
+
+.club-sub-nav {
+    list-style-type: None;
+    text-align: center;
+    margin-left: -40px;
+}
+
 // =============================
 // In progress banner
 // =============================
@@ -106,7 +113,7 @@ body {
 .game-header {
     background-color: $game-header-bg;
     border-radius: 5px;
-    color: #ffffff;
+    color: #000000;
     margin-bottom: 10px;
     margin-left: 0;
     margin-right: 0;
@@ -175,14 +182,16 @@ body {
 }
 
 .table-splitter {
-    background-color: $game-header-bg;
+    background-color: $pill-bg;
 }
 
 .bye-splitter {
     background-color: $pill-bg;
+    height: 5px;
 }
 
 p.supercoach-result {
+    font-size: 14px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -266,6 +275,7 @@ td.tips-table {
     padding-top: -5px;
 }
 
+.tips-table tbody tr:nth-child(odd),
 .tip-fieldset:nth-child(even) {
     background-color: $fieldset-bg;
 }
@@ -382,6 +392,7 @@ td.tips-table {
 }
 */
 .submit-btn {
+    margin-bottom: 20px;
     margin-left: 10px;
     margin-top: 10px;
 }
@@ -493,7 +504,6 @@ td.tips-table {
 }
 
 .tips-table .tip-score {
-    color: $game-header-bg;
     margin-bottom: 0px;
     padding-right: 20px;
     text-align: right;
@@ -516,8 +526,8 @@ td.tips-table {
 //     margin-left: 15px;
 //     margin-right: 15px;
 // }
-#tip-submission .form-group {
-    margin-bottom: 0px;
+.tip-form-container {
+    margin-bottom: 10px;
 }
 
 .tips-table td ul {
@@ -558,4 +568,110 @@ td.tips-table {
 #form-errors ul {
     list-style-type: none;
     padding-left: 10px;
+}
+
+/***** Manual tip forms *****/
+
+.tip_forms_left {
+    float: left;
+    margin-left: 10px;
+    width: 308px;
+}
+
+.tip_forms_centre {
+    float: left;
+    margin-left: 8px;
+    width: 308px;
+}
+
+.tip_forms_right {
+    float: right;
+    margin-right: 10px;
+    width: 308px;
+}
+.tip_form {
+    border: 0px solid black;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-bottom: 8px;
+    border-radius: 5px;
+}
+
+.tip_form_game_header {
+    background-color: #b0deb3;
+    width: 298px;
+    padding: 5px;
+    padding-left: 0px;
+    height: 33px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.tip_form_teams {
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 10px;
+    text-align: left;
+    width: 288px;
+}
+
+.tip_form_venue {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 10px;
+    text-align: left;
+    width: 120px;
+}
+
+.tip_form_date {
+    font-size: 12px;
+    font-weight: bold;
+    float: right;
+    padding-right: 10px;
+    text-align: right;
+    width: 120px;
+}
+
+.tip_form_label {
+    text-align: left;
+    padding-left:5px;
+    padding-right:5px;
+    padding-bottom: 0;
+    vertical-align: top;
+    display: block;
+    width: 40px;
+    float: left;
+}
+
+.tip_form_winner {
+    width: 130px;
+}
+
+.tip_form_player select {
+    width: 230px;
+}
+
+.form_error {
+    color: red;
+    padding-left: 5px;
+}
+
+#tip_submission {
+    background-color: #b0c4de;
+}
+
+.submit_button {
+    background-color: #c7c7c7;
+    clear: left;
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 13px;
+    font-weight: bold;
 }

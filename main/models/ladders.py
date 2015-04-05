@@ -32,6 +32,9 @@ class BaseLadder(models.Model):
         There is no need to do anything for the position, and points fields.
         """
         # Error checking
+        if other is None:
+            return self
+
         if not isinstance(other, self.__class__):
             raise TypeError(
                 'Other ladder (%s) must be an instance of %s.'
@@ -100,8 +103,7 @@ class BaseLadder(models.Model):
 
     def finalise(self):
         """
-        Add the previous ladder to this one. The Coleman and Legends ladders
-        need some extra work.
+        Add the previous ladder to this one.
         """
         self += self.previous_ladder
 
@@ -110,12 +112,10 @@ class BaseLadder(models.Model):
         """
         Return the ladder for the previous round.
         """
-        model = self.__class__
-
         if self.round.name == 'Round 1':
             return None
 
-        return model.objects.get(
+        return self.__class__.objects.get(
             round=self.round.previous_round,
             club=self.club
         )
@@ -201,10 +201,25 @@ class BasePremiershipLadder(BaseLadder):
             getattr(self, attr) for attr in ('win', 'draw', 'loss')
         )
 
+    def finalise(self):
+        """
+        Add the previous ladder to this one.
+        """
+        super(BasePremiershipLadder, self).finalise()
+
+        self.calculate_played()
+        self.calculate_premiership_points()
+        self.calculate_percentage()
+
+        if hasattr(self, 'calculate_min_max_scores'):
+            self.calculate_min_max_scores()
+        if hasattr(self, 'calculate_average_scores'):
+            self.calculate_average_scores()
+
 
 class AFLLadder(BasePremiershipLadder):
 
-    prefix = 'legends'
+    prefix = 'afl'
 
     class Meta:
         app_label = 'main'
@@ -280,8 +295,12 @@ class LegendsLadder(BasePremiershipLadder):
         """
         Calculate average scores for Legends ladder.
         """
-        self.avg_for = float(self.total_for) / self.played
-        self.avg_against = float(self.score_against) / self.played
+        if self.played != 0:
+            self.avg_for = float(self.score_for) / self.played
+            self.avg_against = float(self.score_against) / self.played
+        else:
+            self.avg_for = 0
+            self.avg_against = 0
 
 
 # Non-premiership ladders
@@ -424,6 +443,16 @@ class BaseLegendsLadder(BaseLadder):
         value = getattr(self, attr) + 1
         setattr(self, attr, value)
 
+    def finalise(self):
+        """
+        Add the previous ladder to this one.
+        """
+        super(BaseLegendsLadder, self).finalise()
+
+        self.calculate_min_max_scores()
+        self.calculate_average_scores()
+        self.calculate_strike_rates()
+
 
 class BrownlowLadder(BaseLegendsLadder):
 
@@ -513,8 +542,7 @@ class ColemanLadder(BaseLegendsLadder):
         self.score = self.score / constants.TipPoints.WINNER
         self.winners = self.score
 
-        if self.winners:
-            self._update_difference_attr(self.winners)
+        self._update_difference_attr(self.winners)
 
         super(ColemanLadder, self).finalise()
 
@@ -603,7 +631,7 @@ class CrowdsLadder(BaseLegendsLadder):
 
 class StreakLadder(models.Model):
 
-    sort_order = ['-wins', '-draws', 'losses', 'previous_position', 'club']
+    sort_order = ['-wins', '-draws', 'losses', 'previous_position']
 
     club = models.ForeignKey(Club, related_name='streak_ladders')
     losses = models.IntegerField(default=0)

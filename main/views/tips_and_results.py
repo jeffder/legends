@@ -27,7 +27,7 @@ from main.views import JSONResponse
 from main.views.auth import render_auth_form
 
 # Log tips by default
-logger = logging.getLogger('tips')
+logger = logging.getLogger('legends.tips')
 
 selected_page = 'tips'
 
@@ -48,23 +48,27 @@ def view_tips(request, round_id):
 
     selected_round.set_tipping_deadline()
 
+    games = selected_round.games.all()
+    clubs = selected_round.clubs_by_games(games)
+
+    # We want to see results, tips or tipp forms depending on the state of the
+    # round
     form_games = []
-    tip_games = []
     result_games = []
-    for game in selected_round.games.all():
+    tip_games = []
+    for game in games:
+        tips = game.tips_by_club(clubs)
         if game.status == 'Scheduled':
             if game.deadline_has_passed:
-                tip_games.append(game)
+                tip_games.append((game, tips))
             else:
-                form_games.append(game)
+                form_games.append((game, tips))
         else:
-            result_games.append(game)
+            result_games.append((game, tips))
+            tip_games.append((game, tips))
 
     # Render the round navigation buttons
     content = render_round_nav(request, selected_round)
-
-    # Render the in progress banner
-#    content += render_in_progress(request, selected_round)
 
     # Render tip results/tips/forms
     content += render_results(request, selected_round, result_games)
@@ -181,18 +185,23 @@ def get_results(request, round_id):
             # clear the Supercoach ranking table
             game.initialise_legends_scores()
             SupercoachRanking.objects.filter(game=game).delete()
-
             if game.game_date + delta <= now:
                 result = results[(game.afl_home.name, game.afl_away.name)]
                 set_afl_result(game, result)
                 available_results.append(game)
 
+        score_types = (
+            'crowds_score', 'margins_score', 'score',
+            'supercoach_score', 'winners_bonus', 'winners_score'
+        )
+
         # Set up the bye results for the round
         byes = dict((b.club, b) for b in curr_round.byes.all())
         for club in byes:
-            byes[club].score = 0
+            for attr in score_types:
+                setattr(byes[club], attr, 0)
 
-        calculate_tip_scores(curr_round, available_results)
+        calculate_tip_scores(curr_round, games, byes)
 
         # Update the ladders for home/away rounds
         if not curr_round.is_finals:
@@ -206,25 +215,24 @@ def get_results(request, round_id):
             create_streak_ladders(curr_round, available_results)
 
         # Update status for round
-        if curr_round.status == 'Scheduled':
-            for res in results:
-                res.status = 'Provisional'
-                res.save()
-            curr_round.set_status('Provisional')
+        if curr_round.status == constants.Round.SCHEDULED:
+            for game in available_results:
+                game.status = constants.Game.PROVISIONAL
+                game.save()
+            curr_round.status = constants.Round.PROVISIONAL
             curr_round.set_tipping_deadline()
-        elif all_results_provisional:
-            for res in results:
-                res.status = 'Final'
-                res.save()
-            curr_round.set_status('Final')
+        elif all(g.status == constants.Game.PROVISIONAL for g in games):
+            for game in games:
+                game.status = constants.Game.FINAL
+                game.save()
+            curr_round.status = constants.Round.FINAL
             finalise_round(request, curr_round)
+        else:
+            curr_round.set_tipping_deadline()
         curr_round.save()
 
         # Log the results we got
         _log_results(available_results)
-
-        # Create/update a projected final ladder
-#        project_final_ladder(curr_round)
 
     # Redirect to the tips page when we're done
     return redirect('/legends/%s/tips/' % round_id)
@@ -235,7 +243,7 @@ def finalise_round(request, curr_round):
     Set up the next round
     """
 
-    next_round = curr_round.next_round()
+    next_round = curr_round.next_round
     if next_round:
         if next_round.is_finals:
             next_round.create_finals_fixtures()
@@ -252,7 +260,6 @@ def render_results(request, selected_round, games):
     if not games:
         return b''
 
-    game_data = []
     round_values = {
         'bonus_score': [],
         'crowds_score': [],
@@ -262,40 +269,12 @@ def render_results(request, selected_round, games):
         'winners_score': [],
     }
 
-    # Summarise results for each AFL game that has a result
-    # Just get minimum/maximum/average scores for each quarter
     score_attrs = (
         'winners_score', 'margins_score', 'crowds_score', 'supercoach_score',
         'score'
     )
 
-    tips_dict = selected_round.tips_by_game(games)
-
-    for game, tips in tips_dict.items():
-        # Group tips according to legends games and byes
-        bye_clubs = game.round.bye_clubs
-        if bye_clubs:
-            game_tips = [t for t in tips if t.club not in bye_clubs]
-            bye_tips = [t for t in tips if t.club in bye_clubs]
-        else:
-            game_tips = tips[:]
-            bye_tips = []
-        game_tips = chunks(game_tips)
-
-        game_summary = {}
-        for attr in score_attrs:
-            values = [getattr(t, attr) for t in tips]
-            game_summary[attr] = {
-                'max': max(values),
-                'min': min(values),
-                'avg': mean(values)
-            }
-
-        game_data.append({'game': game,
-                          'game_tips': game_tips,
-                          'bye_tips': bye_tips,
-                          'summary': game_summary})
-
+    for game, tips in games:
         # Update round scores
         for team in ('legends_away', 'legends_home'):
             for attr in score_attrs:
@@ -343,7 +322,8 @@ def render_results(request, selected_round, games):
             size += 1
     else:
         size = 5
-    grouped_games = chunks(games, size)
+    legends_games = selected_round.games.all()
+    grouped_games = chunks((g for g in legends_games), size)
 
     # Split byes into two chunks
     size, remainder = divmod(selected_round.num_games, 2)
@@ -353,40 +333,34 @@ def render_results(request, selected_round, games):
 
     context = {
         'round': selected_round,
-        'data_type': 'result',
-        'games': games,
         'byes': byes,
         'grouped_games': grouped_games,
-        'show_form': False,
-        'data': game_data,
         'total_summary': total_summary
     }
 
     content = render(
         request,
-        'view_tips_and_results.html',
+        'legends_result.html',
         context
     )
 
     return content.content
 
 
-def render_tips(request, selected_round, games):
+def render_tips(request, selected_round, game_tip_data):
     """
     View tips
     """
-    if not games:
+    if not game_tip_data:
         return b''
-
-#    club = Club.objects.get(id=request.session['club'])
-    tips_dict = selected_round.tips_by_game(games)   #, sort_by_game=True)
 
     # Summarise tips for each game
     data = []
     games = []
-    for game, tips in tips_dict.items():
+    byes = selected_round.bye_clubs
+
+    for game, tips in game_tip_data:
         # Group tips according to legends games and byes
-        byes = game.round.bye_clubs
         if byes:
             game_tips = [t for t in tips if t.club not in byes]
             bye_tips = [t for t in tips if t.club in byes]
@@ -394,62 +368,12 @@ def render_tips(request, selected_round, games):
             game_tips = tips[:]
             bye_tips = []
         game_tips = chunks(game_tips)
-
-        summary = {}
-
         games.append(game)
 
-        winners = []
-        summary['margin'] = []
-        for club in (game.afl_home, game.afl_away):
-            winners.append((club, len([t for t in tips if t.winner == club])))
-
-            margins = [t.margin
-                       for t in tips
-                       if t.winner == club and t.margin is not None]
-
-            # There will be no margins if nobody has tipped club
-            if margins:
-                min_max = {
-                    'max': max(margins),
-                    'min': min(margins),
-                    'avg': mean(margins)
-                }
-            else:
-                min_max = {'max': 0, 'min': 0, 'avg': 0}
-
-            summary['margin'].append((club, min_max))
-
-        num_draws = len(tips) - sum(w[1] for w in winners)
-        winners.append(('draw', num_draws))
-        summary['winner'] = winners
-
-        # Crowds
-        crowds = [t.crowd for t in tips if t.crowd is not None]
-        if crowds:
-            min_max = {
-                'max': max(crowds), 'min': min(crowds), 'avg': mean(crowds)}
+        if game.status == constants.Game.SCHEDULED:
+            summary = tip_summary(game, tips)
         else:
-            min_max = {'max': 0, 'min': 0, 'avg': 0}
-        summary['crowd'] = min_max
-
-        # Supercoach
-        supercoach_count = []
-        supercoaches = [s.player for t in tips for s in t.supercoach_tips.all()]
-
-        for supercoach in set(supercoaches):
-            if supercoach is not None:
-                supercoach_count.append(
-                    (supercoach, supercoaches.count(supercoach)))
-        supercoach_count = sorted(
-            supercoach_count, key=lambda x: x[1], reverse=True)
-
-        grouped_supercoach_count = []
-        for key, group in groupby(supercoach_count, lambda x: x[1]):
-            group = sorted(list(group), key=lambda x: x[0].last_name)
-            grouped_supercoach_count.append((key, [g[0] for g in group]))
-
-        summary['supercoach'] = grouped_supercoach_count
+            summary = tip_result_summary(game, tips)
 
         data.append(
             {
@@ -493,7 +417,7 @@ def render_tip_forms(request, selected_round, games=None):
 
     if club_can_tip:
         # Post data is handled via Ajax in submit_tips()
-        frms = create_tip_forms(selected_round, club)
+        frms = create_tip_forms(selected_round, club, games=games)
         context['forms'] = frms
 
     # Show AFL fixtures if club hasn't paid fees yet or can't otherwise tip
@@ -523,12 +447,11 @@ def submit_tips(request):
             for f in frm:
                 f.save()
 
-        # Log tip input
         tip = form[0].instance
 
-        log_message = '%s: %s: %s: Winner: %s Margin: %s Crowd: %d' % (
+        # Log tip input
+        log_message = '%s: %s: Winner: %s Margin: %s Crowd: %d' % (
             tip.club,
-            selected_round,
             tip.game,
             tip.winner,
             tip.margin,
@@ -536,9 +459,8 @@ def submit_tips(request):
         )
         logger.info(log_message)
         for supercoach in tip.supercoach_tips.all():
-            log_message = '%s: %s: %s: BOG: %s' % (
+            log_message = '%s: %s: Supercoach: %s' % (
                 tip.club,
-                selected_round,
                 tip.game,
                 supercoach.player
             )
@@ -582,21 +504,23 @@ def submit_tips(request):
 
     # Process the form
     post_data = _parse_post_data(request)
-    frms = create_tip_forms(selected_round, club, post_data)
+    frms = create_tip_forms(selected_round, club, data=post_data)
     is_valid = {}
     for form in frms:
-        if form[0].is_valid()   \
+        if form[0].is_valid() \
                 and all([f.is_valid() for f in form[1]]):
+            # Default tips are not valid
+            if form[0].instance.is_default:
+                form[0].instance.is_default = False
             _save(form)
             is_valid[form[0].instance.id] = True
         else:
             is_valid[form[0].instance.id] = False
-
     return JSONResponse(is_valid)
 
 
 # Utility functions
-def create_tip_forms(selected_round, club, data=None):
+def create_tip_forms(selected_round, club, games=None, data=None):
     """
     Create a tip form for each tip in data.
     """
@@ -604,7 +528,7 @@ def create_tip_forms(selected_round, club, data=None):
 
     # Get all of the coach's tips for the round if we have no data
     if data is None:
-        tips = selected_round.club_tips(club)
+        tips = [t for g in games for t in g[1] if t.club == club]
     else:
         tips = data.keys()
 
@@ -619,14 +543,17 @@ def create_tip_forms(selected_round, club, data=None):
             player_tips = data[tip].pop('players')
             tip_data = data[tip]
         else:
-            player_tips = None
-            tip_data = None
+            player_tips = tip.supercoach_tips.all()
+            tip_data = {
+                '{}=winner'.format(tip.id): tip.winner,
+                '{}-margin'.format(tip.id): tip.margin,
+                '{}-crowd'.format(tip.id): tip.crowd
+            }
 
         tip_form = forms.TipForm(
             tip_data,
             prefix=tip.id,
-            instance=tip,
-            initial={'winner': tip.winner}
+            instance=tip
         )
 
         # Supercoach forms
@@ -642,7 +569,8 @@ def create_tip_forms(selected_round, club, data=None):
                 players,
                 sc_data,
                 prefix='%0d-%0d' % (tip.id, sc.id),
-                instance=sc)
+                instance=sc
+            )
             supercoach_forms.append(form)
 
         form_list.append((tip_form, supercoach_forms))
@@ -658,7 +586,8 @@ def set_afl_result(game, result):
     game.afl_home_score = result['home_score']
     game.afl_away_score = result['away_score']
     game.crowd = result['crowd']
-    game.status = 'Provisional'
+    game.status = constants.Game.PROVISIONAL
+    game.save()
 
     # Save the Supercoach scores and rankings
     save_supercoach_results(game, result['sc_scores'])
@@ -688,11 +617,11 @@ def save_supercoach_results(game, results):
     # Due to ties we might get more than 5 players
     player_count = 0
     previous = 0
-    rank = 5
+    rank = 0
     for score in scores:
         if previous != score['score']:
-            rank = 5 - player_count
-            if rank <= 0:
+            rank += 1
+            if player_count >= 5:
                 break
             previous = score['score']
 
@@ -705,40 +634,17 @@ def save_supercoach_results(game, results):
         player_count += 1
 
 
-def calculate_tip_scores(current_round, results):
+def calculate_tip_scores(current_round, results, byes):
     """
     Calculate tip scores for the given games.
     """
     if not results:
         return
 
-    # Initialise the game scores for each club. We need to map clubs to the
-    # game they're playing in or bye so that we can update game scores with
-    # tip scores when they're calculated. As well as the game, we also need
-    # to know whether they're the home or away team or if they've got a bye
-    # in this round
-    club_games = {}
-
-    score_types = (
-        'crowds_score', 'margins_score', 'score', 'supercoach_score',
-        'winners_score'
-    )
-
-    games = current_round.games.all()
-    for game in games:
-        club_games[game.legends_away] = (game, False, False)
-        club_games[game.legends_home] = (game, True, False)
-        for score_type in score_types:
-            setattr(game, 'legends_away_{}'.format(score_type), 0)
-            setattr(game, 'legends_home_{}'.format(score_type), 0)
-
-    # Add the byes
-    for bye in current_round.byes.all():
-        club_games[bye.club] = (bye, False, True)
-        for score_type in score_types:
-            setattr(bye, score_type, 0)
-
     for result in results:
+        if result.status == constants.Game.SCHEDULED:
+            continue
+
         winner = result.afl_winner
         margin = result.margin
         crowd = int(1000 * round(result.crowd / 1000.0))
@@ -749,11 +655,6 @@ def calculate_tip_scores(current_round, results):
 
         # We'll never get a score this high
         lowest_score = 999
-
-        score_types = (
-            'crowds_score', 'margins_score', 'score', 'supercoach_score',
-            'winners_score'
-        )
 
         # Create lookup for the top ranked Supercoach players in game
         sc_lookup = {
@@ -799,24 +700,11 @@ def calculate_tip_scores(current_round, results):
                 sc.save()
 
             # Total score
-            tip.total = tip.winners_score + tip.margins_score +   \
+            tip.score = tip.winners_score + tip.margins_score +   \
                 tip.crowds_score + tip.supercoach_score
             tip.save()
 
-            # Update the round scores
-            game, is_home, is_bye = club_games[tip.club]
-            for score_type in score_types:
-                if is_bye:
-                    attr = score_type
-                else:
-                    if is_home:
-                        attr = 'legends_home_{}'.format(score_type)
-                    else:
-                        attr = 'legends_away_{}'.format(score_type)
-                setattr(
-                    game, attr, getattr(game, attr) + getattr(tip, score_type))
-
-            lowest_score = min(lowest_score, tip.total)
+            lowest_score = min(lowest_score, tip.score)
 
         for tip in default_tips:
             # Default tips get 0 for each category but the total is the lowest
@@ -829,30 +717,33 @@ def calculate_tip_scores(current_round, results):
             tip.score = max(0, lowest_score - 1)
             tip.save()
 
-            # Update round scores. We don't need to worry about anything except
-            # the total score
-            game, is_home, is_bye = club_games[tip.club]
-            if is_bye:
-                game.score += tip.score
-            else:
-                if is_home:
-                    game.legends_home_score += tip.score
-                else:
-                    game.legends_away_score += tip.score
-
+    # Update the scores for the round
     # Include the winners bonus for home/away rounds with 9 games
+    # TODO: This is a bit clunky so maybe try a query of some sort
     bonus_games = constants.TipPoints.WINNERS_BONUS_GAME_COUNT
-    if not current_round.is_finals and current_round.num_games == bonus_games:
-        bonus_score = bonus_games * constants.TipPoints.WINNER
+    bonus_score = bonus_games * constants.TipPoints.WINNER
 
-        for game, is_home, is_bye in club_games.values():
-            if is_bye:
-                if game.winners_score == bonus_score:
-                    game.winners_bonus = constants.TipPoints.WINNERS_BONUS
-                    game.score += game.winners_bonus
+    score_types = (
+        'crowds_score', 'margins_score', 'score', 'supercoach_score',
+        'winners_score'
+    )
+
+    for game in results:
+        for team in ('legends_home', 'legends_away'):
+            club = getattr(game, team)
+            is_home = team == 'legends_home'
+            tips = Tip.objects \
+                .filter(club=club) \
+                .filter(game__round=game.round) \
+                .exclude(game__status=constants.Game.SCHEDULED)
+            for score_type in score_types:
+                if is_home:
+                    attr = 'legends_home_{}'.format(score_type)
                 else:
-                    game.winners_bonus = 0
-            else:
+                    attr = 'legends_away_{}'.format(score_type)
+                setattr(game, attr, sum(getattr(t, score_type) for t in tips))
+
+                # Winners bonus
                 if is_home:
                     if game.legends_home_winners_score == bonus_score:
                         game.legends_home_winners_bonus = constants.TipPoints.WINNERS_BONUS
@@ -865,19 +756,102 @@ def calculate_tip_scores(current_round, results):
                         game.legends_away_score += game.legends_away_winners_bonus
                     else:
                         game.legends_away_winners_bonus = 0
+        game.save()
 
-            game.save()
-    else:
-        for game, is_home, is_bye in club_games.values():
-            if is_bye:
-                game.winners_bonus = 0
+    # Handle the byes
+    for bye in byes:
+        tips = Tip.objects \
+            .filter(club=bye.club) \
+            .filter(game__round=game.round) \
+            .exclude(game__status=constants.Game.SCHEDULED)
+        for score_type in score_types:
+            setattr(bye, score_type, sum(getattr(t, score_type) for t in tips))
+            if game.winners_score == bonus_score:
+                game.winners_bonus = constants.TipPoints.WINNERS_BONUS
+                game.score += game.winners_bonus
             else:
-                if is_home:
-                    game.legends_home_winners_bonus = 0
-                else:
-                    game.legends_away_winners_bonus = 0
+                game.winners_bonus = 0
+        bye.save()
 
-            game.save()
+
+def tip_summary(game, tips):
+    """
+    Build a summary of the game's tips.
+    """
+    summary = {}
+
+    winners = []
+    summary['margin'] = []
+    for club in (game.afl_home, game.afl_away):
+        winners.append((club, len([t for t in tips if t.winner == club])))
+
+        margins = [t.margin
+                   for t in tips
+                   if t.winner == club and t.margin is not None]
+
+        # There will be no margins if nobody has tipped club
+        if margins:
+            min_max = {
+                'max': max(margins),
+                'min': min(margins),
+                'avg': mean(margins)
+            }
+        else:
+            min_max = {'max': 0, 'min': 0, 'avg': 0}
+
+        summary['margin'].append((club, min_max))
+
+    summary['winner'] = winners
+
+    # Crowds
+    crowds = [t.crowd for t in tips if t.crowd is not None]
+    if crowds:
+        min_max = {
+            'max': max(crowds), 'min': min(crowds), 'avg': mean(crowds)}
+    else:
+        min_max = {'max': 0, 'min': 0, 'avg': 0}
+    summary['crowd'] = min_max
+
+    # Supercoach
+    player_count = []
+    players = [s.player for t in tips for s in t.supercoach_tips.all()]
+
+    for player in set(players):
+        if player is not None:
+            player_count.append((player, players.count(player)))
+    player_count = sorted(player_count, key=lambda x: x[1], reverse=True)
+
+    grouped_player_count = []
+    for key, group in groupby(player_count, lambda x: x[1]):
+        group = sorted(list(group), key=lambda x: x[0].last_name)
+        grouped_player_count.append((key, [g[0] for g in group]))
+
+    summary['supercoach'] = grouped_player_count
+
+    return summary
+
+
+def tip_result_summary(game, tips):
+    """
+    Summarise results for each AFL game that has a result
+    Just get minimum/maximum/average scores for each quarter
+    """
+    summary = {}
+
+    score_attrs = (
+        'winners_score', 'margins_score', 'crowds_score', 'supercoach_score',
+        'score'
+    )
+
+    for attr in score_attrs:
+        values = [getattr(t, attr) for t in tips]
+        summary[attr] = {
+            'max': max(values),
+            'min': min(values),
+            'avg': mean(values)
+        }
+
+    return summary
 
 
 def create_legends_ladders(curr_round, games):
@@ -885,9 +859,8 @@ def create_legends_ladders(curr_round, games):
     Create the Legends ladder for each club for round
     """
     ladders = curr_round.legends_ladders()
-
     round_ladders = []
-
+    games = curr_round.games.all()
     for game in games:
         for club in (game.legends_away, game.legends_home):
             ladder = ladders[club]
@@ -988,7 +961,7 @@ def create_streak_ladders(curr_round, games):
     ladders = curr_round.get_streak_ladders()
     round_ladders = []
 
-    for game in games:
+    for game in curr_round.games.all():
         for club in (game.legends_away, game.legends_home):
             ladder = ladders[club]
 
@@ -1014,211 +987,3 @@ def create_streak_ladders(curr_round, games):
     for index, row in enumerate(sorted_ladder):
         row.position = index + 1
         row.save()
-
-
-def create_bog_lookup(result):
-    """
-        Create a lookup for result BOGs.
-    """
-
-    lookup = {}
-
-    for bog in result.bogs.all():
-        lookup[bog.player] = bog.votes
-
-    return lookup
-
-
-def project_final_ladder(rnd):
-    """
-    Project a final ladder starting from the given round.
-    """
-
-    # Only do the projection for the home/away rounds
-    if rnd.is_finals:
-        return
-
-    # It seems pointless to do a projection too early so wait until after the
-    # byes
-    rounds = [r for r in Round.objects.filter(season=rnd.season) if r.has_byes]
-    if rnd.round_number() <= rounds[-1].round_number():
-        return
-
-    ### Initialise the projection
-    clubs = rnd.season.clubs()
-
-    # Get the scores we're going to base the predictions on.
-    # These will be the last N completed home or away scores for each club
-    # where N is the number of home/away rounds in the current season excluding
-    # rounds where the club has a bye. This should even out form differences
-    # over time.
-    # Byes are excluded. Games from previous seasons are necesarily included.
-    # TODO: We assume there's only one bye per team per season.
-    N = rnd.season.round_count() - 1
-
-    fixtures = LegendsFixture.objects   \
-        .filter(
-            round__start_time__lte=rnd.start_time,
-            round__is_finals=False
-        )   \
-        .order_by('-round__start_time')
-
-    # Get the last N for and against scores for each club
-    club_scores = collections.defaultdict(dict)
-    for club in clubs:
-        club_fixtures = fixtures   \
-            .filter(Q(home=club) | Q(away=club))[:N]
-        scores_for, scores_against = get_scores(club, club_fixtures, N)
-
-        club_scores[club] = {
-            'for': scores_for,
-            'against': scores_against,
-        }
-
-    ### Project the ladder and update/create the row model instances
-    ladder = project_results(rnd, club_scores)
-
-    for row in ladder:
-        row_ladder, _ = FinalLadder.objects.get_or_create(
-            round=rnd, club=row[0])
-        for key, value in row[1].iteritems():
-            setattr(row_ladder, key, value)
-        row_ladder.save()
-
-
-def project_results(rnd, club_scores):
-    """
-    Estimate all the future results and create the projected final ladder.
-    """
-
-    ladder = base_ladder(rnd)
-
-    # Get the points for win, draw and loss
-    points = Points.objects.get(season=rnd.season)
-
-    current_round = rnd.next_round()
-    while current_round.is_finals is False:
-        for fixture in current_round.legendsfixtures.all():
-            home = fixture.home
-            away = fixture.away
-
-            home_score, away_score = estimate_scores(fixture, club_scores)
-
-            # Update the ladder
-            if home_score > away_score:
-                ladder[home]['win'] += 1
-                ladder[away]['loss'] += 1
-            elif home_score == away_score:
-                ladder[home]['draw'] += 1
-                ladder[away]['draw'] += 1
-            else:
-                ladder[home]['loss'] += 1
-                ladder[away]['win'] += 1
-
-            ladder[home]['score_for'] += home_score
-            ladder[home]['score_against'] += away_score
-            ladder[away]['score_for'] += away_score
-            ladder[away]['score_against'] += home_score
-
-            # Update club scores
-            club_scores[home]['for'].appendleft(home_score)
-            club_scores[home]['against'].appendleft(away_score)
-            club_scores[away]['for'].appendleft(away_score)
-            club_scores[away]['against'].appendleft(home_score)
-
-        current_round = current_round.next_round()
-
-    # Finalise the ladder
-    for club, values in ladder.iteritems():
-        ladder[club]['played'] =   \
-            values['win'] + values['draw'] + values['loss']
-        ladder[club]['points'] =   \
-            values['win'] * points.ladder_win +   \
-            values['draw'] * points.ladder_draw
-        ladder[club]['percentage'] =   \
-            100 * float(values['score_for']) / values['score_against']
-
-    def _sort_keys(item):
-        return (
-            -item[1]['points'],
-            -item[1]['percentage'],
-            -item[1]['score_for'],
-            item[0]
-        )
-
-    final_ladder = sorted(ladder.iteritems(), key=_sort_keys)
-
-    return final_ladder
-
-
-def get_scores(club, fixtures, N):
-    """
-    Get the club's most recent N for and against scores.
-    """
-
-    score_for = collections.deque(maxlen=N)
-    score_against = collections.deque(maxlen=N)
-
-    for f in fixtures:
-        if club == f.home:
-            score_for.append(f.home_score)
-            score_against.append(f.away_score)
-        else:
-            score_for.append(f.away_score)
-            score_against.append(f.home_score)
-
-    return score_for, score_against
-
-
-def base_ladder(rnd):
-    """
-    Get the ladder for the round.
-
-    Just grab the attributes we need.
-    """
-
-    attrs = ('played', 'win', 'draw', 'loss', 'score_for', 'score_against',
-             'points', 'percentage')
-
-    ladders = collections.defaultdict(dict)
-    for ladder in LegendsLadder.objects.filter(round=rnd):
-        ladders[ladder.club] = {attr: getattr(ladder, attr) for attr in attrs}
-
-    return ladders
-
-
-def estimate_scores(fixture, club_scores, N=1000000):
-    """
-    Estimate the score for the given fixture and return a tuple of the home
-    and away scores.
-
-    Each score is the average of N random values drawn from the poisson
-    distribution with lambda calculated as:
-        * find the average of the club's for scores
-        * find the average of the club's opponent's against scores
-        * average these results
-    """
-
-    def _lambda(s_for, s_against):
-        n = len(s_for)
-        denom = float(n) * (n + 1) / 2
-        avg_for = int(sum((n - w) * s for w, s in enumerate(s_for)) / denom)
-
-        n = len(s_against)
-        avg_against = int(
-            sum((n - w) * s for w, s in enumerate(s_against)) / denom
-        )
-
-        return int((avg_for + avg_against) / 2.0)
-
-    s_for = club_scores[fixture.home]['for']
-    s_against = club_scores[fixture.away]['against']
-    lamb = _lambda(s_for, s_against)
-    home_score = int(sum(numpy.random.poisson(lamb, N)) / float(N))
-
-    s_for = club_scores[fixture.away]['for']
-    s_against = club_scores[fixture.home]['against']
-    lamb = _lambda(s_for, s_against)
-    away_score = int(sum(numpy.random.poisson(lamb, N)) / float(N))
-
-    return (home_score, away_score)

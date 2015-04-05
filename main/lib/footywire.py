@@ -48,8 +48,11 @@ class Footywire(object):
 
         return home_score, away_score, link
 
-    def get_supercoach_scores(self, link, home, away):
+    def get_supercoach_scores(self, link, teams):
         scores = {}
+
+        home = teams[0]
+        away = teams[1]
 
         url = 'http://www.footywire.com/afl/footy/{}'.format(link)
         soup = self._get_soup(url)
@@ -68,18 +71,25 @@ class Footywire(object):
         return scores
 
     def get_results(self):
-        '''
+        """
         Retrieve the Footywire fixture data for this round.
-        '''
+        """
         num_games = self.round.num_games
+
+        # Format the round's start date so that we can start the search
+        start_str = self.round.start_time.strftime('%a %d %b')
+        _day, _date, _month = start_str.split()
+        if _date.startswith('0'):
+            start_str = ' '.join((_day, _date[1], _month))
 
         url = 'http://www.footywire.com/afl/footy/ft_match_list'
         soup = self._get_soup(url)
 
-        round_header = soup.find(attrs={'name': self.round_name})
-        search_start = round_header.find_parent('tr')
-        games = search_start.find_next_siblings('tr', limit=num_games + 1)
-        for game in games[1:]:
+        start = soup.find(attrs={'class': 'data'}, text=start_str)
+        search_start = start.find_parent('tr')
+        games = [search_start]
+        games.extend(search_start.find_next_siblings('tr', limit=num_games - 1))
+        for game in games:
             cols = [c for c in game.children if c != u'\n']
 
             home_score, away_score, link = self.get_scores(cols[4])
@@ -87,7 +97,7 @@ class Footywire(object):
                 continue
             teams = self.get_teams(cols[1])
             crowd = self.get_crowd(cols[3])
-            sc_scores = self.get_supercoach_scores(link, teams[0], teams[1])
+            sc_scores = self.get_supercoach_scores(link, teams)
 
             self.data[teams] = {
                 'crowd': crowd,

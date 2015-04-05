@@ -99,7 +99,7 @@ def render_ladder(request, ladder_name, selected_round):
     Render a ladder given the round and ladder name.
     """
 
-    model = get_model('main', '%sLadder' % ladder_name.title())
+    model = get_model('main', '{}Ladder'.format(ladder_name.title()))
 
     template = 'view_%s_ladder.html' % ladder_name
 
