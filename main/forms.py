@@ -195,7 +195,7 @@ class TipForm(forms.ModelForm):
 
         # Set options for fields
         self.fields['winner'].queryset = models.Club.objects.filter(
-            id__in=self.club_lookup.keys())
+            id__in=[c.id for c in clubs])
 
     class Meta:
         model = models.Tip
@@ -397,6 +397,162 @@ class CoachVCoachForm(forms.Form):
     coach_2 = forms.ChoiceField()
 
 
+# Manual tips
+
+class ManualTipForm(forms.Form):
+    """
+    Submission form for manual tips
+    """
+
+    def __init__(self, clubs, *args, **kwargs):
+        self.tip_instance = kwargs.pop('instance')
+
+        # Use customised error formatting
+        kwargs['error_class'] = Errors
+
+        super(ManualTipForm, self).__init__(*args, **kwargs)
+
+        self.home = clubs[0]
+        self.away = clubs[1]
+        self.ground = self.tip_instance.game.ground
+        self.date = self.tip_instance.game.game_date
+
+        self.club_lookup = dict((c.id, c) for c in clubs)
+
+        # Set options for fields
+        choices = [('', u'------')]
+        choices.extend([(c.id, c.name) for c in clubs])
+
+        self.fields['winner'].choices = choices
+        if self.tip_instance.is_default:
+            self.fields['winner'].initial = ''
+            self.fields['margin'].initial = ''
+            self.fields['crowd'].initial = ''
+
+        else:
+            if self.tip_instance.winner:
+                self.fields['winner'].initial = self.tip_instance.winner.id
+
+            self.fields['margin'].initial = self.tip_instance.margin
+            self.fields['crowd'].initial = self.tip_instance.crowd
+
+    winner = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'tip_form_winner'})
+    )
+    margin = forms.IntegerField(widget=forms.TextInput(attrs={'size': 7}))
+    crowd = forms.IntegerField(widget=forms.TextInput(attrs={'size': 7}))
+
+    def clean_crowd(self):
+        crowd = self.cleaned_data['crowd']
+
+        if crowd < 1000 or crowd > 110000:
+            raise forms.ValidationError(
+                'Crowd must be between 1,000 and 110,000'
+            )
+
+        if crowd % 1000:
+            raise forms.ValidationError('Crowd must be a multiple of 1,000')
+
+        return crowd
+
+    def clean_winner(self):
+        winner = self.cleaned_data['winner']
+
+        if not winner:
+            raise forms.ValidationError('Winner must not be blank')
+
+        return int(winner)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+
+        winner = cleaned_data.get('winner')
+        margin = cleaned_data.get('margin')
+
+        if margin is None:
+            return cleaned_data
+
+        if winner:
+            if margin == 0:
+                del cleaned_data['winner']
+                del cleaned_data['margin']
+                raise forms.ValidationError('Margin must be between 1 and 99.')
+
+        return cleaned_data
+
+    def save(self):
+        cleaned_data = self.cleaned_data
+
+        if not cleaned_data:
+            return self.tip_instance
+
+        winner = self.cleaned_data['winner']
+
+        self.tip_instance.winner = self.club_lookup[winner]
+        self.tip_instance.margin = cleaned_data['margin']
+        self.tip_instance.crowd = cleaned_data['crowd']
+        if cleaned_data['crowd'] == 0 and cleaned_data['margin'] == 0:
+            self.tip_instance.is_default = True
+
+        self.tip_instance.save()
+
+        return self.tip_instance
+
+
+class ManualSupercoachForm(forms.Form):
+    """
+    Class for manual Supercoach forms
+    """
+
+    def __init__(self, players, *args, **kwargs):
+
+        self.instance = kwargs.pop('instance')
+
+        # Use customised error formatting
+        kwargs['error_class'] = Errors
+
+        super(ManualSupercoachForm, self).__init__(*args, **kwargs)
+
+        # Set options for fields
+        choices = [('', '------')]
+        choices.extend([(p.id, str(p)) for p in players])
+
+        self.fields['player'].choices = choices
+
+        # Find out if we have a default tip/result
+        if isinstance(self.instance, models.SupercoachTip):
+            attr = getattr(self.instance, 'tip')
+
+        if attr.is_default:
+            self.fields['player'].initial = ''
+
+        else:
+            self.fields['player'].initial = self.instance.player.id
+
+    player = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'tip_form_player'})
+    )
+
+    def clean_player(self):
+
+        player = self.cleaned_data['player']
+
+        if not player:
+            raise forms.ValidationError('Player must not be blank')
+
+        return int(player)
+
+    def save(self):
+
+        player = self.cleaned_data['player']
+
+        self.instance.player = models.Player.objects.get(id=int(player))
+
+        self.instance.save()
+
+        return self.instance
+
+
 class ClubSelectionForm(forms.Form):
     '''
     Selection of club for the manual tips view.
@@ -423,3 +579,5 @@ class ClubSelectionForm(forms.Form):
         self.fields['club'].required = True
 
     club = forms.ChoiceField()
+
+

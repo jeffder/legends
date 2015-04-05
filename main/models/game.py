@@ -88,11 +88,6 @@ class Game(models.Model):
         times for its fixtures until after the previous round has been played.
         So, it won't have a tipping deadline until then.
         """
-        # DEBUG
-        if self.round.name == 'Round 21':
-            return False
-        # END DEBUG
-
         try:
             return datetime.datetime.now() >= self.tipping_deadline
         except TypeError:
@@ -157,3 +152,17 @@ class Game(models.Model):
     @property
     def margin(self):
         return abs(self.afl_home_score - self.afl_away_score)
+
+    def tips_by_club(self, clubs):
+        """
+        Get the tips for the game sorted by the order of clubs in clubs.
+
+        :param clubs:
+            A list or other iterable with an index attribute used to sort the
+            tips.
+        :return:
+            A sorted list of tips
+        """
+        tips = sorted(self.tips.all(), key=lambda x: clubs.index(x.club))
+
+        return tips

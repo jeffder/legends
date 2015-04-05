@@ -182,7 +182,7 @@
             </div>
 
             <div class="pull-right text-right base-div">
-                {% if live_round.status != 'Final' and live_round.deadline_has_passed %}
+                {% if live_round.status != 'Final' and live_round.has_started %}
                     <span class="in-progress">In Progress </span>
                 {% endif %}
                 <span>

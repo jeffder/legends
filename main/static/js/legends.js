@@ -343,20 +343,6 @@ function submit_change_password(form) {
 }
 
 
-function get_fieldset_data(fieldset){
-    var tmp_array = fieldset.serializeArray();
-    var mapping = {};
-
-    $.map(tmp_array, function(attr, i) {
-        if (ends_with(attr['name'], 'checkbox') == false) {
-            mapping[attr['name']] = attr['value'];
-        }
-    });
-    console.log('mapping = ' + mapping);
-    return mapping;
-}
-
-
 function fieldsets_to_json(form, get_all){
     var fieldsets;
     var mapping;
@@ -371,25 +357,23 @@ function fieldsets_to_json(form, get_all){
     else {
         fieldsets = $("input[type=checkbox]:checked").closest("fieldset");
     }
-    console.log(fieldsets);
+
     fieldsets.each(function() {
         mapping = {};
-
-        $.map($(this).serializeArray(), function (attr, i) {
+        $(this).find(':input').each(function() {
             // Use tip ID as the key to the fieldset data but don't include it
-            if (attr['name'] == 'tip_id') {
-                key = attr['value'];
+            if (this.name == 'tip_id') {
+                key = this.value;
             }
             // Put everything else except the checkbox in the fieldset data
-            else if (!ends_with(attr['name'], 'checkbox')) {
-                mapping[attr['name']] = attr['value'];
+            else if (!ends_with(this.name, 'checkbox')) {
+                mapping[this.name] = this.value;
             }
         });
 
         data[key] = mapping;
     });
 
-    console.log(JSON.stringify(data));
     return JSON.stringify(data);
 }
 
@@ -408,22 +392,25 @@ function post_tips(form, data) {
         dataType: "json",
         "beforeSend": function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", csrf);
-        },
-        success: function(response) {
-            // Clear the validation states before we do anything else
+            // Clear the validation states
             $('[id$="icon"]').removeClass('glyphicon-ok glyphicon-remove');
 
+            // Disable the buttons so that you can't send twice
+            $('#submit-all').prop('disabled', true);
+            $('#submit-selected').prop('disabled', true);
+        },
+        success: function(response) {
             $.each(response, function(index, value) {
                 var icon = '#' + index + '-icon';
-
                 if (value) {
-                    $(icon).removeClass("glyphicon-remove");
                     $(icon).addClass("glyphicon-ok");
                 }
                 else {
-                    $(icon).removeClass("glyphicon-ok");
                     $(icon).addClass("glyphicon-remove");
                 }
+                // Enable the buttons so that you can submit again
+                $('#submit-all').prop('disabled', false);
+                $('#submit-selected').prop('disabled', false);
             });
         },
         error: function(xhr, options, error) {
@@ -438,8 +425,6 @@ function post_tips(form, data) {
 function submit_selected_tips(form) {
     var request_data = fieldsets_to_json(form, false);
 
-    console.log('request data = ' + request_data);
-
     // Send the request
     post_tips(form, request_data);
 
@@ -448,8 +433,6 @@ function submit_selected_tips(form) {
 
 function submit_all_tips(form) {
     var request_data = fieldsets_to_json(form, true);
-
-    console.log('request data = ' + request_data);
 
     // Send the request
     post_tips(form, request_data);

@@ -5,6 +5,7 @@ from itertools import groupby
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
+from django.db.models.loading import get_model
 from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
@@ -185,7 +186,7 @@ def render_past_winners(request):
 
     past = PastCategoryWinner.objects.all()
     seasons = Season.objects.all().order_by('-season')
-    live_season == Season.objects.get(season=request.session['live_season'])
+    live_season = Season.objects.get(season=request.session['live_season'])
 
     data = OrderedDict()
     for season in seasons:
@@ -411,8 +412,9 @@ def render_past_ladder(request, ladder_name, season):
     '''
 
     model = globals()['Past%sLadder' % ladder_name.title()]
+    model = get_model('main', 'Past{}Ladder'.format(ladder_name.title()))
 
-    template = 'view_past_%s_ladder.html' % ladder_name
+    template = 'view_past_{}_ladder.html'.format(ladder_name)
 
     ladder = model.objects.filter(season=season).order_by('position')
 

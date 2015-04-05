@@ -1,0 +1,79 @@
+{% comment %}
+    The template for manual tip forms
+{% endcomment %}
+
+{% load chop %}
+
+{% for sub_data in data|chop:columns %}
+    <div class="{% cycle 'tip_forms_left' 'tip_forms_centre' 'tip_forms_right' %}">
+        {% for form in sub_data %}
+            {% if form %}
+                <div class="tip_form">
+                    <div class="tip_form_game_header">
+                        <p class="tip_form_teams">{{ form.0.home.name }} v {{ form.0.away.name }}</p>
+                        <p>
+                            <span class="tip_form_venue">{{ form.0.ground }}</span>
+                            <span class="tip_form_date">{{ form.0.date|date:"D M d H:i" }}</span>
+                        </p>
+                    </div>
+
+                    <!-- Form fields -->
+                    <div>
+                        {% if form.0.winner.errors %}
+                            <div class="form_errors">
+                                <p class="form_error">
+                                    ERROR: {{ form.0.winner.errors }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        <p class="tip_form_row">
+                            <span class="tip_form_label" >Winner:</span>
+                            <span class="tip_form_winner" > {{ form.0.winner }}</span>
+                        </p>
+
+                        {% if form.0.margin.errors %}
+                            <div class="form_errors">
+                                <p class="form_error">
+                                    ERROR: {{ form.0.margin.errors }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        <p class="tip_form_row">
+                            <span class="tip_form_label" >Margin:</span>
+                            <span class="tip_form_text" > {{ form.0.margin }}</span>
+                        </p>
+
+                        {% if form.0.crowd.errors %}
+                            <div class="form_errors">
+                                <p class="form_error">
+                                    ERROR: {{ form.0.crowd.errors }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        <p class="tip_form_row">
+                            <span class="tip_form_label" >Crowd:</span>
+                            <span class="tip_form_text" > {{ form.0.crowd }}</span>
+                        </p>
+
+                        <p>
+                        {% for bog in form.1 %}
+                            {% if bog.player.errors %}
+                                <div class="form_errors">
+                                        <p class="form_error">
+                                            ERROR: {{ bog.player.errors }}
+                                        </p>
+                                </div>
+                            {% endif %}
+                            <p>
+                                <span class="tip_form_label" >BOG:</span>
+                                <span class="tip_form_player" > {{ bog.player }}</span>
+                            </p>
+                        {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+
