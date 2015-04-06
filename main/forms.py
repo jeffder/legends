@@ -304,7 +304,7 @@ class LadderForRoundForm(forms.Form):
             ('coleman', 'Coleman'),
             ('brownlow', 'Brownlow'),
             ('margins', 'Margins'),
-            ('crowds', 'Crowds'),
+            ('crowds', 'Trethowan'),
             ('streak', 'Form Guide'),
             ('afl', 'AFL'),
         ]

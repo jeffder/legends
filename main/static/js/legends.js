@@ -365,12 +365,17 @@ function fieldsets_to_json(form, get_all){
             if (this.name == 'tip_id') {
                 key = this.value;
             }
+            // Just get the selected winner
+            else if (ends_with(this.name, 'winner')) {
+                if (this.checked == true) {
+                    mapping[this.name] = this.value;
+                }
+            }
             // Put everything else except the checkbox in the fieldset data
             else if (!ends_with(this.name, 'checkbox')) {
                 mapping[this.name] = this.value;
             }
         });
-
         data[key] = mapping;
     });
 
