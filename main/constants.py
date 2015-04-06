@@ -27,7 +27,7 @@ class Game(object):
 
 class TipPoints(object):
     # Points per correct winner
-    WINNER = 6
+    WINNER = 10
 
     # Bonus points for tipping every winner in a 9 game round
     WINNERS_BONUS_GAME_COUNT = 9

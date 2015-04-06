@@ -50,13 +50,17 @@
                             {% elif forloop.last %}
                                 class="round-right"
                             {% endif %}
-                            {%  if name == 'Form Guide' %}
+                            {% if name == 'Form Guide' %}
                                 href="/legends/{{ selected_round.id }}/view_streak_ladder/"
-                            {%  else %}
+                            {% else %}
                                 href="/legends/{{ selected_round.id }}/view_{{ name|lower }}_ladder/"
                             {% endif %}
                         >
-                        {{ name }}
+                        {% if name == 'Crowds' %}
+                            Trethowan
+                        {% else %}
+                            {{ name }}
+                        {% endif %}
                         </a>
                     </li>
                 {% endfor %}
