@@ -31,7 +31,7 @@ class TipPoints(object):
 
     # Bonus points for tipping every winner in a 9 game round
     WINNERS_BONUS_GAME_COUNT = 9
-    WINNERS_BONUS = 10
+    WINNERS_BONUS = 5
 
     # Points per difference from actual crowd
     CROWDS = {
