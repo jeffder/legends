@@ -26,7 +26,7 @@ def view_ladder(request, round_id=None, view_name=None):
     """
     live_round = Round.objects.get(id=request.session['live_round'])
     if round_id:
-        selected_round = Round.objects.get(id=round_id)
+        selected_round = Round.objects.get(id=int(round_id))
     else:
         selected_round = live_round
 
@@ -64,20 +64,8 @@ def view_ladder(request, round_id=None, view_name=None):
     ladder_name = view_name.split('_')[1]
 
     content = render_ladder_nav(request, selected_round, ladder_name)
-
-    # Render the in progress banner
-#    in_progress_content = render_in_progress(request, curr_round)
-#    if in_progress_content:
-#        content += in_progress_content
-
     content += render_ladder(request, ladder_name, selected_round)
-
-    # Render the projected ladder
-#    if not curr_round.is_finals and ladder_name == 'legends':
-#        content += render_projected_ladder(request, curr_round)
-
     auth_form = render_auth_form(request)
-
     content += auth_form
 
     context = {
@@ -115,29 +103,6 @@ def render_ladder(request, ladder_name, selected_round):
         {
             'selected_round': selected_round,
             'ladder': ladder
-        },
-        context_instance=RequestContext(request)
-    )
-
-    return content.content
-
-
-def render_projected_ladder(request, curr_round):
-    '''
-    Render the projected Legends ladder for given the round.
-    '''
-
-    def _sort_keys(row):
-        return (-row.points, -row.percentage, -row.score_for, row.club)
-
-    # We probably don't need to do this but let's play safe...
-    rows = sorted(FinalLadder.objects.filter(round=curr_round), key=_sort_keys)
-
-    content = render_to_response(
-        'view_projected_ladder.html',
-        {
-            'curr_round': curr_round,
-            'ladder_rows': rows
         },
         context_instance=RequestContext(request)
     )

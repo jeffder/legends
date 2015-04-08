@@ -10,6 +10,8 @@ class Migration(DataMigration):
         """
         Fix the tipping deadline for all the 2015 games.
         """
+        # No need to run for Firebird conversion
+        pass
         weekends = (4, 5, 6)   # Friday, Saturday, Sunday
         delta = timedelta(minutes=30)
 
