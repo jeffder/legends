@@ -9,6 +9,8 @@ class Migration(DataMigration):
         Remove all tips for Fitzroy since they are an "historical" club and
         haven't been active since before 2008
         """
+        # No need to run for Firebird conversion
+        pass
         tips = orm.Tip.objects.filter(club__name='Fitzroy')
 
         orm.SupercoachTip.objects.filter(tip__in=tips).delete()

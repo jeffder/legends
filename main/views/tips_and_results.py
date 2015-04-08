@@ -41,7 +41,7 @@ def view_tips(request, round_id):
     submission via ajax.
     """
     if round_id:
-        selected_round = Round.objects.get(id=round_id)
+        selected_round = Round.objects.get(id=int(round_id))
     else:
         selected_round = Round.objects.get(id=request.session['live_round'])
     request.session['selected_round'] = selected_round.id

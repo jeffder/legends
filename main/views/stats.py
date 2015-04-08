@@ -228,7 +228,7 @@ def render_past_years(request, season_id=None, round_id=None, ladder=None):
     # Get the selected season
     seasons = Season.objects.all()
     if season_id:
-        selected_season = Season.objects.get(season=season_id)
+        selected_season = Season.objects.get(season=int(season_id))
     else:
         selected_season = seasons[0]
 
@@ -251,7 +251,7 @@ def render_past_years(request, season_id=None, round_id=None, ladder=None):
             round_id = None
 
         if round_id:
-            selected_round = ladder_rounds.get(id=round_id)
+            selected_round = ladder_rounds.get(id=int(round_id))
         else:
             selected_round = ladder_rounds.reverse()[0]
 

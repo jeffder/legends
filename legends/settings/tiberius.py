@@ -26,12 +26,22 @@ DATABASES = {
         'PASSWORD': 'saintssaints',   # db user password
         'HOST': '127.0.0.1',          # Your host machine
         'PORT': '3050',               # If is empty, use default 3050
-        'OPTIONS': {'charset': 'ISO8859_1'},
+        'OPTIONS': {'charset': 'UTF8'},
         'TEST_NAME': TEST_DB_NAME
     },
     'old': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': SQLITE_DB_NAME
+    },
+    'old_fb': {
+        'ENGINE': 'firebird',
+        'NAME': 'legends',           # Path to database or db alias
+        'USER': 'legends',            # Your db user
+        'PASSWORD': 'saintssaints',   # db user password
+        'HOST': 'nero',          # Your host machine
+        'PORT': '3050',               # If is empty, use default 3050
+        'OPTIONS': {'charset': 'ISO8859_1'},
+        'TEST_NAME': TEST_DB_NAME
     },
 }
 

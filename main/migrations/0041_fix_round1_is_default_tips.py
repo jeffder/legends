@@ -8,6 +8,8 @@ class Migration(DataMigration):
         """
         Make sure is_default is off for tips that aren't actually default tips.
         """
+        # No need to run for Firebird conversion
+        pass
         tips = orm.Tip.objects \
             .filter(is_default=True) \
             .filter(game__round__name='Round 1') \
