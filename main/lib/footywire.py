@@ -6,6 +6,10 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 
+class NoSupercoachScoresError(Exception):
+    pass
+
+
 class Footywire(object):
 
     def __init__(self, rnd):
@@ -66,7 +70,10 @@ class Footywire(object):
             for row in rows:
                 cols = [c for c in row.children if c != u'\n']
                 player = cols[0].string.strip()
-                score = int(cols[13].string.strip())
+                try:
+                    score = int(cols[13].string.strip())
+                except IndexError:
+                    raise NoSupercoachScoresError
                 scores[club].append({'player': player, 'score': score})
         return scores
 
@@ -97,7 +104,12 @@ class Footywire(object):
                 continue
             teams = self.get_teams(cols[1])
             crowd = self.get_crowd(cols[3])
-            sc_scores = self.get_supercoach_scores(link, teams)
+            # Sometimes Footywire dosen't have the Supercoach scores so skip the
+            # game. The idea is that sooner or later they'll include them.
+            try:
+                sc_scores = self.get_supercoach_scores(link, teams)
+            except NoSupercoachScoresError:
+                continue
 
             self.data[teams] = {
                 'crowd': crowd,
