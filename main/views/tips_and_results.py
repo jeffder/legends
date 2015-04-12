@@ -186,7 +186,12 @@ def get_results(request, round_id):
             game.initialise_legends_scores()
             SupercoachRanking.objects.filter(game=game).delete()
             if game.game_date + delta <= now:
-                result = results[(game.afl_home.name, game.afl_away.name)]
+                # The game's result might be missing due to a problem with
+                # Footywire (e.g. missing Supercoach scores) so just ignore it
+                try:
+                    result = results[(game.afl_home.name, game.afl_away.name)]
+                except KeyError:
+                    continue
                 set_afl_result(game, result)
                 available_results.append(game)
 
