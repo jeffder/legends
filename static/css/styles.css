@@ -370,8 +370,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?1415812770);
-  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?&1415812770#iefix) format("embedded-opentype"), url(../fonts/bootstrap/glyphicons-halflings-regular.woff?1415812770) format("woff"), url(../fonts/bootstrap/glyphicons-halflings-regular.ttf?1415812770) format("truetype"), url(../fonts/bootstrap/glyphicons-halflings-regular.svg?1415812770#glyphicons_halflingsregular) format("svg");
+  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?1427600768);
+  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?&1427600768#iefix) format("embedded-opentype"), url(../fonts/bootstrap/glyphicons-halflings-regular.woff?1427600768) format("woff"), url(../fonts/bootstrap/glyphicons-halflings-regular.ttf?1427600768) format("truetype"), url(../fonts/bootstrap/glyphicons-halflings-regular.svg?1427600768#glyphicons_halflingsregular) format("svg");
 }
 /* line 21, ../../../../../.rvm/gems/ruby-2.1.5/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon {
@@ -8170,8 +8170,8 @@ button.close {
 
 /* line 30, ../sass/partials/_bootstrap_overrides.scss */
 .nav > li.active > a {
-  background-color: #585858;
-  color: #ffffff;
+  background-color: #c7c7c7;
+  color: #000000;
 }
 
 /* line 35, ../sass/partials/_bootstrap_overrides.scss */
@@ -8292,21 +8292,28 @@ body {
   min-height: 30px;
 }
 
-/* line 94, ../sass/styles.scss */
+/* line 91, ../sass/styles.scss */
+.club-sub-nav {
+  list-style-type: None;
+  text-align: center;
+  margin-left: -40px;
+}
+
+/* line 101, ../sass/styles.scss */
 .in-progress {
   color: red;
 }
 
-/* line 102, ../sass/styles.scss */
+/* line 109, ../sass/styles.scss */
 .tab-content {
   padding-left: 15px;
 }
 
-/* line 106, ../sass/styles.scss */
+/* line 113, ../sass/styles.scss */
 .game-header {
-  background-color: #585858;
+  background-color: #c7c7c7;
   border-radius: 5px;
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 10px;
   margin-left: 0;
   margin-right: 0;
@@ -8314,43 +8321,43 @@ body {
   padding-top: 10px;
 }
 
-/* line 117, ../sass/styles.scss */
+/* line 124, ../sass/styles.scss */
 .table-header {
   padding-left: 10px;
   font-weight: bold;
 }
 
-/* line 122, ../sass/styles.scss */
+/* line 129, ../sass/styles.scss */
 .table-cell-left {
   margin-bottom: 0px;
   text-align: left;
   white-space: pre;
 }
 
-/* line 128, ../sass/styles.scss */
+/* line 135, ../sass/styles.scss */
 .table-cell-right {
   margin-bottom: 0px;
   padding-right: 20px;
   text-align: right;
 }
 
-/* line 134, ../sass/styles.scss */
+/* line 141, ../sass/styles.scss */
 .table-cell-center {
   margin-bottom: 0px;
   text-align: center;
 }
 
-/* line 139, ../sass/styles.scss */
+/* line 146, ../sass/styles.scss */
 .game-row-1 {
   background-color: #ffffff;
 }
 
-/* line 142, ../sass/styles.scss */
+/* line 149, ../sass/styles.scss */
 .game-row-2 {
   background-color: #c7c7c7;
 }
 
-/* line 147, ../sass/styles.scss */
+/* line 154, ../sass/styles.scss */
 .legends_results {
   margin: 0 -15px;
   padding-left: 0px;
@@ -8362,45 +8369,47 @@ body {
     border-bottom: 1px solid #dcdcdc;
 }
 */
-/* line 159, ../sass/styles.scss */
+/* line 166, ../sass/styles.scss */
 .game-footer {
-  background-color: #585858;
+  background-color: #c7c7c7;
   border-radius: 5px;
   font-weight: 100;
 }
 
-/* line 165, ../sass/styles.scss */
+/* line 172, ../sass/styles.scss */
 .game-footer ul li:first-child {
   font-weight: bold;
 }
 
-/* line 169, ../sass/styles.scss */
+/* line 176, ../sass/styles.scss */
 .game-footer ul li.player-sub-cell {
   font-weight: 100;
 }
 
-/* line 173, ../sass/styles.scss */
+/* line 180, ../sass/styles.scss */
 .player-sub-cell {
   margin-left: 20px;
 }
 
-/* line 177, ../sass/styles.scss */
+/* line 184, ../sass/styles.scss */
 .table-splitter {
-  background-color: #585858;
-}
-
-/* line 181, ../sass/styles.scss */
-.bye-splitter {
   background-color: #c7c7c7;
 }
 
-/* line 185, ../sass/styles.scss */
+/* line 188, ../sass/styles.scss */
+.bye-splitter {
+  background-color: #c7c7c7;
+  height: 5px;
+}
+
+/* line 193, ../sass/styles.scss */
 p.supercoach-result {
+  font-size: 14px;
   padding-left: 15px;
   padding-right: 15px;
 }
 
-/* line 190, ../sass/styles.scss */
+/* line 199, ../sass/styles.scss */
 span.tip-score {
   font-weight: bold;
   text-align: right;
@@ -8408,24 +8417,24 @@ span.tip-score {
   padding-right: 10px;
 }
 
-/* line 197, ../sass/styles.scss */
+/* line 206, ../sass/styles.scss */
 .tips-table span.summary-tip-score {
   float: right;
   text-align: right;
   padding-right: 10px;
 }
 
-/* line 203, ../sass/styles.scss */
+/* line 212, ../sass/styles.scss */
 .tips-table td {
   margin-bottom: 0;
 }
 
-/* line 207, ../sass/styles.scss */
+/* line 216, ../sass/styles.scss */
 td.tips-table {
   padding-bottom: 0;
 }
 
-/* line 215, ../sass/styles.scss */
+/* line 224, ../sass/styles.scss */
 .form-header {
   background-color: #c7c7c7;
   color: #000000;
@@ -8439,13 +8448,13 @@ td.tips-table {
   padding-top: 2px;
 }
 
-/* line 229, ../sass/styles.scss */
+/* line 238, ../sass/styles.scss */
 .form-header .text-left {
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
-/* line 234, ../sass/styles.scss */
+/* line 243, ../sass/styles.scss */
 .form-header p {
   background-color: #c7c7c7;
   color: #000000;
@@ -8457,7 +8466,7 @@ td.tips-table {
   width: 300px;
 }
 
-/* line 247, ../sass/styles.scss */
+/* line 256, ../sass/styles.scss */
 .tip-form .tip-time-ground {
   background-color: none;
   color: #585858;
@@ -8466,7 +8475,7 @@ td.tips-table {
   padding-top: 0px;
 }
 
-/* line 257, ../sass/styles.scss */
+/* line 266, ../sass/styles.scss */
 .tip-fieldset .tip-time-ground p {
   background-color: none;
   color: pill-active-bg;
@@ -8477,12 +8486,14 @@ td.tips-table {
   padding-top: -5px;
 }
 
-/* line 269, ../sass/styles.scss */
+/* line 278, ../sass/styles.scss */
+.tips-table tbody tr:nth-child(4n-3),
+.tips-table tbody tr:nth-child(4n-2),
 .tip-fieldset:nth-child(even) {
   background-color: #eeeeee;
 }
 
-/* line 273, ../sass/styles.scss */
+/* line 284, ../sass/styles.scss */
 .tip-fieldset {
   border-color: #eeeeee;
   border-radius: 5px;
@@ -8495,7 +8506,7 @@ td.tips-table {
   padding-top: 5px;
 }
 
-/* line 285, ../sass/styles.scss */
+/* line 296, ../sass/styles.scss */
 .tip-sub-form {
   margin-bottom: 5px;
   margin-left: 0px;
@@ -8504,7 +8515,7 @@ td.tips-table {
   padding-top: 5px;
 }
 
-/* line 293, ../sass/styles.scss */
+/* line 304, ../sass/styles.scss */
 .form-control-inline {
   /*
       min-width: 150px;
@@ -8527,7 +8538,7 @@ td.tips-table {
     padding-left: 0px;
 }
 */
-/* line 316, ../sass/styles.scss */
+/* line 327, ../sass/styles.scss */
 .form-control-inline-select-supercoach {
   /*
       min-width: 150px;
@@ -8539,54 +8550,60 @@ td.tips-table {
   margin-top: 5px;
 }
 
-/* line 327, ../sass/styles.scss */
+/* line 338, ../sass/styles.scss */
 .form-ok {
   background-color: #3c763d;
   border-color: #3c763d;
   border-style: solid;
 }
 
-/* line 333, ../sass/styles.scss */
+/* line 344, ../sass/styles.scss */
 .form-error {
   border-color: #a94442;
   border-style: solid;
 }
 
-/* line 338, ../sass/styles.scss */
+/* line 349, ../sass/styles.scss */
 .form-inline .checkbox input[type="checkbox"] {
   margin-left: 10px;
   font-size: 20px;
 }
 
-/* line 345, ../sass/styles.scss */
+/* line 356, ../sass/styles.scss */
 .winner label {
   vertical-align: top;
 }
 
-/* line 348, ../sass/styles.scss */
+/* line 359, ../sass/styles.scss */
 .winner {
   margin-left: 10px;
-  width: 170px;
+  width: 180px;
 }
 
-/* line 353, ../sass/styles.scss */
+/* line 364, ../sass/styles.scss */
+.winner ul {
+  -webkit-padding-start: 10px;
+  margin-right: 10px;
+}
+
+/* line 369, ../sass/styles.scss */
 .winner input {
   text-align: center;
   width: 30px;
 }
 
-/* line 358, ../sass/styles.scss */
+/* line 374, ../sass/styles.scss */
 [id$="icon"] {
   font-size: 24px;
   margin-left: 15px;
   vertical-align: middle;
   margin-top: -3px;
 }
-/* line 359, ../sass/styles.scss */
+/* line 375, ../sass/styles.scss */
 [id$="icon"].glyphicon-ok {
   color: #3c763d;
 }
-/* line 362, ../sass/styles.scss */
+/* line 378, ../sass/styles.scss */
 [id$="icon"].glyphicon-remove {
   color: #a94442;
 }
@@ -8600,13 +8617,14 @@ td.tips-table {
         color: $form-error;
 }
 */
-/* line 379, ../sass/styles.scss */
+/* line 395, ../sass/styles.scss */
 .submit-btn {
+  margin-bottom: 20px;
   margin-left: 10px;
   margin-top: 10px;
 }
 
-/* line 388, ../sass/styles.scss */
+/* line 405, ../sass/styles.scss */
 #comp_rules h2 {
   background-color: #c7c7c7;
   border-radius: 5px;
@@ -8617,18 +8635,18 @@ td.tips-table {
   padding-bottom: 5px;
 }
 
-/* line 398, ../sass/styles.scss */
+/* line 415, ../sass/styles.scss */
 #comp_rules h3 {
   font-size: 14px;
   font-weight: bold;
 }
 
-/* line 403, ../sass/styles.scss */
+/* line 420, ../sass/styles.scss */
 #comp_rules .container-fluid {
   margin-top: 10px;
 }
 
-/* line 407, ../sass/styles.scss */
+/* line 424, ../sass/styles.scss */
 .coaches-season {
   background-color: #c7c7c7;
   border-radius: 5px;
@@ -8640,41 +8658,41 @@ td.tips-table {
   padding-bottom: 5px;
 }
 
-/* line 418, ../sass/styles.scss */
+/* line 435, ../sass/styles.scss */
 #past-winners {
   margin-top: 20px;
 }
 
-/* line 422, ../sass/styles.scss */
+/* line 439, ../sass/styles.scss */
 #past-winners .table tr th {
   background-color: #c7c7c7;
   border-width: 0px;
 }
 
-/* line 427, ../sass/styles.scss */
+/* line 444, ../sass/styles.scss */
 #past-winners .table tr th:first-child {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-/* line 432, ../sass/styles.scss */
+/* line 449, ../sass/styles.scss */
 #past-winners .table tr th:last-child {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 437, ../sass/styles.scss */
+/* line 454, ../sass/styles.scss */
 #past-winners .table tr:first-child td {
   border-width: 0px;
 }
 
-/* line 441, ../sass/styles.scss */
+/* line 458, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr > th {
   background-color: #c7c7c7;
   border-width: 0px;
 }
 
-/* line 446, ../sass/styles.scss */
+/* line 463, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr > th:first-child {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
@@ -8682,55 +8700,55 @@ td.tips-table {
   border-top-right-radius: 5px;
 }
 
-/* line 453, ../sass/styles.scss */
+/* line 470, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr > th:last-child {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 458, ../sass/styles.scss */
+/* line 475, ../sass/styles.scss */
 #season-fixtures .round-detail > .table > thead > tr:first-child > td {
   border-width: 0px;
 }
 
-/* line 462, ../sass/styles.scss */
+/* line 479, ../sass/styles.scss */
+#season-nav,
 #coach-v-coach,
 #coach-v-coach_selection {
   margin-top: 20px;
 }
 
-/* line 467, ../sass/styles.scss */
+/* line 485, ../sass/styles.scss */
 #past-winners .club {
   font-weight: bold;
 }
 
-/* line 475, ../sass/styles.scss */
+/* line 493, ../sass/styles.scss */
 .round-all {
   border-radius: 5px;
 }
 
-/* line 479, ../sass/styles.scss */
+/* line 497, ../sass/styles.scss */
 .round-left {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-/* line 484, ../sass/styles.scss */
+/* line 502, ../sass/styles.scss */
 .round-right {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-/* line 489, ../sass/styles.scss */
+/* line 507, ../sass/styles.scss */
 .tips-table .tip-score {
-  color: #585858;
   margin-bottom: 0px;
   padding-right: 20px;
   text-align: right;
   white-space: pre;
 }
 
-/* line 497, ../sass/styles.scss */
+/* line 514, ../sass/styles.scss */
 .tips-table .summary-tip-score {
   margin-bottom: 0px;
   padding-right: 20px;
@@ -8738,62 +8756,182 @@ td.tips-table {
   white-space: pre;
 }
 
-/* line 504, ../sass/styles.scss */
+/* line 521, ../sass/styles.scss */
 .summary-header {
   text-align: left;
   font-weight: bold;
 }
 
-/* line 513, ../sass/styles.scss */
-#tip-submission .form-group {
-  margin-bottom: 0px;
+/* line 530, ../sass/styles.scss */
+.tip-form-container {
+  margin-bottom: 10px;
 }
 
-/* line 517, ../sass/styles.scss */
+/* line 534, ../sass/styles.scss */
 .tips-table td ul {
   margin-bottom: 0;
 }
 
-/* line 521, ../sass/styles.scss */
+/* line 538, ../sass/styles.scss */
 #tip-submission ul {
   margin-bottom: 0px;
 }
 
-/* line 525, ../sass/styles.scss */
+/* line 542, ../sass/styles.scss */
 #tip-submission ul li {
   margin-bottom: 5px;
 }
 
-/* line 529, ../sass/styles.scss */
+/* line 546, ../sass/styles.scss */
 .tip-form-row .form-group {
   vertical-align: middle;
 }
 
-/* line 533, ../sass/styles.scss */
+/* line 550, ../sass/styles.scss */
 .tip-form-row .form-group span {
   vertical-align: bottom;
   top: -4px;
 }
 
-/* line 538, ../sass/styles.scss */
+/* line 555, ../sass/styles.scss */
 .table-cell-number-left {
   margin-bottom: 0px;
   text-align: right;
   padding-right: 20px;
 }
 
-/* line 544, ../sass/styles.scss */
+/* line 561, ../sass/styles.scss */
 .hidden {
   display: none;
 }
 
-/* line 548, ../sass/styles.scss */
+/* line 565, ../sass/styles.scss */
 #form-success {
   display: none;
 }
 
-/* line 552, ../sass/styles.scss */
+/* line 569, ../sass/styles.scss */
 #form-errors ul {
   list-style-type: none;
   padding-left: 10px;
+}
+
+/***** Manual tip forms *****/
+/* line 576, ../sass/styles.scss */
+.tip_forms_left {
+  float: left;
+  margin-left: 10px;
+  width: 308px;
+}
+
+/* line 582, ../sass/styles.scss */
+.tip_forms_centre {
+  float: left;
+  margin-left: 8px;
+  width: 308px;
+}
+
+/* line 588, ../sass/styles.scss */
+.tip_forms_right {
+  float: right;
+  margin-right: 10px;
+  width: 308px;
+}
+
+/* line 593, ../sass/styles.scss */
+.tip_form {
+  border: 0px solid black;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-bottom: 8px;
+  border-radius: 5px;
+}
+
+/* line 601, ../sass/styles.scss */
+.tip_form_game_header {
+  background-color: #b0deb3;
+  width: 298px;
+  padding: 5px;
+  padding-left: 0px;
+  height: 33px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* line 612, ../sass/styles.scss */
+.tip_form_teams {
+  float: left;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 10px;
+  text-align: left;
+  width: 288px;
+}
+
+/* line 621, ../sass/styles.scss */
+.tip_form_venue {
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 10px;
+  text-align: left;
+  width: 120px;
+}
+
+/* line 630, ../sass/styles.scss */
+.tip_form_date {
+  font-size: 12px;
+  font-weight: bold;
+  float: right;
+  padding-right: 10px;
+  text-align: right;
+  width: 120px;
+}
+
+/* line 639, ../sass/styles.scss */
+.tip_form_label {
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0;
+  vertical-align: top;
+  display: block;
+  width: 40px;
+  float: left;
+}
+
+/* line 650, ../sass/styles.scss */
+.tip_form_winner {
+  width: 130px;
+}
+
+/* line 654, ../sass/styles.scss */
+.tip_form_player select {
+  width: 230px;
+}
+
+/* line 658, ../sass/styles.scss */
+.form_error {
+  color: red;
+  padding-left: 5px;
+}
+
+/* line 663, ../sass/styles.scss */
+#tip_submission {
+  background-color: #b0c4de;
+}
+
+/* line 667, ../sass/styles.scss */
+.submit_button {
+  background-color: #c7c7c7;
+  clear: left;
+  float: left;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 13px;
+  font-weight: bold;
 }
