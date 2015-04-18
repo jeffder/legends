@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import logging
 import os
 
-from django.core.exceptions import ImproperlyConfigured
-
 
 def get_environ_variable(name):
     """
@@ -36,7 +34,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # Get the secret key from the environment
-SECRET_KEY = get_environ_variable('LEGENDS_SECRET_KEY')
+SECRET_KEY = '&&kkxs=@%2^s-++fdby-wagu0po7#@p%)0j@=idkh6!_*yyqe='
 
 # Project paths
 # Build paths like this: os.path.join(BASE_DIR, ...)
