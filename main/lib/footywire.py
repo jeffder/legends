@@ -3,7 +3,7 @@
 import http.cookiejar
 import urllib.request
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, element
 
 
 class NoSupercoachScoresError(Exception):
@@ -26,6 +26,17 @@ class Footywire(object):
         response = self.opener.open(request)
 
         return BeautifulSoup(response)
+
+    def _is_empty(self, obj):
+        """
+        Check if obj is empty.
+        """
+        if isinstance(obj, element.Tag):
+            return obj.is_empty_element
+        elif isinstance(obj, element.NavigableString):
+            return obj.isspace()
+        else:
+            return obj.isspace()
 
     def get_teams(self, html):
         contents = html.contents
@@ -97,7 +108,7 @@ class Footywire(object):
         games = [search_start]
         games.extend(search_start.find_next_siblings('tr', limit=num_games - 1))
         for game in games:
-            cols = [c for c in game.children if c != u'\n']
+            cols = [c for c in game.children if not self._is_empty(c)]
 
             home_score, away_score, link = self.get_scores(cols[4])
             if link is None:
