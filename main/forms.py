@@ -554,9 +554,9 @@ class ManualSupercoachForm(forms.Form):
 
 
 class ClubSelectionForm(forms.Form):
-    '''
+    """
     Selection of club for the manual tips view.
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
 
@@ -570,7 +570,7 @@ class ClubSelectionForm(forms.Form):
 
         # Get the club names
         if not self.clubs:
-            self.clubs = [c for c in self.curr_round.season.clubs()
+            self.clubs = [c for c in self.curr_round.season.clubs
                           if c.can_tip_in_round(self.curr_round)]
 
         choices = [(c.id, c) for c in self.clubs]

@@ -60,7 +60,7 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
         },
         'simple': {
-            'format': '%(levelname)s %(message)s'
+            'format': '%(levelname)s %(asctime)s:\n\t(message)s'
         },
     },
     'handlers': {
@@ -145,7 +145,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 ROOT_URLCONF = 'legends.urls'
 
-WSGI_APPLICATION = 'legends.wsgi.application'
+WSGI_APPLICATION = 'www.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

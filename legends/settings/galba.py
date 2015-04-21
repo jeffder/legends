@@ -12,7 +12,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # Project paths
-#TEST_DB_NAME = os.path.join(PROJECT_DIR, 'test_legends3.fdb')
+SQLITE_DB_NAME = os.path.join(PROJECT_DIR, 'legends.db')
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -25,8 +25,11 @@ DATABASES = {
         'HOST': '127.0.0.1',          # Your host machine
         'PORT': '3050',               # If is empty, use default 3050
         'OPTIONS': {'charset': 'UTF8'},
-#        'TEST_NAME': TEST_DB_NAME
     },
+    'old': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': SQLITE_DB_NAME,
+    }
 }
 
 INSTALLED_APPS += (

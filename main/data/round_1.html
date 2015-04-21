@@ -1,0 +1,6151 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Legends Footy Tipping 2015</title>
+
+        <script type="text/javascript" src="/static/js/jquery/jquery-2.1.1.min.js"></script>
+        <!--
+        <script type="text/javascript" src="/static/js/jquery/jquery.tools.min.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        -->
+        <script type="text/javascript" src="/static/fancybox/source/jquery.fancybox.js"></script>
+        <script type="text/javascript" src="/static/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.js"></script>
+        <script src="/static/js/jquery/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" src="/static/js/legends.js"></script>
+<!--
+        <script type="text/javascript" src="/static/js/legends_table_wrapper.js"></script>
+        <script type="text/javascript" src="/static/js/legends_chart_wrapper.js"></script>
+        <script type="text/javascript">
+            // Load Google visualizations
+            google.load('visualization', '1', {packages:['table', 'corechart']});
+        </script>
+-->
+        <script type="text/javascript">
+            $(document).ready(function() 
+            {
+                // Show tips and results for selected game in games list
+                $("#games-list a").click(function (e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
+
+                $("#afl_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#brownlow_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#coleman_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#crowds_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#legends_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#margins_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: { 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false} }
+                });
+                $("#streak_ladder").tablesorter({
+                    //sortList: [[10,1], [7,1]], [9,1]],
+                    cssAsc: "header_sort_asc",
+                    cssDesc: "header_sort_desc",
+                    cssHeader: "header",
+                    headers: {
+                        0: { sorter: false}, 1: {sorter: false}, 3: {sorter: false},
+                        4: { sorter: false}, 5: {sorter: false}, 6: {sorter: false},
+                        7: { sorter: false}, 8: {sorter: false}, 9: {sorter: false},
+                        10: { sorter: false}, 11: {sorter: false}, 12: {sorter: false},
+                        13: { sorter: false}, 14: {sorter: false}, 15: {sorter: false},
+                        16: { sorter: false}, 17: {sorter: false}, 18: {sorter: false},
+                        19: { sorter: false}, 20: {sorter: false}, 21: {sorter: false},
+                        22: { sorter: false}, 23: {sorter: false}, 24: {sorter: false},
+                        25: { sorter: false}
+                    }
+                });
+
+                // Fancybox
+                $(".fancybox").fancybox({
+                    afterClose: function() {
+                        $('.form-group.has-success').removeClass('has-success');
+                        $('.form-group.has-error').removeClass('has-error');
+                        $('.form-group span.glyphicon-ok').removeClass('glyphicon-ok');
+                        $('.form-group span.glyphicon-remove').removeClass('glyphicon-remove');
+                    },
+                    autoSize: true,
+                    helpers : {
+                        overlay : null
+                    }
+                });
+
+                $('#login-form').submit(function(e) {
+                    submit_login($(this));
+                    e.preventDefault();
+                });
+
+                $('#change-password-form').submit(function(e) {
+                    submit_change_password($(this));
+                    e.preventDefault();
+                });
+
+                // Launch login dialog if not logged in
+                var fancy = $(".fancybox").eq(0);
+                if (fancy.attr('href') == '#login') {
+                    fancy.click();
+                }
+
+                // Tip submission - selected games
+                $('#submit-selected').click(function(e) {
+                    submit_selected_tips($(this).parent());
+                    e.preventDefault();
+                });
+
+                // Tip submission - all games
+                $('#submit-all').click(function(e) {
+                    submit_all_tips($(this).parent());
+                    e.preventDefault();
+                });
+
+            });
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="/static/fancybox/source/jquery.fancybox.css" >
+        <link rel="stylesheet" type="text/css" href="/static/fancybox/source/helpers/jquery.fancybox-buttons.css" >
+<!--
+        <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css" media="screen">
+-->
+        <link rel="stylesheet" href="/static/css/styles.css">
+<!--
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/nav.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/tips.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/ladders.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/stats.css" >
+-->
+<!--
+        <link rel="stylesheet" type="text/css" href="/static/css/legends/fixtures.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/legends/ladders.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/legends/coaches.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/gviz.css" >
+-->
+    </head>
+   
+    <body>
+        <header class="clearfix">
+            <div class="text-center">
+                
+                    <h1>Legends Footy Tipping 2015</h1>
+                
+            </div>
+
+            <div class="pull-left text-left base-div">
+                
+                    <span>Coach: St Kilda</span>
+                
+            </div>
+
+            <div class="pull-right text-right base-div">
+                
+                <span>
+                    Round 4
+                    Deadline: Friday 24 Apr 19:20
+                </span>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-default main-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse-1">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="main-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li
+                             class="active"
+                        >
+                            <a href="/legends/193/tips/" class="round-left">
+                                Tips
+                            </a>
+                        </li>
+                        <li
+                            
+                        >
+                            <a href="/legends/193/ladders/">
+                                Ladders
+                            </a>
+                        </li>
+                        <li
+                            
+                        >
+                            <a href="/legends/stats/">
+                                Stats
+                            </a>
+                        </li>
+                        
+                            <li
+                                
+                            >
+                                <a href="/legends/admin/" class="round-right">
+                                    Admin
+                                </a>
+                            </li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                            <li><a href="/accounts/logout" class="round-left">Logout</a></li>
+                            <li><a id="change-password-link" href="#change-password" class="round-right fancybox">Change Password</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            
+                
+
+<nav class="navbar navbar-default main-navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="round-navbar-collapse-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="round-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                
+                    <li class="nav-item active">
+                        <a
+                            
+                                class="round-left"
+                            
+                                href="/legends/190/tips/">1
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/191/tips/">2
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/192/tips/">3
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/193/tips/">4
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/194/tips/">5
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/195/tips/">6
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/196/tips/">7
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/197/tips/">8
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/198/tips/">9
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/199/tips/">10
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/200/tips/">11
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/201/tips/">12
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/202/tips/">13
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/203/tips/">14
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/204/tips/">15
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/205/tips/">16
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/206/tips/">17
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/207/tips/">18
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/208/tips/">19
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/209/tips/">20
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/210/tips/">21
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                href="/legends/211/tips/">22
+                        </a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a
+                            
+                                class="round-right"
+                            
+                                href="/legends/216/tips/">23
+                        </a>
+                    </li>
+                
+            </ul>
+            
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="round-right">
+                        <a
+                            href="/legends/190/submit_results/"
+                            class="btn btn-default"
+                            >
+                            Get Results
+                        </a>
+                    </li>
+                </ul>
+            
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+<div class="clearfix legends_results">
+    
+            <div class="col-xs-6">
+                <table class="table table-condensed tips-table pull-left">
+                    <thead>
+                        <tr class="table-header">
+                            <th></th>
+                            <th class="table-cell-right">W</th>
+                            <th class="table-cell-right">M</th>
+                            <th class="table-cell-right">C</th>
+                            <th class="table-cell-right">S</th>
+                            <th class="table-cell-right">B</th>
+                            <th class="table-cell-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Carlton</td>
+                                    <td class="table-cell-right">50</td>
+                                    <td class="table-cell-right">30</td>
+                                    <td class="table-cell-right">12</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">108</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">Richmond</td>
+                                    <td class="table-cell-right">50</td>
+                                    <td class="table-cell-right">18</td>
+                                    <td class="table-cell-right">15</td>
+                                    <td class="table-cell-right">14</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">97</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Melbourne</td>
+                                    <td class="table-cell-right">40</td>
+                                    <td class="table-cell-right">23</td>
+                                    <td class="table-cell-right">39</td>
+                                    <td class="table-cell-right">24</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">126</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">Gold Coast</td>
+                                    <td class="table-cell-right">40</td>
+                                    <td class="table-cell-right">19</td>
+                                    <td class="table-cell-right">14</td>
+                                    <td class="table-cell-right">18</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">91</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Sydney</td>
+                                    <td class="table-cell-right">70</td>
+                                    <td class="table-cell-right">52</td>
+                                    <td class="table-cell-right">22</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">160</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">Essendon</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">34</td>
+                                    <td class="table-cell-right">6</td>
+                                    <td class="table-cell-right">14</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">114</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Brisbane</td>
+                                    <td class="table-cell-right">50</td>
+                                    <td class="table-cell-right">22</td>
+                                    <td class="table-cell-right">24</td>
+                                    <td class="table-cell-right">20</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">116</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">Collingwood</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">43</td>
+                                    <td class="table-cell-right">21</td>
+                                    <td class="table-cell-right">24</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">148</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Western Bulldogs</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">40</td>
+                                    <td class="table-cell-right">10</td>
+                                    <td class="table-cell-right">10</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">120</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">West Coast</td>
+                                    <td class="table-cell-right">40</td>
+                                    <td class="table-cell-right">28</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">10</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">94</td>
+                                </tr>
+                            
+                        
+
+                        
+                        
+                    </tbody>
+                    <tfoot>
+                        
+
+
+
+<tr class="table-splitter"><td colspan="7"></td></tr>
+<tr class="results_summary_table">
+    <td class="table_head_first">Minimum</td>
+    <td class="table-cell-right">40</td>
+    <td class="table-cell-right">7</td>
+    <td class="table-cell-right">6</td>
+    <td class="table-cell-right">6</td>
+    <td class="table-cell-right">0</td>
+    <td class="table-cell-right">82</td>
+</tr>
+<tr class="results_summary_table">
+    <td class="table_head">Maximum</td>
+    <td class="table-cell-right">80</td>
+    <td class="table-cell-right">66</td>
+    <td class="table-cell-right">39</td>
+    <td class="table-cell-right">26</td>
+    <td class="table-cell-right">0</td>
+    <td class="table-cell-right">175</td>
+</tr>
+<tr class="results_summary_table">
+    <td class="table_head">Average</td>
+    <td class="table-cell-right">55.00</td>
+    <td class="table-cell-right">31.94</td>
+    <td class="table-cell-right">18.94</td>
+    <td class="table-cell-right">16.44</td>
+    <td class="table-cell-right">0.00</td>
+    <td class="table-cell-right">122.33</td>
+</tr>
+
+                    </tfoot>
+                </table>
+            </div>
+    
+            <div class="col-xs-6">
+                <table class="table table-condensed tips-table pull-left">
+                    <thead>
+                        <tr class="table-header">
+                            <th></th>
+                            <th class="table-cell-right">W</th>
+                            <th class="table-cell-right">M</th>
+                            <th class="table-cell-right">C</th>
+                            <th class="table-cell-right">S</th>
+                            <th class="table-cell-right">B</th>
+                            <th class="table-cell-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">St Kilda</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">21</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">113</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">GWS</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">39</td>
+                                    <td class="table-cell-right">18</td>
+                                    <td class="table-cell-right">6</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">123</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Adelaide</td>
+                                    <td class="table-cell-right">50</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">22</td>
+                                    <td class="table-cell-right">20</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">108</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">North Melbourne</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">21</td>
+                                    <td class="table-cell-right">23</td>
+                                    <td class="table-cell-right">6</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">110</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Fremantle</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">66</td>
+                                    <td class="table-cell-right">29</td>
+                                    <td class="table-cell-right">20</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">175</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">Port Adelaide</td>
+                                    <td class="table-cell-right">60</td>
+                                    <td class="table-cell-right">42</td>
+                                    <td class="table-cell-right">18</td>
+                                    <td class="table-cell-right">26</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">146</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr>
+                                    <td class="table-cell-left">Hawthorn</td>
+                                    <td class="table-cell-right">80</td>
+                                    <td class="table-cell-right">54</td>
+                                    <td class="table-cell-right">21</td>
+                                    <td class="table-cell-right">16</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">171</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-cell-left">Geelong</td>
+                                    <td class="table-cell-right">40</td>
+                                    <td class="table-cell-right">7</td>
+                                    <td class="table-cell-right">15</td>
+                                    <td class="table-cell-right">20</td>
+                                    <td class="table-cell-right">0</td>
+                                    <td class="table-cell-right">82</td>
+                                </tr>
+                            
+                        
+                            
+                                <tr><td colspan="7">&nbsp;</td></tr>
+                                <tr><td colspan="7">&nbsp;</td></tr>
+                            
+                        
+
+                        
+                        
+                    </tbody>
+                    <tfoot>
+                        
+
+
+
+<tr class="table-splitter"><td colspan="7"></td></tr>
+<tr class="results_summary_table">
+    <td class="table_head_first">Minimum</td>
+    <td class="table-cell-right">40</td>
+    <td class="table-cell-right">7</td>
+    <td class="table-cell-right">6</td>
+    <td class="table-cell-right">6</td>
+    <td class="table-cell-right">0</td>
+    <td class="table-cell-right">82</td>
+</tr>
+<tr class="results_summary_table">
+    <td class="table_head">Maximum</td>
+    <td class="table-cell-right">80</td>
+    <td class="table-cell-right">66</td>
+    <td class="table-cell-right">39</td>
+    <td class="table-cell-right">26</td>
+    <td class="table-cell-right">0</td>
+    <td class="table-cell-right">175</td>
+</tr>
+<tr class="results_summary_table">
+    <td class="table_head">Average</td>
+    <td class="table-cell-right">55.00</td>
+    <td class="table-cell-right">31.94</td>
+    <td class="table-cell-right">18.94</td>
+    <td class="table-cell-right">16.44</td>
+    <td class="table-cell-right">0.00</td>
+    <td class="table-cell-right">122.33</td>
+</tr>
+
+                    </tfoot>
+                </table>
+            </div>
+    
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row content">
+        <ul class="nav nav-tabs nav-stacked col-md-2 pull-left">
+            
+                <li class="active">
+                    <a href="#game_1375" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Carlton
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               Richmond
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1376" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Melbourne
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               Gold Coast
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1377" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Sydney
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               Essendon
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1378" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Brisbane
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               Collingwood
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1379" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Western Bulldogs
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               West Coast
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1380" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                St Kilda
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               GWS
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1381" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Adelaide
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               North Melbourne
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1382" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Fremantle
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               Port Adelaide
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+                <li >
+                    <a href="#game_1383" data-toggle="tab" class="text-left">
+                        <ul class="club-sub-nav">
+                            <li>
+                                Hawthorn
+                            </li>
+                            <li>
+                                v
+                            </li>
+                           <li>
+                               Geelong
+                           </li>
+                        </ul>
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="tab-content col-md-10">
+            
+                
+                    <div id="game_1375" class="tab-pane active">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Carlton 78 - 105 Richmond</p></div>
+                                    <div class="col-md-6 text-right"><p>MCG (83,493)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Sam Docherty (Blues), 
+                                    
+                                        2 - Brandon Ellis (Tigers), 
+                                    
+                                        3 - Kamdyn McIntosh (Tigers), 
+                                    
+                                        4 - Taylor Hunt (Tigers), 
+                                    
+                                        5 - Tom Bell (Blues), 
+                                    
+                                        5 - Nick Vlastuin (Tigers)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 78,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Chris Judd</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">8</td>
+<td class="table-cell-number-left"> 74,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dustin Martin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 83,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Marc Murphy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score"> 28</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 88,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dustin Martin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 28</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 72,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Trent Cotchin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 73,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Brett Deledio</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">None</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">None</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">   None</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>None</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score"> 22</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">4</td>
+<td class="table-cell-number-left"> 83,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dustin Martin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score"> 30</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 27</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 76,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Brett Deledio</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 71,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Andrew Carrazzo</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score"> 30</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 27</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 76,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Brett Deledio</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score"> 28</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 78,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dustin Martin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score"> 22</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 23</td>
+<td class="tip-score">12</td>
+<td class="table-cell-number-left"> 78,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Trent Cotchin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 39</td>
+<td class="tip-score">3</td>
+<td class="table-cell-number-left"> 74,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Trent Cotchin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score"> 26</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 29</td>
+<td class="tip-score">16</td>
+<td class="table-cell-number-left"> 71,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dustin Martin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score"> 28</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 28</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 77,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dustin Martin</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 19</td>
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">9</td>
+<td class="table-cell-number-left"> 72,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Marc Murphy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">None</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">None</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">   None</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>None</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">30</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">20</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">17.22</td>
+        <td></td>
+        <td class="summary-tip-score">7.22</td>
+        <td></td>
+        <td class="summary-tip-score">9.11</td>
+        <td></td>
+        <td class="summary-tip-score">0.89</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1376" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Melbourne 115 - 89 Gold Coast</p></div>
+                                    <div class="col-md-6 text-right"><p>MCG (27,013)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Tom McDonald (Demons), 
+                                    
+                                        2 - Jeff Garlett (Demons), 
+                                    
+                                        3 - Jeremy Howe (Demons), 
+                                    
+                                        3 - Gary Ablett (Suns), 
+                                    
+                                        4 - Dion Prestia (Suns)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 19</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">  7</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 27,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">  9</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 25,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 27</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 19,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 70,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">  7</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 19</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Harley Bennell</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">  4</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 45</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 26,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nathan Jones</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 45</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Harley Bennell</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 28</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 42</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 21,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">  9</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 30</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 29,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">  7</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 34</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 25</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 18,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">  1</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Gary Ablett</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">14</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">6</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">6.50</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+        <td></td>
+        <td class="summary-tip-score">1.50</td>
+        <td></td>
+        <td class="summary-tip-score">5.00</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1377" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Sydney 72 - 60 Essendon</p></div>
+                                    <div class="col-md-6 text-right"><p>ANZ Stadium (23,274)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Dan Hannebery (Swans), 
+                                    
+                                        2 - Josh P. Kennedy (Swans), 
+                                    
+                                        3 - Kieren Jack (Swans), 
+                                    
+                                        4 - Dyson Heppell (Bombers), 
+                                    
+                                        5 - Cale Hooker (Bombers)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score"> 34</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">16</td>
+<td class="table-cell-number-left"> 31,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 24</td>
+<td class="tip-score">3</td>
+<td class="table-cell-number-left"> 30,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Luke Parker</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score"> 19</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">1</td>
+<td class="table-cell-number-left"> 44,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score"> 19</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">1</td>
+<td class="table-cell-number-left"> 45,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 30</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 46,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score"> 32</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">14</td>
+<td class="table-cell-number-left"> 38,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 29</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 38,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jobe Watson</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 28</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 36,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 35</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 42,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score"> 28</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 35</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 42,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score"> 11</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">1</td>
+<td class="table-cell-number-left"> 46,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Luke Parker</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 35</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 35,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 19</td>
+<td class="tip-score">8</td>
+<td class="table-cell-number-left"> 37,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jobe Watson</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score"> 30</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  8</td>
+<td class="tip-score">12</td>
+<td class="table-cell-number-left"> 47,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 41</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 35,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 34</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 31</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 28,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh P. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">34</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">16</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">19.89</td>
+        <td></td>
+        <td class="summary-tip-score">10.00</td>
+        <td></td>
+        <td class="summary-tip-score">3.67</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+        <td></td>
+        <td class="summary-tip-score">6.22</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1378" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Brisbane 74 - 86 Collingwood</p></div>
+                                    <div class="col-md-6 text-right"><p>Gabba (31,240)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Steele Sidebottom (Pies), 
+                                    
+                                        2 - Daniel Rich (Lions), 
+                                    
+                                        3 - Scott Pendlebury (Pies), 
+                                    
+                                        4 - Dane Swan (Pies), 
+                                    
+                                        5 - Dayne Beams (Lions)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 19</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">  6</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 18</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Scott Pendlebury</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score">  4</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 30,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 35,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dayne Beams</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score">  4</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 25</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 30,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score"> 31</td>
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">14</td>
+<td class="table-cell-number-left"> 27,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Scott Pendlebury</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score"> 32</td>
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">16</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dane Swan</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">4</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">  2</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">  2</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 31</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 26,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dayne Beams</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 31,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">  2</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 28</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 25,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">  1</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 29</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 27,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">  4</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 32,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score"> 28</td>
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 24</td>
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">12</td>
+<td class="table-cell-number-left"> 28,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score">  2</td>
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 28,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Rockliff</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">32</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">18</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">6</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">8.50</td>
+        <td></td>
+        <td class="summary-tip-score">2.22</td>
+        <td></td>
+        <td class="summary-tip-score">3.33</td>
+        <td></td>
+        <td class="summary-tip-score">1.83</td>
+        <td></td>
+        <td class="summary-tip-score">1.11</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1379" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Western Bulldogs 97 - 87 West Coast</p></div>
+                                    <div class="col-md-6 text-right"><p>Etihad Stadium (22,366)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Jeremy McGovern (Eagles), 
+                                    
+                                        2 - Marcus Bontempelli (Dogs), 
+                                    
+                                        3 - Luke Dahlhaus (Dogs), 
+                                    
+                                        4 - Andrew Gaff (Eagles), 
+                                    
+                                        5 - Jason Johannisen (Dogs)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 15,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score"> 21</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 18</td>
+<td class="tip-score">7</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 27,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 18</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jack Macrae</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 27</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  7</td>
+<td class="tip-score">14</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matthew Boyd</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">  8</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Tom Liberatore</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score"> 26</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">8</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matthew Boyd</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score"> 33</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 31,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Josh J. Kennedy</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 31,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score"> 24</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score"> 30</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 33,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score"> 24</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 19</td>
+<td class="tip-score">6</td>
+<td class="table-cell-number-left"> 22,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 26</td>
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  8</td>
+<td class="tip-score">16</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Matt Priddis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">33</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">20</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">13.78</td>
+        <td></td>
+        <td class="summary-tip-score">5.00</td>
+        <td></td>
+        <td class="summary-tip-score">5.61</td>
+        <td></td>
+        <td class="summary-tip-score">3.17</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1380" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>St Kilda 78 - 87 GWS</p></div>
+                                    <div class="col-md-6 text-right"><p>Etihad Stadium (18,794)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Adam Treloar (Giants), 
+                                    
+                                        2 - Dylan Shiel (Giants), 
+                                    
+                                        3 - Jarryn Geary (Saints), 
+                                    
+                                        4 - Leigh Montagna (Saints), 
+                                    
+                                        5 - Shane Savage (Saints)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score"> 22</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">9</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Callan Ward</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 37</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 21,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Ryan Griffen</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score"> 22</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">4</td>
+<td class="table-cell-number-left"> 19,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Shane Mumford</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 30</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 25,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Ryan Griffen</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 18,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Ryan Griffen</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score"> 19</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">8</td>
+<td class="table-cell-number-left"> 15,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Shane Mumford</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 37</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Dylan Shiel</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">8</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score"> 17</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">3</td>
+<td class="table-cell-number-left"> 20,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Callan Ward</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Shane Mumford</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score"> 11</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 40</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 23,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Toby Greene</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 28</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Callan Ward</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Shane Mumford</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">4</td>
+<td class="table-cell-number-left"> 18,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Shane Mumford</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 32</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 19,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Ryan Griffen</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score"> 32</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 20,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Shane Mumford</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 24</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 21,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Callan Ward</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 21</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">8</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Callan Ward</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score"> 20</td>
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  1</td>
+<td class="tip-score">7</td>
+<td class="table-cell-number-left"> 17,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Callan Ward</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">32</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">18</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">17.00</td>
+        <td></td>
+        <td class="summary-tip-score">10.00</td>
+        <td></td>
+        <td class="summary-tip-score">3.39</td>
+        <td></td>
+        <td class="summary-tip-score">3.17</td>
+        <td></td>
+        <td class="summary-tip-score">0.44</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1381" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Adelaide 140 - 63 North Melbourne</p></div>
+                                    <div class="col-md-6 text-right"><p>Adelaide Oval (46,491)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Taylor Walker (Crows), 
+                                    
+                                        2 - Eddie Betts (Crows), 
+                                    
+                                        3 - Rory Sloane (Crows), 
+                                    
+                                        4 - Brodie Smith (Crows), 
+                                    
+                                        5 - Patrick Dangerfield (Crows)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score"> 15</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  2</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 48,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">  4</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 49,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 46,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Sam Jacobs</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 42,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 15</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  7</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 48,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score"> 12</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  9</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 49,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Sam Jacobs</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 22</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 46,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Andrew Swallow</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">  9</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">  8</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 48,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Rory Sloane</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score"> 16</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 47,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 24</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 48,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Andrew Swallow</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score"> 16</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 47,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score">  7</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 50,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Rory Sloane</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score"> 17</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 12</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 50,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Rory Sloane</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 19</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 47,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Andrew Swallow</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score"> 24</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 46,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Rory Sloane</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 48,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Todd Goldstein</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 20</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 46,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Patrick Dangerfield</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score"> 19</td>
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 18</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 48,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Rory Sloane</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">6</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">3</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">1</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">24</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">6</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">11.83</td>
+        <td></td>
+        <td class="summary-tip-score">5.56</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+        <td></td>
+        <td class="summary-tip-score">3.83</td>
+        <td></td>
+        <td class="summary-tip-score">2.44</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1382" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Fremantle 75 - 68 Port Adelaide</p></div>
+                                    <div class="col-md-6 text-right"><p>Patersons Stadium (34,099)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Brad Ebert (Power), 
+                                    
+                                        2 - Matthew Pavlich (Dockers), 
+                                    
+                                        3 - Ollie Wines (Power), 
+                                    
+                                        4 - Danyle Pearce (Dockers), 
+                                    
+                                        5 - Robbie Gray (Power)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">5</td>
+<td class="table-cell-number-left"> 36,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score">  1</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 38,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score"> 29</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  8</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 30,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 39,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 33</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  7</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 36,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score"> 24</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">12</td>
+<td class="table-cell-number-left"> 37,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 36,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Travis Boak</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score">  0</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 11</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 40,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score"> 30</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  7</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 40,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score"> 32</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  8</td>
+<td class="tip-score">18</td>
+<td class="table-cell-number-left"> 35,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">1</td>
+<td class="table-cell-number-left"> 37,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score"> 30</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  7</td>
+<td class="tip-score">20</td>
+<td class="table-cell-number-left"> 40,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score">  1</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">  5</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 38,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 36,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">  8</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 14</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">  3</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 20</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 38,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Robbie Gray</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">2</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 27</td>
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">9</td>
+<td class="table-cell-number-left"> 34,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score">  4</td>
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left">  1</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 35,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Nat Fyfe</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">33</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">20</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">2</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">14.39</td>
+        <td></td>
+        <td class="summary-tip-score">5.00</td>
+        <td></td>
+        <td class="summary-tip-score">6.83</td>
+        <td></td>
+        <td class="summary-tip-score">2.44</td>
+        <td></td>
+        <td class="summary-tip-score">0.11</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+                
+                    <div id="game_1383" class="tab-pane">
+                        <div class="game-header row">
+                            
+                                    <div class="col-md-6 text-left"><p>Hawthorn 123 - 61 Geelong</p></div>
+                                    <div class="col-md-6 text-right"><p>MCG (73,584)</p></div>
+                            
+                            
+                                <p class="supercoach-result">
+                                    <small>
+                                        
+                                        1 - Jordan Lewis (Hawks), 
+                                    
+                                        2 - Steve Johnson (Cats), 
+                                    
+                                        3 - Shaun Burgoyne (Hawks), 
+                                    
+                                        4 - Josh Gibson (Hawks), 
+                                    
+                                        5 - Jarryd Roughead (Hawks)
+                                    
+                                        </small>
+                                </p>
+                            
+                        </div>
+                        <table class="table table-condensed tips-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table-cell-left" colspan="2">Winner</td>
+                                    <td class="table-cell-left" colspan="2">Margin</td>
+                                    <td class="table-cell-left" colspan="2">Crowd</td>
+                                    <td class="table-cell-left" colspan="2">Supercoach</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Carlton</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 72,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Sam Mitchell</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Richmond</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 22</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 75,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Melbourne</td>
+<td class="tip-score"> 22</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 77,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jordan Lewis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">10</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Gold Coast</td>
+<td class="tip-score"> 11</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 26</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 70,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Sydney</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 72,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Sam Mitchell</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Essendon</td>
+<td class="tip-score"> 11</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left">  9</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 78,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Brisbane</td>
+<td class="tip-score"> 14</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 75,000</td>
+<td class="tip-score">4</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Luke Hodge</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Collingwood</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 15</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 81,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Sam Mitchell</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Western Bulldogs</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 82,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">West Coast</td>
+<td class="tip-score"> 11</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 22</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 78,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Sam Mitchell</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">St Kilda</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 16</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 82,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">GWS</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 13</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 72,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jimmy Bartel</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Adelaide</td>
+<td class="tip-score"> 18</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 17</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 74,000</td>
+<td class="tip-score">8</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">North Melbourne</td>
+<td class="tip-score"> 13</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 76,000</td>
+<td class="tip-score">3</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Fremantle</td>
+<td class="tip-score"> 12</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 10</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 77,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jimmy Bartel</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Port Adelaide</td>
+<td class="tip-score"> 22</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 35</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 77,000</td>
+<td class="tip-score">2</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Jordan Lewis</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">10</td>
+
+                                        </tr>
+                                    
+                                
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score"> 10</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 21</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 80,000</td>
+<td class="tip-score">0</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                        <tr>
+                                            
+
+
+
+<td class="table-cell-left">Geelong</td>
+<td class="tip-score"> 11</td>
+<td class="table-cell-left">Hawthorn</td>
+<td class="tip-score">10</td>
+<td class="table-cell-number-left"> 23</td>
+<td class="tip-score">0</td>
+<td class="table-cell-number-left"> 78,000</td>
+<td class="tip-score">1</td>
+<td>
+    <ul class="list-unstyled">
+        
+            
+                <li>Joel Selwood</li>
+            
+        
+    </ul>
+</td>
+<td class="tip-score">0</td>
+
+                                        </tr>
+                                    
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                
+                                    
+
+
+
+
+    <tr class="table-splitter"><td colspan="10"></td></tr>
+    <tr>
+        <td>Minimum</td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+    </tr>
+    <tr>
+        <td>Maximum</td>
+        <td class="summary-tip-score">22</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+        <td></td>
+        <td class="summary-tip-score">0</td>
+        <td></td>
+        <td class="summary-tip-score">8</td>
+        <td></td>
+        <td class="summary-tip-score">10</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td class="summary-tip-score">13.22</td>
+        <td></td>
+        <td class="summary-tip-score">10.00</td>
+        <td></td>
+        <td class="summary-tip-score">0.00</td>
+        <td></td>
+        <td class="summary-tip-score">2.11</td>
+        <td></td>
+        <td class="summary-tip-score">1.11</td>
+    </tr>
+
+                                
+                            </tfoot>
+                        </table>
+                    </div>
+                
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="hidden">
+    <div id="change-password">
+        <form id="change-password-form" method="post" action=".">
+            <input type='hidden' name='csrfmiddlewaretoken' value='UgnmKzz4WwHHecg5b2sEEi8Zh7jtJKSw' />
+
+            <div class="form-group has-feedback">
+                <label class="control-label" for="old-password">Old password</label>
+                <input class="form-control" id="old-password" name="old_password" placeholder="Old password" type="password" />
+                <span class="glyphicon form-control-feedback"></span>
+            </div>
+
+            <div class="form-group has-feedback">
+                <label class="control-label" for="new-password1">New password</label>
+                <input class="form-control" id="new-password1" name="new_password1" placeholder="New password" type="password" />
+                <span class="glyphicon form-control-feedback"></span>
+            </div>
+
+            <div class="form-group has-feedback">
+                <label class="control-label" for="new-password2">Confirm new password</label>
+                <input class="form-control" id="new-password2" name="new_password2" placeholder="Confirm new password" type="password" />
+                <span class="glyphicon form-control-feedback"></span>
+            </div>
+
+            <button type="submit" class="btn btn-default" name="change_password_submit">Change Password</button>
+        </form>
+    </div>
+</div>
+            
+        </div>
+    </body>
+</html>

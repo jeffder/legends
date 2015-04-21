@@ -10,38 +10,40 @@ from legends.settings.base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-INTERNAL_IPS = ('127.0.0.1', '192.168.1.103', '192.168.1.116')
+INTERNAL_IPS = ('127.0.0.1', '192.168.1.103', '192.168.1.118')
 
 # Project paths
 SQLITE_DB_NAME = os.path.join(PROJECT_DIR, 'legends.db')
-TEST_DB_NAME = os.path.join(PROJECT_DIR, 'test_legends3.fdb')
+OLD_SQLITE_DB_NAME = os.path.join(PROJECT_DIR, 'legends_2014.db')
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'firebird',
-        'NAME': 'legends3',           # Path to database or db alias
-        'USER': 'legends',            # Your db user
-        'PASSWORD': 'saintssaints',   # db user password
-        'HOST': '127.0.0.1',          # Your host machine
-        'PORT': '3050',               # If is empty, use default 3050
-        'OPTIONS': {'charset': 'UTF8'},
-        'TEST_NAME': TEST_DB_NAME
-    },
+#    'old': {
+#        'ENGINE': 'firebird',
+#        'NAME': 'legends',           # Path to database or db alias
+#        'USER': 'legends',            # Your db user
+#        'PASSWORD': 'saintssaints',   # db user password
+#        'HOST': '127.0.0.1',          # Your host machine
+#        'PORT': '3050',               # If is empty, use default 3050
+#        'OPTIONS': {'charset': 'UTF8'},
+#    },
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': SQLITE_DB_NAME,
+#        },
     'old': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': SQLITE_DB_NAME
+        'NAME': OLD_SQLITE_DB_NAME,
     },
-    'old_fb': {
+    'default': {
         'ENGINE': 'firebird',
         'NAME': 'legends',           # Path to database or db alias
         'USER': 'legends',            # Your db user
         'PASSWORD': 'saintssaints',   # db user password
-        'HOST': 'nero',          # Your host machine
+        'HOST': 'localhost',          # Your host machine
         'PORT': '3050',               # If is empty, use default 3050
-        'OPTIONS': {'charset': 'ISO8859_1'},
-        'TEST_NAME': TEST_DB_NAME
+        'OPTIONS': {'charset': 'UTF8'}
     },
 }
 

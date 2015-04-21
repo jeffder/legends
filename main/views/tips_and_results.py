@@ -7,17 +7,12 @@ import json
 import logging
 from statistics import mean
 
-import numpy
-
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
 from main.models import (
-#    Round, Bye, Points, CrowdPoints, MarginPoints, LegendsFixture, Tip,
-#    LegendsLadder, FinalLadder
     Club, Round, SupercoachRanking, Tip
 )
 from main import constants, forms
@@ -891,7 +886,7 @@ def create_non_premiership_ladders(curr_round, games):
     ladder_names = ('brownlow', 'coleman', 'crowds', 'margins')
     round_ladders = dict((name, []) for name in ladder_names)
 
-    clubs = curr_round.tipping_clubs
+    clubs = curr_round.season.clubs
     tips = curr_round.tips_by_club(games)
 
     for club in clubs:

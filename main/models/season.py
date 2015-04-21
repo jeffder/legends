@@ -39,7 +39,7 @@ class Season(models.Model):
 
         # All rounds have status of 'Final' so return the Grand Final round for
         # season
-        return self.rounds.filter(name='Grand Final')[0]
+        return self.rounds.get(name='Grand Final')
 
     @property
     def games_played(self):
