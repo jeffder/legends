@@ -57,27 +57,30 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+            'format': '%(levelname)s %(asctime)s %(module)s\n\t%(message)s'
         },
         'simple': {
-            'format': '%(levelname)s %(asctime)s:\n\t(message)s'
+            'format': '%(levelname)s %(asctime)s:\n\t%(message)s'
         },
     },
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': LOG_LEGENDS_FILE
+            'filename': LOG_LEGENDS_FILE,
+            'formatter': 'verbose'
         },
         'tip_file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': LOG_TIPS_FILE
+            'filename': LOG_TIPS_FILE,
+            'formatter': 'simple'
         },
         'result_file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': LOG_RESULTS_FILE
+            'filename': LOG_RESULTS_FILE,
+            'formatter': 'simple'
         }
     },
     'loggers': {
@@ -88,10 +91,12 @@ LOGGING = {
         'legends.tip': {
             'handlers': ['tip_file'],
             'level': 'INFO',
+            'propagate': False
         },
         'legends.result': {
             'handlers': ['result_file'],
             'level': 'INFO',
+            'propagate': False
         },
     }
 }

@@ -21,9 +21,6 @@ from main.utils.misc import chunks
 from main.views import JSONResponse
 from main.views.auth import render_auth_form
 
-# Log tips by default
-logger = logging.getLogger('legends.tips')
-
 selected_page = 'tips'
 
 
@@ -138,7 +135,7 @@ def get_results(request, round_id):
     """
 
     def _log_results(results):
-        logger = logging.getLogger('results')
+        logger = logging.getLogger('legends.result')
 
         for result in results:
             log_message = '%s: %s %s - %s %s (%d)' %   \
@@ -439,6 +436,7 @@ def submit_tips(request):
     """
 
     def _save(form):
+        logger = logging.getLogger('legends.tip')
 
         form[0].save()
 
@@ -450,7 +448,7 @@ def submit_tips(request):
         tip = form[0].instance
 
         # Log tip input
-        log_message = '%s: %s: Winner: %s Margin: %s Crowd: %d' % (
+        log_message = '{}: {}: Winner: {} Margin: {} Crowd: {}'.format(
             tip.club,
             tip.game,
             tip.winner,
@@ -458,8 +456,9 @@ def submit_tips(request):
             tip.crowd
         )
         logger.info(log_message)
+
         for supercoach in tip.supercoach_tips.all():
-            log_message = '%s: %s: Supercoach: %s' % (
+            log_message = '{}: {}: Supercoach: {}'.format(
                 tip.club,
                 tip.game,
                 supercoach.player

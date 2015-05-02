@@ -64,6 +64,8 @@ def render_manual_tips(request, **kwargs):
     View for manual tips form
     """
     def _save(form):
+        logger = logging.getLogger('legends.tip')
+
         form[0].save()
 
         # BOGs
@@ -74,15 +76,16 @@ def render_manual_tips(request, **kwargs):
         # Log tip input
         tip = form[0].tip_instance
 
-        log_message = '%s: %s: Winner: %s Margin: %s Crowd: %d' % (
+        log_message = 'MANUAL TIP: %s: %s: Winner: %s Margin: %s Crowd: %d' % (
             tip.club,
             tip.game,
             tip.winner,
             tip.margin,
             tip.crowd
         )
-        logger = logging.getLogger('tips')
+
         logger.info(log_message)
+
         for bog in tip.supercoach_tips.all():
             log_message = '%s: %s: Supercoach: %s' % (
                 tip.club,
