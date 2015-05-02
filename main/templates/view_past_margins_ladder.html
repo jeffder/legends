@@ -9,17 +9,17 @@
             <tr>
                 <th></th>
                 <th></th>
-                <th>Score</th>
-                <th>Avg</th>
+                <th class="align-right">Score</th>
+                <th class="align-right">Avg</th>
             </tr>
         </thead>
         <tbody>
             {% for row in ladder %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
+                    <td class="align-right" class="align-right">{{ forloop.counter }}</td>
                     <td class="club">{{ row.club }}</td>
-                    <td>{{ row.score }}</td>
-                    <td>{{ row.avg_score|floatformat:2 }}</td>
+                    <td class="align-right" class="align-right">{{ row.score }}</td>
+                    <td class="align-right" class="align-right">{{ row.avg_score|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>

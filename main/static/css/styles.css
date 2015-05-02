@@ -8816,29 +8816,44 @@ td.tips-table {
   padding-left: 10px;
 }
 
+/* line 578, ../sass/styles.scss */
+.align-center {
+  text-align: center;
+}
+
+/* line 582, ../sass/styles.scss */
+.align-left {
+  text-align: left;
+}
+
+/* line 586, ../sass/styles.scss */
+.align-right {
+  text-align: right;
+}
+
 /***** Manual tip forms *****/
-/* line 576, ../sass/styles.scss */
+/* line 593, ../sass/styles.scss */
 .tip_forms_left {
   float: left;
   margin-left: 10px;
   width: 308px;
 }
 
-/* line 582, ../sass/styles.scss */
+/* line 599, ../sass/styles.scss */
 .tip_forms_centre {
   float: left;
   margin-left: 8px;
   width: 308px;
 }
 
-/* line 588, ../sass/styles.scss */
+/* line 605, ../sass/styles.scss */
 .tip_forms_right {
   float: right;
   margin-right: 10px;
   width: 308px;
 }
 
-/* line 593, ../sass/styles.scss */
+/* line 610, ../sass/styles.scss */
 .tip_form {
   border: 0px solid black;
   margin-bottom: 10px;
@@ -8847,7 +8862,7 @@ td.tips-table {
   border-radius: 5px;
 }
 
-/* line 601, ../sass/styles.scss */
+/* line 618, ../sass/styles.scss */
 .tip_form_game_header {
   background-color: #b0deb3;
   width: 298px;
@@ -8859,7 +8874,7 @@ td.tips-table {
   border-radius: 5px;
 }
 
-/* line 612, ../sass/styles.scss */
+/* line 629, ../sass/styles.scss */
 .tip_form_teams {
   float: left;
   font-size: 16px;
@@ -8869,7 +8884,7 @@ td.tips-table {
   width: 288px;
 }
 
-/* line 621, ../sass/styles.scss */
+/* line 638, ../sass/styles.scss */
 .tip_form_venue {
   float: left;
   font-size: 12px;
@@ -8879,7 +8894,7 @@ td.tips-table {
   width: 120px;
 }
 
-/* line 630, ../sass/styles.scss */
+/* line 647, ../sass/styles.scss */
 .tip_form_date {
   font-size: 12px;
   font-weight: bold;
@@ -8889,7 +8904,7 @@ td.tips-table {
   width: 120px;
 }
 
-/* line 639, ../sass/styles.scss */
+/* line 656, ../sass/styles.scss */
 .tip_form_label {
   text-align: left;
   padding-left: 5px;
@@ -8901,28 +8916,28 @@ td.tips-table {
   float: left;
 }
 
-/* line 650, ../sass/styles.scss */
+/* line 667, ../sass/styles.scss */
 .tip_form_winner {
   width: 130px;
 }
 
-/* line 654, ../sass/styles.scss */
+/* line 671, ../sass/styles.scss */
 .tip_form_player select {
   width: 230px;
 }
 
-/* line 658, ../sass/styles.scss */
+/* line 675, ../sass/styles.scss */
 .form_error {
   color: red;
   padding-left: 5px;
 }
 
-/* line 663, ../sass/styles.scss */
+/* line 680, ../sass/styles.scss */
 #tip_submission {
   background-color: #b0c4de;
 }
 
-/* line 667, ../sass/styles.scss */
+/* line 684, ../sass/styles.scss */
 .submit_button {
   background-color: #c7c7c7;
   clear: left;

@@ -10,25 +10,25 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>Score</th>
-                <th>Exact</th>
-                <th>One Off</th>
-                <th>Two Off</th>
-                <th>Three Off</th>
-                <th>Four Off</th>
-                <th>Nothing</th>
-                <th>Score %</th>
-                <th>Bonus %</th>
-                <th>Min</th>
-                <th>Max</th>
-                <th>Avg</th>
+                <th class="align-right">Score</th>
+                <th class="align-right">Exact</th>
+                <th class="align-right">One Off</th>
+                <th class="align-right">Two Off</th>
+                <th class="align-right">Three Off</th>
+                <th class="align-right">Four Off</th>
+                <th class="align-right">Nothing</th>
+                <th class="align-right">Score %</th>
+                <th class="align-right">Bonus %</th>
+                <th class="align-right">Min</th>
+                <th class="align-right">Max</th>
+                <th class="align-right">Avg</th>
             </tr>
         </thead>
         <tbody>
             {% for row in ladder %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>
+                    <td class="align-right">{{ forloop.counter }}</td>
+                    <td class="align-right">
                         {% if row.previous_position %}
                             ({{ row.previous_position }})
                         {% else %}
@@ -36,18 +36,18 @@
                         {% endif %}
                     </td>
                     <td class="club">{{ row.club }}</td>
-                    <td>{{ row.score }}</td>
-                    <td>{{ row.exact }}</td>
-                    <td>{{ row.one }}</td>
-                    <td>{{ row.two }}</td>
-                    <td>{{ row.three }}</td>
-                    <td>{{ row.four }}</td>
-                    <td>{{ row.nothing }}</td>
-                    <td>{{ row.strike_rate|floatformat:2 }}%</td>
-                    <td>{{ row.bonus_strike_rate|floatformat:2 }}%</td>
-                    <td>{{ row.min_score }}</td>
-                    <td>{{ row.max_score }}</td>
-                    <td>{{ row.avg_score|floatformat:2 }}</td>
+                    <td class="align-right">{{ row.score }}</td>
+                    <td class="align-right">{{ row.exact }}</td>
+                    <td class="align-right">{{ row.one }}</td>
+                    <td class="align-right">{{ row.two }}</td>
+                    <td class="align-right">{{ row.three }}</td>
+                    <td class="align-right">{{ row.four }}</td>
+                    <td class="align-right">{{ row.nothing }}</td>
+                    <td class="align-right">{{ row.strike_rate|floatformat:2 }}%</td>
+                    <td class="align-right">{{ row.bonus_strike_rate|floatformat:2 }}%</td>
+                    <td class="align-right">{{ row.min_score }}</td>
+                    <td class="align-right">{{ row.max_score }}</td>
+                    <td class="align-right">{{ row.avg_score|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>

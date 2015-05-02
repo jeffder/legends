@@ -10,15 +10,15 @@
                 <th></th>
                 <th></th>
                 {% for row in ladder.0.round.season.ha_rounds %}
-                <th>{{ forloop.counter }}</th>
+                <th class="align-right">{{ forloop.counter }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for row in ladder %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>
+                    <td class="align-right">{{ forloop.counter }}</td>
+                    <td class="align-right">
                         {% if row.previous_position %}
                             ({{ row.previous_position }})
                         {% else %}

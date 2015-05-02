@@ -9,27 +9,27 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>P</th>
-                <th>W</th>
-                <th>D</th>
-                <th>L</th>
-                <th>F</th>
-                <th>A</th>
-                <th>%</th>
-                <th>Pts</th>
-                <th>F Max</th>
-                <th>F Min</th>
-                <th>F Avg</th>
-                <th>A Min</th>
-                <th>A Max</th>
-                <th>A Avg</th>
+                <th class="align-right">P</th>
+                <th class="align-right">W</th>
+                <th class="align-right">D</th>
+                <th class="align-right">L</th>
+                <th class="align-right">F</th>
+                <th class="align-right">A</th>
+                <th class="align-right">%</th>
+                <th class="align-right">Pts</th>
+                <th class="align-right">F Max</th>
+                <th class="align-right">F Min</th>
+                <th class="align-right">F Avg</th>
+                <th class="align-right">A Min</th>
+                <th class="align-right">A Max</th>
+                <th class="align-right">A Avg</th>
             </tr>
         </thead>
         <tbody>
             {% for row in ladder %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>
+                    <td class="align-right">{{ forloop.counter }}</td>
+                    <td class="align-right">
                         {% if row.previous_position %}
                             ({{ row.previous_position }})
                         {% else %}
@@ -37,20 +37,20 @@
                         {% endif %}
                     </td>
                     <td class="club">{{ row.club }}</td>
-                    <td>{{ row.played }}</td>
-                    <td>{{ row.win }}</td>
-                    <td>{{ row.draw }}</td>
-                    <td>{{ row.loss }}</td>
-                    <td>{{ row.score_for }}</td>
-                    <td>{{ row.score_against }}</td>
-                    <td>{{ row.percentage|floatformat:2 }}%</td>
-                    <td>{{ row.points }}</td>
-                    <td>{{ row.max_for }}</td>
-                    <td>{{ row.min_for }}</td>
-                    <td>{{ row.avg_for|floatformat:2 }}</td>
-                    <td>{{ row.min_against }}</td>
-                    <td>{{ row.max_against }}</td>
-                    <td>{{ row.avg_against|floatformat:2 }}</td>
+                    <td class="align-right">{{ row.played }}</td>
+                    <td class="align-right">{{ row.win }}</td>
+                    <td class="align-right">{{ row.draw }}</td>
+                    <td class="align-right">{{ row.loss }}</td>
+                    <td class="align-right">{{ row.score_for }}</td>
+                    <td class="align-right">{{ row.score_against }}</td>
+                    <td class="align-right">{{ row.percentage|floatformat:2 }}%</td>
+                    <td class="align-right">{{ row.points }}</td>
+                    <td class="align-right">{{ row.max_for }}</td>
+                    <td class="align-right">{{ row.min_for }}</td>
+                    <td class="align-right">{{ row.avg_for|floatformat:2 }}</td>
+                    <td class="align-right">{{ row.min_against }}</td>
+                    <td class="align-right">{{ row.max_against }}</td>
+                    <td class="align-right">{{ row.avg_against|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>
