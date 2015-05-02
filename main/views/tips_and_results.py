@@ -76,6 +76,7 @@ def view_tips(request, round_id):
         'club': Club.objects.get(id=request.session['club']),
         'selected_page': selected_page,
     }
+
     return render_to_response(
         'main.html',
         context,
@@ -252,7 +253,7 @@ def finalise_round(request, curr_round):
 
 def render_results(request, selected_round, games):
     """
-        Render all results
+    Render all results
     """
     if not games:
         return b''
@@ -271,15 +272,16 @@ def render_results(request, selected_round, games):
         'score'
     )
 
-    for game, tips in games:
+    legends_games = selected_round.games.all()
+    for game in legends_games:
         # Update round scores
         for team in ('legends_away', 'legends_home'):
             for attr in score_attrs:
                 _attr = '{}_{}'.format(team, attr)
                 round_values[attr].append(getattr(game, _attr))
-            # Winners bonus
-            round_values['bonus_score'].append(game.legends_away_winners_bonus)
-            round_values['bonus_score'].append(game.legends_home_winners_bonus)
+        # Winners bonus
+        round_values['bonus_score'].append(game.legends_away_winners_bonus)
+        round_values['bonus_score'].append(game.legends_home_winners_bonus)
 
     # Handle byes
     byes = selected_round.byes.all()
@@ -319,7 +321,6 @@ def render_results(request, selected_round, games):
             size += 1
     else:
         size = 5
-    legends_games = selected_round.games.all()
     grouped_games = chunks((g for g in legends_games), size)
 
     # Split byes into two chunks
