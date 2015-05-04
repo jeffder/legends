@@ -95,10 +95,14 @@ class Footywire(object):
         num_games = self.round.num_games
 
         # Format the round's start date so that we can start the search
-        start_str = self.round.start_time.strftime('%a %d %b')
-        _day, _date, _month = start_str.split()
-        if _date.startswith('0'):
-            start_str = ' '.join((_day, _date[1], _month))
+        start_str = self.round.start_time.strftime('%a %d %b %I:%Mpm')
+        _day, _date, _month, _time = start_str.split()
+        if _date.startswith('0') or _time.startswith('0'):
+            if _date.startswith('0'):
+                _date = _date[1]
+            if _time.startswith('0'):
+                _time = _time[1:]
+            start_str = ' '.join((_day, _date, _month, _time))
 
         url = 'http://www.footywire.com/afl/footy/ft_match_list'
         soup = self._get_soup(url)
