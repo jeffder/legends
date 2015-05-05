@@ -270,8 +270,10 @@ class LegendsLadder(BasePremiershipLadder):
                 self.min_against = previous.min_against
                 self.max_against = previous.max_against
             else:
-                self.min_for = min(self.score_for, previous.min_for)
-                self.max_for = max(self.score_for, previous.max_for)
+                self.min_for = min(
+                    self.score_for - previous.score_for, previous.min_for)
+                self.max_for = max(
+                    self.score_for - previous.score_for, previous.max_for)
                 if previous.min_against == 0:
                     # We want to override a 0 min_against in the previous round
                     # if club had a bye in Round 1 since that 0 score didn't
@@ -282,9 +284,13 @@ class LegendsLadder(BasePremiershipLadder):
                         self.min_against = self.score_against
                 else:
                     self.min_against = min(
-                        self.score_against, previous.min_against
+                        self.score_against - previous.score_against,
+                        previous.min_against
                     )
-                self.max_against = max(self.score_against, previous.max_against)
+                self.max_against = max(
+                    self.score_against - previous.score_against,
+                    previous.max_against
+                )
         else:
             self.min_for = self.score_for
             self.max_for = self.score_for
