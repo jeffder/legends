@@ -9,3 +9,4 @@ fdb==1.4.1
 numpy==1.8.1
 see==1.0.1
 six==1.7.3
+mod-wsgi

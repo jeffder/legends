@@ -7,8 +7,8 @@ import os
 from legends.settings.base import *
 
 
-# We want debugging
-DEBUG = True
+# We don't want debugging in production
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # Project paths
@@ -32,8 +32,4 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS += (
-    'django_extensions',
-)
-
-TEMPLATE_STRING_IF_INVALID = 'XXX'
+TEMPLATE_STRING_IF_INVALID = ''
