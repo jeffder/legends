@@ -23,7 +23,7 @@ def get_environ_variable(name):
         raise ImproperlyConfigured(error_msg)
 
 
-# Debug is off by default - turn it on in local settings files for dev
+# Debug is off by default - turn it on in the relevant server settings
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -65,19 +65,19 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+#            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': LOG_LEGENDS_FILE,
             'formatter': 'verbose'
         },
         'tip_file': {
-            'level': 'INFO',
+#            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': LOG_TIPS_FILE,
             'formatter': 'simple'
         },
         'result_file': {
-            'level': 'INFO',
+#            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': LOG_RESULTS_FILE,
             'formatter': 'simple'
@@ -101,6 +101,26 @@ LOGGING = {
     }
 }
 
+# mod_wsgi-express
+
+# Log exceptions to /etc/mod_wsgi-express
+if os.environ.get('MOD_WSGI_EXPRESS'):
+    LOGGING['handlers'].update({
+        'console': {
+            #            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            #            'formatter': 'verbose'
+        }
+    })
+    LOGGING['loggers'].update({
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        }
+    })
+
+
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -112,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
+    'mod_wsgi.server',
     # Legends apps
     'main',
 )
