@@ -8,7 +8,7 @@ from legends.settings.base import *
 
 
 # We don't want debugging in production
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # Project paths
