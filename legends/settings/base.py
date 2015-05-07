@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
+    'mod_wsgi.server',
     # Legends apps
     'main',
 )
