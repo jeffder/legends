@@ -1,6 +1,5 @@
 # Tips and results views
 
-import collections
 import datetime
 from itertools import groupby
 import json
@@ -617,12 +616,11 @@ def save_supercoach_results(game, results):
     # Due to ties we might get more than 5 players
     player_count = 0
     previous = 0
-    rank = 0
     for score in scores:
         if previous != score['score']:
-            rank += 1
             if player_count >= 5:
                 break
+            rank = player_count + 1
             previous = score['score']
 
         sc_rank = SupercoachRanking(
