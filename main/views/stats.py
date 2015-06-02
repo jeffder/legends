@@ -22,7 +22,6 @@ from main.models import (
     PastCrowdsLadder, PastMarginsLadder
 )
 from main.views import ladders, tips_and_results
-#from main.utils import avg
 
 selected_page = 'stats'
 selected_stats = 'rules'
@@ -32,10 +31,9 @@ CLUBS = Club.objects.all()
 
 @login_required
 def view_stats(request, **kwargs):
-    '''
+    """
     View various kinds of statistics.
-    '''
-
+    """
     if request.method == 'POST':
         form_lookup = {
             'past_years': process_ladder_for_round_form,
@@ -100,10 +98,9 @@ def render_stats_nav(request, active_stats):
 
 
 def render_rules(request):
-    '''
-        Display the competition rules.
-    '''
-
+    """
+    Display the competition rules.
+    """
     rendered = render(
         request,
         'view_rules.html',
@@ -113,10 +110,9 @@ def render_rules(request):
 
 
 def render_coaches(request):
-    '''
-        Display the Legends coaches.
-    '''
-
+    """
+    Display the Legends coaches.
+    """
     coaches = Coach.objects.all().order_by('club', '-season')
     past_coaches = PastCoach.objects.all().order_by('club', '-season')
 
@@ -146,12 +142,11 @@ def render_coaches(request):
 
 
 def render_coaches_by_club(request):
-    '''
-        Display the Legends coaches.
+    """
+    Display the Legends coaches.
 
-        NOTE: Not currently used.
-    '''
-
+    NOTE: Not currently used.
+    """
     coaches = Coach.objects.all().order_by('club', '-season')
     past_coaches = PastCoach.objects.all().order_by('club', '-season')
 
@@ -180,10 +175,9 @@ def render_coaches_by_club(request):
 
 
 def render_past_winners(request):
-    '''
-        Display past winners. We need to allow for joint coaches.
-    '''
-
+    """
+    Display past winners. We need to allow for joint coaches.
+    """
     past = PastCategoryWinner.objects.all()
     seasons = Season.objects.all().order_by('-season')
     live_season = Season.objects.get(season=request.session['live_season'])
@@ -221,10 +215,9 @@ def render_past_winners(request):
 
 
 def render_past_years(request, season_id=None, round_id=None, ladder=None):
-    '''
-        Display past years results and ladders.
-    '''
-
+    """
+    Display past years results and ladders.
+    """
     # Get the selected season
     seasons = Season.objects.all()
     if season_id:
@@ -275,8 +268,13 @@ def render_past_years(request, season_id=None, round_id=None, ladder=None):
             'post_2008': post_2008
         }
 
+    season_split = []
+    season_split.append([s for s in seasons if s.season >= 2010])
+    season_split.append([s for s in seasons if 2000 <= s.season < 2010])
+    season_split.append([s for s in seasons if s.season < 2000])
+
     # Render the view
-    content = render_season_nav(request, selected_season, seasons)
+    content = render_season_nav(request, selected_season, season_split)
     content += render_ladder_selector(*selector_args, **selector_kwargs)
     content += render_ladder(*ladder_args, **ladder_kwargs)
     if post_2008:
@@ -286,16 +284,18 @@ def render_past_years(request, season_id=None, round_id=None, ladder=None):
 
 
 def render_coach_v_coach(request, coach_1=None, coach_2=None):
-    '''
-        Display head to head results for coach_1 and coach_2.
-    '''
-
+    """
+    Display head to head results for coach_1 and coach_2.
+    """
     # Get the coach names
     def _sort_key(name):
         first, last = name.split(' ', 1)
         return (last.lower(), first.lower())
 
-    coaches = sorted({c.name for c in Coach.objects.all()}, key=_sort_key)
+    coaches = sorted(
+        {c.name for c in Coach.objects.all() if not c.is_assistant},
+        key=_sort_key
+    )
 
     # Render the view
     content = render_coach_v_coach_selector(request, coach_1, coach_2, coaches)
@@ -305,9 +305,9 @@ def render_coach_v_coach(request, coach_1=None, coach_2=None):
 
 
 def render_records(request):
-    '''
-        Display various records e.g most wins in season
-    '''
+    """
+    Display various records e.g most wins in season
+    """
     records = get_all_records()
 
     # Temporary until do template
@@ -315,18 +315,17 @@ def render_records(request):
 
 
 def render_season_nav(request, season, seasons):
-    '''
+    """
     Render season navigation.
 
     Args:
         * 'season': the currently selected Season (latest season by default)
         * 'seasons': a queryset containing all of the existing seasons
-    '''
-
+    """
     season_nav = render(
         request,
         'season_nav.html',
-        {'seasons': seasons,
+        {'season_split': seasons,
          'selected_season': season},
     )
 
@@ -335,10 +334,9 @@ def render_season_nav(request, season, seasons):
 
 def render_ladder_selector(
         request, season, ladder_name, rnd=None, rounds=None, post_2008=True):
-    '''
+    """
     Render the round and ladder form.
-    '''
-
+    """
     if post_2008:
         form = LadderForRoundForm(
             rnd=rnd.id,
@@ -369,10 +367,9 @@ def render_ladder_selector(
 
 
 def render_coach_v_coach_selector(request, coach_1, coach_2, coaches):
-    '''
+    """
     Render the coach versus coach form.
-    '''
-
+    """
     form = CoachVCoachForm(coach_1=coach_1, coach_2=coach_2, coaches=coaches)
     url = '/legends/stats/coach_v_coach/{}/{}/'.format(coach_1, coach_2)
 
@@ -386,10 +383,9 @@ def render_coach_v_coach_selector(request, coach_1, coach_2, coaches):
 
 
 def render_ladder(request, ladder_name, round=None, season=None, post_2008=True):
-    '''
+    """
     Render a ladder given the season, round and ladder name.
-    '''
-
+    """
     if post_2008:
         rendered = ladders.render_ladder(
             request,
@@ -407,11 +403,9 @@ def render_ladder(request, ladder_name, round=None, season=None, post_2008=True)
 
 
 def render_past_ladder(request, ladder_name, season):
-    '''
+    """
     Render a past ladder given the season and ladder name.
-    '''
-
-    model = globals()['Past%sLadder' % ladder_name.title()]
+    """
     model = get_model('main', 'Past{}Ladder'.format(ladder_name.title()))
 
     template = 'view_past_{}_ladder.html'.format(ladder_name)
@@ -431,10 +425,9 @@ def render_past_ladder(request, ladder_name, season):
 
 
 def render_legends_fixtures(request, season, rounds):
-    '''
+    """
     Render the legends fixtures/results for the selected season.
-    '''
-
+    """
     results = Game.objects \
         .filter(round__in=rounds) \
         .order_by('round', 'legends_home')
@@ -461,10 +454,9 @@ def render_legends_fixtures(request, season, rounds):
 
 
 def score_detail_header(request, fixture_id):
-    '''
+    """
     Return the header for a club's scoring details in a specified round.
-    '''
-
+    """
     fixture = Game.objects.get(id=fixture_id)
 
     return render_to_response(
@@ -476,10 +468,9 @@ def score_detail_header(request, fixture_id):
 
 
 def bye_score_detail_header(request, bye_id):
-    '''
+    """
     Return the header for a bye club's scoring details in a specified round.
-    '''
-
+    """
     bye = Bye.objects.get(id=bye_id)
     rnd = Round.objects.get(id=bye.round.id)
     club = Club.objects.get(id=bye.club.id)
@@ -494,10 +485,9 @@ def bye_score_detail_header(request, bye_id):
 
 
 def score_detail(request, fixture_id):
-    '''
+    """
     Return scoring details for a club in a specified round.
-    '''
-
+    """
     fixture = Game.objects.get(id=fixture_id)
     rnd = Round.objects.get(id=fixture.round.id)
     home = Club.objects.get(id=fixture.legends_home.id)
@@ -518,10 +508,9 @@ def score_detail(request, fixture_id):
 
 
 def bye_score_detail(request, bye_id):
-    '''
+    """
     Return bye scoring details for a club in a specified round.
-    '''
-
+    """
     bye = Bye.objects.get(id=bye_id)
     rnd = Round.objects.get(id=bye.round.id)
     club = Club.objects.get(id=bye.club.id)
@@ -538,10 +527,9 @@ def bye_score_detail(request, bye_id):
 
 
 def render_coach_v_coach_results(request, coach_1, coach_2):
-    '''
+    """
     Render a list of coach head to head results given two coaches names.
-    '''
-
+    """
     if coach_1 is None or coach_2 is None:
         return b''
 
@@ -607,10 +595,9 @@ def render_coach_v_coach_results(request, coach_1, coach_2):
 ### Form processing
 
 def process_ladder_for_round_form(request, **kwargs):
-    '''
+    """
     Process the form for the past years view.
-    '''
-
+    """
     season_id = int(kwargs['season_id'])
     season = Season.objects.get(season=season_id)
 
@@ -642,10 +629,9 @@ def process_ladder_for_round_form(request, **kwargs):
 
 
 def process_coach_v_coach_form(request, **kwargs):
-    '''
+    """
     Process the form for the coach versus coach view.
-    '''
-
+    """
     form = CoachVCoachForm(request.POST)
     if form.is_valid():
         coach_1 = form.cleaned_data['coach_1']
@@ -662,9 +648,9 @@ def process_coach_v_coach_form(request, **kwargs):
 ### Helper functions
 
 def get_rounds(season):
-    '''
+    """
     Return the rounds with ladders for the season.
-    '''
+    """
     rounds = Round.objects.filter(season=season)
     ladder_rounds = rounds.filter(
         is_finals=False,
@@ -694,9 +680,9 @@ def results_group_key(result):
 
 
 def get_all_records():
-    '''
+    """
     Return the records for each given season.
-    '''
+    """
     season_records = {}
     round_records = {}
 
@@ -792,9 +778,9 @@ def get_all_records():
 
 
 #def get_all_records():
-#    '''
+#    """
 #    Return the records for each given season.
-#    '''
+#    """
 #    season_records = {}
 #    round_records = {}
 #
@@ -906,9 +892,9 @@ def get_all_records():
 
 
 def convert_score(tip, attr):
-    '''
+    """
     Convert the attr score for tip from the old scoring system to the new one.
-    '''
+    """
     new_score = 0
 
     score = getattr(tip, attr)
@@ -948,9 +934,9 @@ def convert_score(tip, attr):
 
 
 def legends_records():
-    '''
+    """
     Get records from legends ladder.
-    '''
+    """
     records = {
         'most_wins': 0,
         'least_wins': 1000,

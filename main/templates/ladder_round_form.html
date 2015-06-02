@@ -5,11 +5,11 @@
 <div id="ladder_round_selection">
     <form class="form-inline" method="post" action="{{ url }}">
         {% csrf_token %}
-        
+
         {{ form.rnd }}
         {{ form.ladder_name }}
 
-        <button class="btn" type="submit">Select Ladder</button>
-        
+        <button class="btn btn-default submit-btn" type="submit">Select Ladder</button>
+
     </form>
 </div>

@@ -12,12 +12,11 @@ DRAW_TIP = '-99'
 EMPTY_VALUE = ''
 
 class Errors(ErrorList):
-    '''
+    """
         Customise the error list format
-    '''
+    """
 
     def __unicode__(self):
-
         if not self:
             return u''
 
@@ -26,9 +25,9 @@ class Errors(ErrorList):
 
 # Authorisation
 class LoginForm(forms.Form):
-    '''
+    """
     Log a user in using a username and password.
-    '''
+    """
 
     username = forms.CharField(
         max_length=30,
@@ -86,9 +85,9 @@ class LoginForm(forms.Form):
 
 
 class ChangePasswordForm(forms.Form):
-    '''
+    """
     Let a user change set his password.
-    '''
+    """
 
     old_password = forms.CharField(
         widget=forms.PasswordInput(
@@ -279,10 +278,9 @@ class SupercoachForm(forms.ModelForm):
 
 
 class LadderForRoundForm(forms.Form):
-    '''
+    """
     Selection of round and ladder name in past years (post 2008) view.
-    '''
-
+    """
     def __init__(self, *args, **kwargs):
 
         for attr in ('rnd', 'ladder_name', 'rounds'):
@@ -317,17 +315,24 @@ class LadderForRoundForm(forms.Form):
         self.fields['ladder_name'].initial = self.ladder_name or 'legends'
         self.fields['ladder_name'].required = True
 
-    rnd = forms.ChoiceField()
-    ladder_name = forms.ChoiceField()
+    rnd = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={'class': 'form-control-inline input-sm'}
+        )
+    )
+    ladder_name = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={'class': 'form-control-inline input-sm'}
+        )
+    )
 
 
 class LadderForRoundFormPre2008(forms.Form):
-    '''
+    """
     Selection of round and ladder name in past years (pre 2008) view.
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
-
         for attr in ('ladder_name', 'season'):
             try:
                 setattr(self, attr, kwargs.pop(attr))
@@ -344,24 +349,27 @@ class LadderForRoundFormPre2008(forms.Form):
 
         if self.season.season == 2007:
             ladder_choices.extend([
-                ('crowds', 'Crowds'),
                 ('margins', 'Margins'),
+                ('crowds', 'Trethowan'),
             ])
 
         self.fields['ladder_name'].choices = ladder_choices
         self.fields['ladder_name'].initial = self.ladder_name or 'legends'
         self.fields['ladder_name'].required = True
 
-    ladder_name = forms.ChoiceField()
+    ladder_name = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={'class': 'form-control-inline input-sm'}
+        )
+    )
 
 
 class CoachVCoachForm(forms.Form):
-    '''
+    """
     Selection of coaches for the coach versus coach view.
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
-
         for attr in ('coach_1', 'coach_2', 'coaches'):
             try:
                 setattr(self, attr, kwargs.pop(attr))
@@ -377,13 +385,11 @@ class CoachVCoachForm(forms.Form):
                 return (last.lower(), first.lower())
 
             self.coaches = sorted(
-                {c.name for c in models.Coach.objects.all()},
+                {c.name for c in models.Coach.objects.all() if not c.is_assistant},
                 key=_sort_key
             )
 
-        assistants = ('Bernard Bialecki', 'Ben West', 'Peter Moran',
-                      'Chris Balkos')
-        choices = [(c, c) for c in self.coaches if c not in assistants]
+        choices = [(c, c) for c in self.coaches]
 
         self.fields['coach_1'].choices = choices
         self.fields['coach_1'].initial = self.coach_1 or self.coaches[0]
@@ -393,8 +399,16 @@ class CoachVCoachForm(forms.Form):
         self.fields['coach_2'].initial = self.coach_2 or self.coaches[0]
         self.fields['coach_2'].required = True
 
-    coach_1 = forms.ChoiceField()
-    coach_2 = forms.ChoiceField()
+    coach_1 = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={'class': 'form-control-inline input-sm'}
+        )
+    )
+    coach_2 = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={'class': 'form-control-inline input-sm'}
+        )
+    )
 
 
 # Manual tips
@@ -505,7 +519,6 @@ class ManualSupercoachForm(forms.Form):
     """
 
     def __init__(self, players, *args, **kwargs):
-
         self.instance = kwargs.pop('instance')
 
         # Use customised error formatting
@@ -534,7 +547,6 @@ class ManualSupercoachForm(forms.Form):
     )
 
     def clean_player(self):
-
         player = self.cleaned_data['player']
 
         if not player:
@@ -543,7 +555,6 @@ class ManualSupercoachForm(forms.Form):
         return int(player)
 
     def save(self):
-
         player = self.cleaned_data['player']
 
         self.instance.player = models.Player.objects.get(id=int(player))
@@ -559,7 +570,6 @@ class ClubSelectionForm(forms.Form):
     """
 
     def __init__(self, *args, **kwargs):
-
         for attr in ('curr_round', 'club', 'clubs'):
             try:
                 setattr(self, attr, kwargs.pop(attr))

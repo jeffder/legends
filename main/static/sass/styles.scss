@@ -82,9 +82,10 @@ body {
     color: $pill-bg;
 }
 
-#ladder-nav {
+#ladder-nav,
+#stats-nav {
     margin-bottom: 5px;
-    margin-left: -15px;
+    margin-left: 0px;
     min-height: 30px;
 }
 
@@ -486,6 +487,19 @@ td.tips-table {
     font-weight: bold;
 }
 
+#coach-v-coach_selection .submit-btn,
+#ladder_round_selection .submit-btn {
+    margin-top: 20px;
+}
+
+#id_coach_1,
+#id_coach_2,
+#id_rnd,
+#id_ladder_name {
+    background-color: #ffffff;
+    margin-left: 10px;
+    width: 150px;
+}
 // =============================
 // General
 // =============================
@@ -541,6 +555,7 @@ td.tips-table {
 
 #tip-submission ul li {
     margin-bottom: 5px;
+    width: 160px;
 }
 
 .tip-form-row .form-group {
