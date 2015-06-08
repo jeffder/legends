@@ -94,24 +94,17 @@ class Footywire(object):
         """
         num_games = self.round.num_games
 
-        # Format the round's start date so that we can start the search
-        start_str = self.round.start_time.strftime('%a %d %b %I:%Mpm')
-        _day, _date, _month, _time = start_str.split()
-        if _date.startswith('0') or _time.startswith('0'):
-            if _date.startswith('0'):
-                _date = _date[1]
-            if _time.startswith('0'):
-                _time = _time[1:]
-            start_str = ' '.join((_day, _date, _month, _time))
+        # Find the starting point for getting the results
+        start_str = self.round.name.replace(' ', '_').lower()
 
         url = 'http://www.footywire.com/afl/footy/ft_match_list'
         soup = self._get_soup(url)
 
-        start = soup.find(attrs={'class': 'data'}, text=start_str)
+        start = soup.find(attrs={'name': start_str})
         search_start = start.find_parent('tr')
         games = [search_start]
-        games.extend(search_start.find_next_siblings('tr', limit=num_games - 1))
-        for game in games:
+        games.extend(search_start.find_next_siblings('tr', limit=num_games + 1))
+        for game in games[2:]:
             cols = [c for c in game.children if not self._is_empty(c)]
 
             home_score, away_score, link = self.get_scores(cols[4])
