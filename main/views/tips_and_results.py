@@ -757,18 +757,18 @@ def calculate_tip_scores(current_round, results, byes):
         game.save()
 
     # Handle the byes
-    for bye in byes:
+    for club, bye in byes.items():
         tips = Tip.objects \
-            .filter(club=bye.club) \
+            .filter(club=club) \
             .filter(game__round=game.round) \
             .exclude(game__status=constants.Game.SCHEDULED)
         for score_type in score_types:
             setattr(bye, score_type, sum(getattr(t, score_type) for t in tips))
-            if game.winners_score == bonus_score:
-                game.winners_bonus = constants.TipPoints.WINNERS_BONUS
-                game.score += game.winners_bonus
+            if bye.winners_score == bonus_score:
+                bye.winners_bonus = constants.TipPoints.WINNERS_BONUS
+                bye.score += game.winners_bonus
             else:
-                game.winners_bonus = 0
+                bye.winners_bonus = 0
         bye.save()
 
 

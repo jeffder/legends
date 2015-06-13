@@ -13,6 +13,7 @@
 {% endcomment %}
 <div class="clearfix legends_results">
     {% for group in grouped_games %}
+        {%  with forloop.counter as bye_index %}
             <div class="col-xs-6">
                 <table class="table table-condensed tips-table pull-left">
                     <thead>
@@ -29,7 +30,7 @@
                     <tbody>
                         {% for game in group %}
                             {% if game %}
-                                <tr>
+                                <tr class="game-row">
                                     <td class="table-cell-left">{{ game.legends_home }}</td>
                                     <td class="table-cell-right">{{ game.legends_home_winners_score }}</td>
                                     <td class="table-cell-right">{{ game.legends_home_margins_score }}</td>
@@ -38,7 +39,7 @@
                                     <td class="table-cell-right">{{ game.legends_home_winners_bonus }}</td>
                                     <td class="table-cell-right">{{ game.legends_home_score }}</td>
                                 </tr>
-                                <tr>
+                                <tr class="game-row">
                                     <td class="table-cell-left">{{ game.legends_away }}</td>
                                     <td class="table-cell-right">{{ game.legends_away_winners_score }}</td>
                                     <td class="table-cell-right">{{ game.legends_away_margins_score }}</td>
@@ -73,5 +74,6 @@
                     </tfoot>
                 </table>
             </div>
+        {%  endwith %}
     {% endfor %}
 </div>

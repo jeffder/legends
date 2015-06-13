@@ -276,8 +276,8 @@ td.tips-table {
     padding-top: -5px;
 }
 
-.tips-table tbody tr:nth-child(4n-3),
-.tips-table tbody tr:nth-child(4n-2),
+.tips-table tbody tr:nth-child(4n-3).game-row,
+.tips-table tbody tr:nth-child(4n-2).game-row,
 .tip-fieldset:nth-child(even) {
     background-color: $fieldset-bg;
 }

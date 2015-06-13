@@ -8488,8 +8488,8 @@ td.tips-table {
 }
 
 /* line 279, ../sass/styles.scss */
-.tips-table tbody tr:nth-child(4n-3),
-.tips-table tbody tr:nth-child(4n-2),
+.tips-table tbody tr:nth-child(4n-3).game-row,
+.tips-table tbody tr:nth-child(4n-2).game-row,
 .tip-fieldset:nth-child(even) {
   background-color: #eeeeee;
 }
