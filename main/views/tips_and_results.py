@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
 from main.models import (
-    Club, Round, SupercoachRanking, Tip
+    Club, LegendsLadder, Round, SupercoachRanking, Tip
 )
 from main import constants, forms
 from main.lib.footywire import Footywire
@@ -858,8 +858,7 @@ def create_legends_ladders(curr_round, games):
     """
     ladders = curr_round.legends_ladders()
     round_ladders = []
-    games = curr_round.games.all()
-    for game in games:
+    for game in curr_round.games.all():
         for club in (game.legends_away, game.legends_home):
             ladder = ladders[club]
             # Clear the existing ladders since we don't know which games are
@@ -870,6 +869,23 @@ def create_legends_ladders(curr_round, games):
             ladder.update_columns(game)
             ladder.finalise()
             round_ladders.append(ladder)
+
+    # If the round has byes we need to copy the previous round's ladder for the
+    # affected clubs
+    for bye in curr_round.byes.all():
+        try:
+            ladder = ladders[bye.club]
+        except KeyError:
+            ladder = LegendsLadder(round=curr_round, club=bye.club)
+
+        # Clear the existing ladders since we don't know which games are
+        # already included
+        ladder.clear()
+
+        # Update the ladder contents - just finalise since there's no game info
+        # to worry about
+        ladder.finalise()
+        round_ladders.append(ladder)
 
     sorted_ladder = curr_round.sort_ladder(round_ladders, reverse=False)
     for index, row in enumerate(sorted_ladder):
@@ -942,7 +958,8 @@ def create_afl_ladders(curr_round, games):
             # already included
             ladder.clear()
 
-            # Update the ladder contents
+            # Update the ladder contents - just finalise since there's no game info
+            # to worry about
             ladder.finalise()
             round_ladders.append(ladder)
 
