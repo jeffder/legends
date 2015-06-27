@@ -645,7 +645,8 @@ def calculate_tip_scores(current_round, results, byes):
 
         winner = result.afl_winner
         margin = result.margin
-        crowd = int(1000 * round(result.crowd / 1000.0))
+        # The round builtin rounds half to even when we want to round half up
+        crowd = 1000 * int((result.crowd + 500) / 1000)
 
         # We need to keep track of default tips since they get one less than the
         # lowest score for the AFL game
