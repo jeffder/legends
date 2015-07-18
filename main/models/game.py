@@ -37,6 +37,7 @@ class Game(models.Model):
     )
     tipping_deadline = models.DateTimeField(null=True, blank=True)
     ground = models.ForeignKey(Ground, related_name='games')
+    is_manual_result = models.BooleanField(default=False)
 
     # AFL specific fields
     afl_away = models.ForeignKey(Club, related_name='afl_game_away')

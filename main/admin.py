@@ -74,7 +74,7 @@ class GameAdmin(admin.ModelAdmin):
                 'fields': (
                     ('round', 'ground'),
                     ('game_date', 'tipping_deadline'),
-                    ('status', 'finals_game')
+                    ('status', 'finals_game', 'is_manual_result')
                 )
             }
         ),

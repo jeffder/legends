@@ -176,7 +176,6 @@ def get_results(request, round_id):
             # consequence, we need to initialise the legends scores again and
             # clear the Supercoach ranking table
             game.initialise_legends_scores()
-            SupercoachRanking.objects.filter(game=game).delete()
             if game.game_date + delta <= now:
                 # The game's result might be missing due to a problem with
                 # Footywire (e.g. missing Supercoach scores) so just ignore it
@@ -184,7 +183,9 @@ def get_results(request, round_id):
                     result = results[(game.afl_home.name, game.afl_away.name)]
                 except KeyError:
                     continue
-                set_afl_result(game, result)
+                if not game.is_manual_result:
+                    SupercoachRanking.objects.filter(game=game).delete()
+                    set_afl_result(game, result)
                 available_results.append(game)
 
         score_types = (
@@ -682,9 +683,12 @@ def calculate_tip_scores(current_round, results, byes):
                 tip.margins_score = 0
 
             # Crowd score
-            diff = abs(tip.crowd - crowd)
-            if diff in constants.TipPoints.CROWDS:
-                tip.crowds_score = constants.TipPoints.CROWDS[diff]
+            if crowd:   # Allow for abandoned games
+                diff = abs(tip.crowd - crowd)
+                if diff in constants.TipPoints.CROWDS:
+                    tip.crowds_score = constants.TipPoints.CROWDS[diff]
+                else:
+                    tip.crowd_score = 0
             else:
                 tip.crowd_score = 0
 
