@@ -179,9 +179,12 @@ def get_results(request, round_id):
             if game.game_date + delta <= now:
                 # The game's result might be missing due to a problem with
                 # Footywire (e.g. missing Supercoach scores) so just ignore it
+                # unless it's flagged as an manual result
                 try:
                     result = results[(game.afl_home.name, game.afl_away.name)]
                 except KeyError:
+                    if game.is_manual_result:
+                        available_results.append(game)
                     continue
                 if not game.is_manual_result:
                     SupercoachRanking.objects.filter(game=game).delete()
