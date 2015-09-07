@@ -164,6 +164,9 @@ class Game(models.Model):
         :return:
             A sorted list of tips
         """
+        if not self.tips.all():
+            self.create_tips()
+
         tips = sorted(self.tips.all(), key=lambda x: clubs.index(x.club))
 
         return tips
@@ -173,3 +176,33 @@ class Game(models.Model):
         Is the club the legends home team?
         """
         return club == self.legends_home
+
+    def create_tips(self):
+        """
+        Create default tips for this game.
+        """
+        clubs = self.round.tipping_clubs
+        num_sc = self.round.num_bogs
+
+        tip_model = models.loading.get_model('main', 'Tip')
+        sc_tip_model = models.loading.get_model('main', 'SupercoachTip')
+
+        for club in clubs:
+            args = {
+                'game': self,
+                'club': club,
+                'crowd': None,
+                'is_default': True,
+                'margin': None,
+                'winner': None
+            }
+            tip = tip_model(**args)
+            tip.save()
+
+            for i in range(num_sc):
+                args = {
+                    'player': None,
+                    'tip': tip
+                }
+                sc_tip = sc_tip_model(**args)
+                sc_tip.save()
