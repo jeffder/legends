@@ -6,7 +6,7 @@
     {% if round.is_finals %}
         <div id="finals_games">
             <div class="row">
-                <div class="span4">
+                <div class="col-md-4">
                     <table class="table table-condensed">
                         <thead>
                             <tr>
@@ -25,7 +25,7 @@
                     </table>
                 </div>
                 {% if not club_can_tip %}
-                    <div class="span8">
+                    <div class="col-md-8">
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
@@ -136,27 +136,6 @@
                     Submit Selected
                 </button>
             </form>
-        </div>
-    {% else %}
-        <div class="span8">
-            <table class="table table-condensed">
-                <thead>
-                <tr>
-                    <th colspan="5">AFL Games</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for game in round.games.all %}
-                    <tr>
-                        <td class="game_left">{{ game.afl_home }}</td>
-                        <td class="versus">v</td>
-                        <td>{{ game.afl_away }}</td>
-                        <td>{{ game.ground }}</td>
-                        <td>{{ game.game_date|date:"D M d H:i"}}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
         </div>
     {% endif %}
 </div>

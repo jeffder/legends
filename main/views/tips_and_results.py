@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 
 from main.models import (
-    Club, LegendsLadder, Round, SupercoachRanking, Tip
+    AFLLadder, Club, Game, Ground, LegendsLadder, Round, SupercoachRanking, Tip
 )
 from main import constants, forms
 from main.lib.footywire import Footywire
@@ -87,14 +87,16 @@ def render_round_nav(request, selected_round=None):
     """
     Render the round navigation buttons.
     """
-    if not selected_round:
-        selected_round = Round.objects.get(id=request.session['live_round'])
+    live_round = Round.objects.get(id=request.session['live_round'])
 
-    season = selected_round.season
+    if not selected_round:
+        selected_round = live_round
+
+    season = live_round.season
 
     rounds = Round.objects.filter(season=season)
-    if selected_round.is_finals:
-        rounds = rounds.filter(start_time__lte=selected_round.start_time)
+    if live_round.is_finals:
+        rounds = rounds.filter(start_time__lte=live_round.start_time)
     else:
         rounds = rounds.filter(is_finals=False)
     rounds = rounds.order_by('start_time')
@@ -247,7 +249,7 @@ def finalise_round(request, curr_round):
     next_round = curr_round.next_round
     if next_round:
         if next_round.is_finals:
-            next_round.create_finals_fixtures()
+            next_round.create_finals_games(next_round)
         next_round.set_tipping_deadline()
         next_round.save()
 
@@ -1010,3 +1012,147 @@ def create_streak_ladders(curr_round, games):
     for index, row in enumerate(sorted_ladder):
         row.position = index + 1
         row.save()
+
+
+def _get_finals_match_ups(rnd):
+    """
+    Get the match ups for the first week of finals.
+
+    Get the last home/away ladder. Just get the top 8 positions since
+    we're not interested in also rans:)
+    """
+    afl_ladder = AFLLadder   \
+        .filter(round=rnd.previous_round)   \
+        .order_by(*AFLLadder.sort_order)[:8]
+    afl_finalists = [row.club for row in afl_ladder]
+
+    legends_ladder = LegendsLadder   \
+        .filter(round=rnd.previous_round)   \
+        .order_by(*LegendsLadder.sort_order)[:8]
+    legends_finalists = [row.club for row in legends_ladder]
+
+    return (
+        (
+            (afl_finalists[0], afl_finalists[3]),
+            (afl_finalists[1], afl_finalists[2]),
+            (afl_finalists[4], afl_finalists[7]),
+            (afl_finalists[5], afl_finalists[6])
+        ),
+        (
+            (legends_finalists[0], legends_finalists[3]),
+            (legends_finalists[1], legends_finalists[2]),
+            (legends_finalists[4], legends_finalists[7]),
+            (legends_finalists[5], legends_finalists[6])
+        )
+    )
+
+def create_finals_games(self, rnd):
+    """
+    Create finals games for round
+    """
+
+    def _create_games(afl_match_ups, legends_match_ups, game_index=1):
+        """
+            Create games for each match up.
+        """
+
+        for afl_game, legends_game in zip(afl_match_ups, legends_match_ups):
+            args = {
+                'afl_away': afl_game[1],
+                'afl_home': afl_game[0],
+                'finals_game': game_index,
+                'legends_away': legends_game[1],
+                'legends_home': legends_game[0],
+                'round': rnd,
+                'status': 'Scheduled',
+                'ground': ground
+            }
+            game = Game(**args)
+            game.save()
+
+            game_index += 1
+
+    ground = Ground.objects.get(name='MCG')
+
+    if rnd.name == 'Finals Week 1':
+        afl, legends = self._get_finals_match_ups(rnd)
+        _create_games(afl, legends)
+
+    else:
+        results = Game.objects.filter(round=rnd.previous_round)
+
+        if rnd.name == 'Finals Week 2':
+            # Matchups for AFL and Legends fixtures:
+            #     Game 5: Loser Game 1 v Winner Game 3
+            #     Game 6: Loser Game 2 v Winner Game 4
+            afl = (
+                (
+                    results.get(finals_game=1).afl_loser,
+                    results.get(finals_game=3).afl_winner()
+                ),
+                (
+                    results.get(finals_game=2).afl_loser(),
+                    results.get(finals_game=4).afl_winner()
+                )
+            )
+
+            legends = (
+                (
+                    results.get(finals_game=1).legends_loser(),
+                    results.get(finals_game=3).legends_winner()
+                ),
+                (
+                    results.get(finals_game=2).legends_loser(),
+                    results.get(finals_game=4).legends_winner()
+                )
+            )
+
+            _create_games(afl, legends, game_index=5)
+
+        elif rnd.name == 'Finals Week 3':
+            # Matchups for AFL and Legends fixtures:
+            #     Game 7: Winner Game 1 v Winner Game 6
+            #     Game 8: Winner Game 2 v Winner Game 5
+            afl = (
+                (
+                    results.get(finals_game=1).afl_winner(),
+                    results.get(finals_game=6).afl_winner()
+                ),
+                (
+                    results.get(finals_game=2).afl_winner(),
+                    results.get(finals_game=5).afl_winner()
+                )
+            )
+
+            legends = (
+                (
+                    results.get(finals_game=1).legends_winner(),
+                    results.get(finals_game=6).legends_winner()
+                ),
+                (
+                    results.get(finals_game=2).legends_winner(),
+                    results.get(finals_game=5).legends_winner()
+                )
+            )
+
+            _create_games(afl, legends, game_index=7)
+
+        elif rnd.name == 'Grand Final':
+            # Matchups for AFL and Legends fixtures:
+            #     Winner Game 7 v Winner Game 8
+            afl = (
+                (
+                    results.get(finals_game=7).afl_winner(),
+                    results.get(finals_game=8).afl_winner()
+                ),
+            )
+
+            legends = (
+                (
+                    results.get(finals_game=7).legends_winner(),
+                    results.get(finals_game=8).legends_winner()
+                ),
+            )
+
+            _create_games(afl, legends, game_index=9)
+
