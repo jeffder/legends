@@ -164,11 +164,11 @@ def get_results(request, round_id):
         # Get the available AFL results
         # Start with the Footywire fixture data for the round
         # Do finals manually until I can sort out Footywire's format
-        if curr_round.is_finals:
-            return
-
-        footywire = Footywire(curr_round)
-        results = footywire.get_results()
+        if not curr_round.is_finals:
+            footywire = Footywire(curr_round)
+            results = footywire.get_results()
+        else:
+            results = {}
 
         for game in games:
             # This picks up all of the available results so we'll be refreshing
