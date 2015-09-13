@@ -224,7 +224,8 @@ def get_results(request, round_id):
                 game.save()
             curr_round.status = constants.Round.PROVISIONAL
             curr_round.set_tipping_deadline()
-        elif all(g.status == constants.Game.PROVISIONAL for g in games):
+        elif all(g.status == constants.Game.PROVISIONAL for g in games) or   \
+                curr_round.status == constants.Game.PROVISIONAL:
             for game in games:
                 game.status = constants.Game.FINAL
                 game.save()
@@ -1046,7 +1047,7 @@ def _get_finals_match_ups(rnd):
         )
     )
 
-def create_finals_games(self, rnd):
+def create_finals_games(rnd):
     """
     Create finals games for round
     """
@@ -1088,22 +1089,22 @@ def create_finals_games(self, rnd):
             afl = (
                 (
                     results.get(finals_game=1).afl_loser,
-                    results.get(finals_game=3).afl_winner()
+                    results.get(finals_game=3).afl_winner
                 ),
                 (
-                    results.get(finals_game=2).afl_loser(),
-                    results.get(finals_game=4).afl_winner()
+                    results.get(finals_game=2).afl_loser,
+                    results.get(finals_game=4).afl_winner
                 )
             )
 
             legends = (
                 (
-                    results.get(finals_game=1).legends_loser(),
-                    results.get(finals_game=3).legends_winner()
+                    results.get(finals_game=1).legends_loser,
+                    results.get(finals_game=3).legends_winner
                 ),
                 (
-                    results.get(finals_game=2).legends_loser(),
-                    results.get(finals_game=4).legends_winner()
+                    results.get(finals_game=2).legends_loser,
+                    results.get(finals_game=4).legends_winner
                 )
             )
 
@@ -1115,23 +1116,23 @@ def create_finals_games(self, rnd):
             #     Game 8: Winner Game 2 v Winner Game 5
             afl = (
                 (
-                    results.get(finals_game=1).afl_winner(),
-                    results.get(finals_game=6).afl_winner()
+                    results.get(finals_game=1).afl_winner,
+                    results.get(finals_game=6).afl_winner
                 ),
                 (
-                    results.get(finals_game=2).afl_winner(),
-                    results.get(finals_game=5).afl_winner()
+                    results.get(finals_game=2).afl_winner,
+                    results.get(finals_game=5).afl_winner
                 )
             )
 
             legends = (
                 (
-                    results.get(finals_game=1).legends_winner(),
-                    results.get(finals_game=6).legends_winner()
+                    results.get(finals_game=1).legends_winner,
+                    results.get(finals_game=6).legends_winner
                 ),
                 (
-                    results.get(finals_game=2).legends_winner(),
-                    results.get(finals_game=5).legends_winner()
+                    results.get(finals_game=2).legends_winner,
+                    results.get(finals_game=5).legends_winner
                 )
             )
 
@@ -1142,15 +1143,15 @@ def create_finals_games(self, rnd):
             #     Winner Game 7 v Winner Game 8
             afl = (
                 (
-                    results.get(finals_game=7).afl_winner(),
-                    results.get(finals_game=8).afl_winner()
+                    results.get(finals_game=7).afl_winner,
+                    results.get(finals_game=8).afl_winner
                 ),
             )
 
             legends = (
                 (
-                    results.get(finals_game=7).legends_winner(),
-                    results.get(finals_game=8).legends_winner()
+                    results.get(finals_game=7).legends_winner,
+                    results.get(finals_game=8).legends_winner
                 ),
             )
 
