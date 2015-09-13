@@ -249,7 +249,7 @@ def finalise_round(request, curr_round):
     next_round = curr_round.next_round
     if next_round:
         if next_round.is_finals:
-            next_round.create_finals_games(next_round)
+            create_finals_games(next_round)
         next_round.set_tipping_deadline()
         next_round.save()
 
