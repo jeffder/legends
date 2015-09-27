@@ -1076,11 +1076,13 @@ def create_finals_games(rnd):
     ground = Ground.objects.get(name='MCG')
 
     if rnd.name == 'Finals Week 1':
-        afl, legends = self._get_finals_match_ups(rnd)
+        afl, legends = _get_finals_match_ups(rnd)
         _create_games(afl, legends)
 
     else:
-        results = Game.objects.filter(round=rnd.previous_round)
+        results = Game.objects.filter(
+            round__season=rnd.season, round__is_finals=True)
+
 
         if rnd.name == 'Finals Week 2':
             # Matchups for AFL and Legends fixtures:

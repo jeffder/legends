@@ -118,6 +118,10 @@ class Game(models.Model):
             return home
         elif home_score < away_score:
             return away
+        elif self.round.is_finals:
+            # If a finals game is a draw, the higher placed team on the ladder
+            # is declared the winner. This will be the home team.
+            return home
         else:
             return None
 
