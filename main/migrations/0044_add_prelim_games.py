@@ -14,7 +14,7 @@ class Migration(DataMigration):
         # Note: Don't use "from appname.models import ModelName".
         # Use orm.ModelName to refer to models in this application,
         # and orm['appname.ModelName'] for models in other applications.
-        season = self.orm.Season.objects.get(season=2015)
+        season = orm.Season.objects.get(season=2015)
         clubs = {c.name: c for c in season.clubs}
         ground = orm.Ground.objects.get(name='Patersons Stadium')
         rnd = orm.Round.objects.get(season=season, name='Finals Week 3')
@@ -51,7 +51,7 @@ class Migration(DataMigration):
             game.save()
 
     def backwards(self, orm):
-        season = self.orm.Season.objects.get(season=2015)
+        season = orm.Season.objects.get(season=2015)
         rnd = orm.Round.objects.get(season=season, name='Finals Week 3')
 
         for game in rnd.games:
