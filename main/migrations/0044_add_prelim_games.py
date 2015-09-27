@@ -15,7 +15,7 @@ class Migration(DataMigration):
         # Use orm.ModelName to refer to models in this application,
         # and orm['appname.ModelName'] for models in other applications.
         season = orm.Season.objects.get(season=2015)
-        clubs = {c.name: c for c in season.clubs}
+        clubs = {c.name: c for c in orm.Club.objects.all()}
         ground = orm.Ground.objects.get(name='Patersons Stadium')
         rnd = orm.Round.objects.get(season=season, name='Finals Week 3')
 
