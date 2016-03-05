@@ -42,7 +42,7 @@ def view_tips(request, round_id):
     games = selected_round.games.all()
     clubs = selected_round.clubs_by_games(games)
 
-    # We want to see results, tips or tipp forms depending on the state of the
+    # We want to see results, tips or tip forms depending on the state of the
     # round
     form_games = []
     result_games = []

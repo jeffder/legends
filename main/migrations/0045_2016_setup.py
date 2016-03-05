@@ -1,31 +1,37 @@
 # -*- coding: utf-8 -*-
+from bs4 import BeautifulSoup
+import re
+
 from south.utils import datetime_utils as datetime
 from south.v2 import DataMigration
+from django.contrib.auth.hashers import make_password
+
+from main import constants
 
 
 SEASON = 2016
-LAST_ROUND = 160   # Last completed round from the previous season
-GAME_DATA = '/home/jeff/src/legends_site/main/data/fixtures_2015.txt'
+GAME_DATA = '/home/jeff/src/legends_site/main/data/2016/fixtures_hs.html'
+PLAYER_DATA = '/home/jeff/src/legends_site/main/data/2016/2016_players.html'
 
-club_abbrevs = {
-    'ADE': 'Adelaide',
-    'BRL': 'Brisbane',
-    'CAR': 'Carlton',
-    'COL': 'Collingwood',
-    'ESS': 'Essendon',
-    'FRE': 'Fremantle',
-    'GEE': 'Geelong',
-    'GCS': 'Gold Coast',
-    'GWS': 'GWS',
-    'HAW': 'Hawthorn',
-    'MEL': 'Melbourne',
-    'NTH': 'North Melbourne',
-    'PTA': 'Port Adelaide',
-    'RIC': 'Richmond',
-    'STK': 'St Kilda',
-    'SYD': 'Sydney',
-    'WCE': 'West Coast',
-    'WBD': 'Western Bulldogs',
+club_lookup = {
+    'Adelaide Crows': 'Adelaide',
+    'Brisbane Lions': 'Brisbane',
+    'Carlton Blues': 'Carlton',
+    'Collingwood Magpies': 'Collingwood',
+    'Essendon Bombers': 'Essendon',
+    'Fremantle Dockers': 'Fremantle',
+    'Geelong Cats': 'Geelong',
+    'Gold Coast Suns': 'Gold Coast',
+    'GWS Giants': 'GWS',
+    'Hawthorn Hawks': 'Hawthorn',
+    'Melbourne Demons': 'Melbourne',
+    'North Melbourne Kangaroos': 'North Melbourne',
+    'Port Adelaide Power': 'Port Adelaide',
+    'Richmond Tigers': 'Richmond',
+    'St Kilda Saints': 'St Kilda',
+    'Sydney Swans': 'Sydney',
+    'West Coast Eagles': 'West Coast',
+    'Western Bulldogs': 'Western Bulldogs',
 }
 
 user_names = {
@@ -83,6 +89,15 @@ class Migration(DataMigration):
         for u, p in user_names.items():
             user = self.orm['auth.User'].objects.get(username=u)
             user.password = make_password(p)
+
+            if u == 'saints':
+                user.is_staff = False
+                user.is_superuser = False
+
+            if u == 'eagles':
+                user.is_staff = True
+                user.is_superuser = True
+
             user.save()
 
     def import_coaches(self):
@@ -125,18 +140,29 @@ class Migration(DataMigration):
              'last_name': 'Tsirogiannis', 'season': season},
             {'club': clubs['Richmond'], 'first_name': 'Paul',
              'last_name': 'Trethowan', 'season': season},
-            {'club': clubs['St Kilda'], 'first_name': 'Jeff',
-             'last_name': 'de Ruyter', 'season': season},
+            {'club': clubs['St Kilda'], 'first_name': 'Justin',
+             'last_name': 'Page', 'season': season},
             {'club': clubs['Sydney'], 'first_name': 'Gary',
              'last_name': 'Paterson', 'season': season},
-            {'club': clubs['West Coast'], 'first_name': 'Jonathan',
+            {'club': clubs['West Coast'], 'first_name': 'Jeff',
+             'last_name': 'de Ruyter', 'season': season},
+            {'club': clubs['Western Bulldogs'], 'first_name': 'Jonathan',
              'last_name': 'Healy', 'season': season},
-            {'club': clubs['Western Bulldogs'], 'first_name': 'Mr',
-             'last_name': 'Nobody', 'season': season},
         ]
 
         for coach in coaches:
             self.orm.Coach.objects.create(**coach)
+
+        # Adjust is_staff and is_superuser as necessary
+        saints = self.orm.Coach.objects.get(season=season, club=clubs['St Kilda'])
+        saints.is_staff = False
+        saints.is_superuser = False
+        saints.save()
+
+        eagles = self.orm.Coach.objects.get(season=season, club=clubs['West Coast'])
+        eagles.is_staff = True
+        eagles.is_superuser = True
+        eagles.save()
 
     def import_grounds(self):
         """
@@ -144,9 +170,10 @@ class Migration(DataMigration):
         """
         # New grounds
         # grounds is a tuple of ground names
-        grounds = ()
+        grounds = ('Domain Stadium', )
         for ground in grounds:
-            self.orm.Ground.objects.create(name=ground)
+            g = self.orm.Ground(name=ground)
+            g.save()
 
         # Name changes
         # Changes are a tuple of (old_name, new_name) for each changed ground
@@ -155,98 +182,199 @@ class Migration(DataMigration):
             ground.name = grnd[1]
             ground.save()
 
-    def import_round(self, season, round_name, game_count, games, byes, clubs):
-        """
-        Create a round and set up its fixtures
-        """
-        start_time = games[0].game_date
-        deadline = start_time - datetime.timedelta(minutes=30)
-
-        current_round = self.orm.Round()
-        current_round.is_finals = False
-        current_round.is_split = False
-        current_round.name = round_name
-        current_round.num_bogs = 1
-        current_round.num_games = game_count
-        current_round.season = season
-        current_round.status = constants.Round.SCHEDULED
-        current_round.start_time = start_time
-        current_round.tipping_deadline = deadline
-        current_round.save()
-
-        # Add the games
-        for game in games:
-            deadline = game.game_date - datetime.timedelta(minutes=30)
-
-            game.round = current_round
-            game.tipping_deadline = deadline
-            game.save()
-
-            # Create empty tips for each club
-            for club in clubs:
-                tip = self.orm.Tip.objects.create(
-                    game=game, club=club, is_default=True)
-                self.orm.SupercoachTip.objects.create(tip=tip)
-
-        for bye in byes:
-            bye.round = current_round
-            bye.save()
+#    def import_round(self, season, round_name, game_count, games, byes, clubs):
+#        """
+#        Create a round and set up its fixtures
+#        """
+#        start_time = games[0].game_date
+#        deadline = start_time - datetime.timedelta(minutes=30)
+#
+#        current_round = self.orm.Round()
+#        current_round.is_finals = False
+#        current_round.is_split = False
+#        current_round.name = round_name
+#        current_round.num_bogs = 1
+#        current_round.num_games = game_count
+#        current_round.season = season
+#        current_round.status = constants.Round.SCHEDULED
+#        current_round.start_time = start_time
+#        current_round.tipping_deadline = deadline
+#        current_round.save()
+#
+#        # Add the games
+#        for game in games:
+#            deadline = game.game_date - datetime.timedelta(minutes=30)
+#
+#            game.round = current_round
+#            game.tipping_deadline = deadline
+#            game.save()
+#
+#            # Create empty tips for each club
+#            for club in clubs:
+#                tip = self.orm.Tip.objects.create(
+#                    game=game, club=club, is_default=True)
+#                self.orm.SupercoachTip.objects.create(tip=tip)
+#
+#        for bye in byes:
+#            bye.round = current_round
+#            bye.save()
 
     def import_games(self):
         """
         Import the games for the season.
         """
+        game_re = re.compile(
+            '''(?P<home>[a-zA-Z ]+) v (?P<away>[a-zA-Z ]+) at (?P<ground>[a-zA-Z, ]+)( \((?P<time>\d\.\d\dpm)\))?$'''
+        )
+
+        grounds_sub = {
+            'Cazalys Stadium, Cairns': "Cazaly's Stadium",
+            'Subiaco Oval': 'Domain Stadium',
+            'Subiaco Oval at': 'Domain Stadium',
+            'TIO Traeger Park, Alice Springs': 'TIO Traeger Park',
+            'TIO Stadium, Darwin': 'TIO Stadium',
+        }
+        clubs_sub = {
+            'Brisbane Lions': 'Brisbane',
+            'Gold Coast Suns': 'Gold Coast',
+            'GWS Giants': 'GWS',
+            'Sydney Swans': 'Sydney',
+            'West Coast Eagles': 'West Coast'
+        }
+
         season = self.orm.Season.objects.get(season=SEASON)
-        clubs = dict((c.name, c) for c in self.orm.Club.objects.all())
-        grounds = dict((v.name, v) for v in self.orm.Ground.objects.all())
+        clubs = {c.name: c for c in self.orm.Club.objects.all() if c.name != 'Fitzroy'}
+        grounds = {v.name: v for v in self.orm.Ground.objects.all()}
 
         byes = []
         games = []
-        game_count = 0
+        rnd_args = {}
+        delta = datetime.timedelta(minutes=30)
 
-        rows = open(GAME_DATA, 'r').readlines()
-        for row in rows:
-            row = row.strip()
-            if not row:   # Blank lines indicate the end of a round
-                self.import_round(
-                    season, round_name, game_count, games, byes, clubs.values())
-                byes = []
-                games = []
-                game_count = 0
+        soup = BeautifulSoup(open(GAME_DATA))
+        start = soup.find('div', 'w_other-stories')
+        for para in start.next_siblings:
+            bold = para.find('b')
+            if bold:
+                text = bold.contents[0]
+                if 'Byes' in text:
+                    text = para.contents[1]
+            else:
+                text = para.contents[0]
 
-            elif row.startswith('Bye'):   # Byes for the round
-                for club in (c.strip() for c in row.split(': ')[1].split(',')):
-                    bye = self.orm.Bye()
-                    bye.club = clubs[club]
-                    byes.append(bye)
+            # Stop here but save round 23 first
+            if 'published' in text:
+                rnd_args['tipping_deadline'] = games[0]['tipping_deadline']
+                rnd_args['start_time'] = games[0]['game_date']
+                rnd_args['num_games'] = len(games)
+                rnd = self.orm.Round(**rnd_args)
+                rnd.save()
 
-            else:   # An AFL game
-                round_name, day, home, away, ground, time = row.split(',')
+                for game in games:
+                    g = self.orm.Game(**game)
+                    g.round = rnd
+                    g.save()
 
+                    # Create empty tips for each club
+                    for club in clubs.values():
+                        tip = self.orm.Tip.objects.create(
+                            game=g, club=club, is_default=True)
+                        self.orm.SupercoachTip.objects.create(tip=tip)
+
+                break
+
+            # Build up the fixture list
+            # Round and dates are in bold, games aren't
+            if bold:
+                if 'ROUND' in text:
+                    # Save everything from the previous round and start again
+                    if text != 'ROUND 1':
+                        rnd_args['tipping_deadline'] = games[0]['tipping_deadline']
+                        rnd_args['start_time'] = games[0]['game_date']
+                        rnd_args['num_games'] = len(games)
+                        rnd = self.orm.Round(**rnd_args)
+                        rnd.save()
+
+                        for game in games:
+                            g = self.orm.Game(**game)
+                            g.round = rnd
+                            g.save()
+
+                            # Create empty tips for each club
+                            for club in clubs.values():
+                                tip = self.orm.Tip.objects.create(
+                                    game=g, club=club, is_default=True)
+                                self.orm.SupercoachTip.objects.create(tip=tip)
+
+                        for bye in byes:
+                            b = self.orm.Bye(**bye)
+                            b.round = rnd
+                            b.save()
+
+                    byes = []
+                    games = []
+                    deadline = None
+
+                    rnd_args = {
+                        'name': text.title(),
+                        'is_finals': False,
+                        'num_bogs': 1,
+                        'num_games': 0,
+                        'season': season,
+                        'status': constants.Round.SCHEDULED,
+                        'start_time': None,
+                        'tipping_deadline': None
+                    }
+                elif 'and' in text:
+                    bye_clubs = text.strip().split(', ')
+                    for c in bye_clubs[:-1]:
+                        name = clubs_sub.get(c, c)
+                        byes.append({'club': clubs[name]})
+                    for c in bye_clubs[-1].split(' and '):
+                        name = clubs_sub.get(c, c)
+                        byes.append({'club': clubs[name]})
+                else:
+                    week_day, month, day = text.split()
+            else:
+                game_args = {}
+                game = game_re.match(text).groupdict()
+                for key in ('home', 'away'):
+                    club = clubs[clubs_sub.get(game[key], game[key])]
+                    game_args['afl_{}'.format(key)] = club
+                    game_args['legends_{}'.format(key)] = club
+                game_args['ground'] = grounds[
+                    grounds_sub.get(game['ground'], game['ground'])]
+
+                # Set game date
+                if not game['time']:
+                    time = '12.00pm'
+                else:
+                    time = game['time']
                 date = datetime.datetime.strptime(
-                    '{} {} 2015'.format(time, day),
-                    '%I.%M%p %A %B %d %Y'
+                    '{} {} {} 2016'.format(time, day, month),
+                    '%I.%M%p %d %B %Y'
                 )
+                game_args['game_date'] = date
 
-                home = clubs[home.strip()]
-                away = clubs[away.strip()]
-                ground = grounds[ground.strip()]
+                # Set game tipping deadline
+                if week_day in ('Thursday', 'Friday', 'Monday'):
+                    deadline = date - delta
+                elif rnd_args['name'] == 'Round 1' and week_day == 'Saturday':
+                    if deadline is None:
+                        deadline = date - delta
+                game_args['tipping_deadline'] = deadline
 
-                # Write AFL game
-                game = self.orm.Game()
-                game.afl_away = away
-                game.legends_away = away
-                game.game_date = date
-                game.afl_home = home
-                game.legends_home = home
-                game.status = constants.Game.SCHEDULED
-                game.ground = ground
-                games.append(game)
+                # Reset deadline if day is not a normal weekend day (Friday,
+                # Saturday, Sunday) since the current deadline won't apply
+                if week_day in ('Thursday', 'Monday'):
+                    deadline = None
 
-                game_count += 1
+                game_args['status'] = constants.Round.SCHEDULED
+
+                games.append(game_args)
 
         # Finals rounds
-        start_time = datetime.datetime(2015, 9, 11, hour=12)
+        start_time = datetime.datetime(2016, 9, 9, hour=12)
         deadline = start_time - datetime.timedelta(minutes=30)
         rnd = self.orm.Round()
         rnd.is_finals = True
@@ -306,18 +434,36 @@ class Migration(DataMigration):
         season = self.orm.Season.objects.get(season=SEASON)
         clubs = dict((c.name, c) for c in self.orm.Club.objects.all())
 
-        for player in players:
-            # Footywire doesn't include the middle initial for names like "Josh
-            # P Kennedy"
-            if ' ' in player['fn']:
-                sc_name = '{} {}'.format(player['fn'].split()[0], player['ln'])
-            else:
-                sc_name = '{} {}'.format(player['fn'], player['ln'])
+        def player_a_tags(tag):
+            if tag.name != 'a':
+                return False
+
+            if 'href' not in tag.attrs:
+                return False
+
+            if tag['href'].startswith('pp-'):
+                return True
+
+            return False
+
+        soup = BeautifulSoup(open(PLAYER_DATA))
+        player_tags = soup.find_all(player_a_tags)
+        for tag in player_tags:
+            player_str = tag.contents[0]
+
+            if 'Unknown' in player_str:
+                continue
+
+            club_str = tag.next_sibling.next_sibling.contents[0]
+            last_name, first_name = player_str.split(', ')
+            club = clubs[club_lookup[club_str]]
+            sc_name = '{} {}'.format(first_name, last_name)
+
             args = {
                 'season': season,
-                'club': clubs[club_abbrevs[player['team']]],
-                'first_name': player['fn'],
-                'last_name': player['ln'],
+                'club': club,
+                'first_name': first_name,
+                'last_name': last_name,
                 'supercoach_name': sc_name
             }
             p = self.orm.Player(**args)
@@ -325,11 +471,11 @@ class Migration(DataMigration):
 
     def import_past_winners(self):
         club_names = (
-            'Adelaide',
             'Carlton',
-            'Geelong',
-            'North Melbourne',
+            'Essendon',
+            'Melbourne',
             'Richmond',
+            'St Kilda',
             'Sydney',
         )
 
@@ -337,19 +483,19 @@ class Migration(DataMigration):
             (c.name, c) for c in self.orm.Club.objects.all()
             if c.name in club_names
         )
-        # 2014 Winners
-        season = self.orm.Season.objects.get(season=2014)
+        # 2015 Winners
+        season = self.orm.Season.objects.get(season=2015)
         data = {
-            constants.PrizeCategories.PREMIER: clubs['Sydney'],
+            constants.PrizeCategories.PREMIER: clubs['Melbourne'],
             constants.PrizeCategories.RUNNER_UP: clubs['Richmond'],
-            constants.PrizeCategories.MINOR_PREMIER: clubs['North Melbourne'],
-            constants.PrizeCategories.WOODEN_SPOON: clubs['Geelong'],
-            constants.PrizeCategories.COLEMAN: clubs['Carlton'],
-            constants.PrizeCategories.BROWNLOW: clubs['Adelaide'],
+            constants.PrizeCategories.MINOR_PREMIER: clubs['Melbourne'],
+            constants.PrizeCategories.WOODEN_SPOON: clubs['St Kilda'],
+            constants.PrizeCategories.COLEMAN: clubs['Sydney'],
+            constants.PrizeCategories.BROWNLOW: clubs['Essendon'],
             constants.PrizeCategories.MARGINS: clubs['Sydney'],
             constants.PrizeCategories.CROWDS: clubs['Richmond'],
-            constants.PrizeCategories.HIGH_SEASON: clubs['Carlton'],
-            constants.PrizeCategories.HIGH_ROUND: clubs['Carlton'],
+            constants.PrizeCategories.HIGH_SEASON: clubs['Sydney'],
+            constants.PrizeCategories.HIGH_ROUND: clubs['Sydney'],
         }
 
         for key, value in data.items():
@@ -382,6 +528,7 @@ class Migration(DataMigration):
         }
 
         self.orm.Club.objects.create(**kwargs)
+
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
