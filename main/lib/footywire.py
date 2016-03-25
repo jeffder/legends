@@ -97,8 +97,18 @@ class Footywire(object):
         # Find the starting point for getting the results
         start_str = self.round.name.replace(' ', '_').lower()
 
+        # The Footywire fixtures page contains dodgy html:
+        #     '<td class="lbnorm">&nbsp;Venue</th>'
+        # We fix this and pass the fixed html to Beautiful Soup
         url = 'http://www.footywire.com/afl/footy/ft_match_list'
-        soup = self._get_soup(url)
+        request = urllib.request.Request(url)
+        response = self.opener.open(request)
+        data = response.read().decode('utf-8')
+        html = data.replace(
+            '<td class="lbnorm">&nbsp;Venue</th>',
+            '<th class="lbnorm">&nbsp;Venue</th>'
+        )
+        soup = BeautifulSoup(html)
 
         start = soup.find(attrs={'name': start_str})
         search_start = start.find_parent('tr')
