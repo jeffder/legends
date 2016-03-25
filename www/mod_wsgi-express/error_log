@@ -1,0 +1,425 @@
+[Sat Mar 12 12:23:04.089751 2016] [mpm_event:notice] [pid 31891:tid 139734927181696] AH00489: Apache/2.4.7 (Ubuntu) mod_wsgi/4.4.11 Python/3.4.0 configured -- resuming normal operations
+[Sat Mar 12 12:23:04.089827 2016] [core:notice] [pid 31891:tid 139734927181696] AH00094: Command line: 'apache2 (mod_wsgi-express) -f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -D WSGI_MPM_ENABLE_EVENT_MODULE -D WSGI_MPM_EXISTS_EVENT_MODULE -D WSGI_MPM_EXISTS_WORKER_MODULE -D WSGI_MPM_EXISTS_PREFORK_MODULE'
+[Sat Mar 12 13:23:15.245245 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:23:15.249729 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:23:15.252520 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:23:15.255243 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:23:15.258500 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:23:15.261367 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:23:15.264888 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:23:15.268365 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/css/styles.css
+[Sat Mar 12 13:23:15.272020 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/legends.js
+[Sat Mar 12 13:32:53.370518 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:32:53.381382 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:32:53.386508 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:32:53.389238 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:32:53.391928 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:32:53.395580 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:32:53.400660 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/css/styles.css
+[Sat Mar 12 13:32:53.406172 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:32:53.409543 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/legends.js
+[Sat Mar 12 13:32:57.070396 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:32:57.079791 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:32:57.083014 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:32:57.085041 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:32:57.087565 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:32:57.090155 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/legends.js
+[Sat Mar 12 13:32:57.093813 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:32:57.098598 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:32:57.101712 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/css/styles.css
+[Sat Mar 12 13:33:00.079980 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:33:00.097212 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:33:00.101079 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:33:00.104389 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:33:00.107086 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:33:00.111071 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/legends.js
+[Sat Mar 12 13:33:00.115608 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:33:00.119136 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:33:00.122144 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/css/styles.css
+[Sat Mar 12 13:33:32.064235 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:33:32.072525 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:33:32.074854 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:33:32.077697 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:33:32.080539 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:33:32.084272 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/js/legends.js
+[Sat Mar 12 13:33:32.088569 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:33:32.092699 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/css/styles.css
+[Sat Mar 12 13:33:32.096268 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:33:40.658842 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:33:40.664453 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:33:40.666855 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:33:40.669273 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/legends.js
+[Sat Mar 12 13:33:40.671819 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:33:40.674557 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:33:40.680047 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:33:40.683285 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:33:40.686464 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/css/styles.css
+[Sat Mar 12 13:33:53.474158 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:33:53.484880 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:33:53.488559 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:33:53.491689 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:33:53.494687 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:33:53.498301 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/legends.js
+[Sat Mar 12 13:33:53.501794 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:33:53.505330 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/css/styles.css
+[Sat Mar 12 13:33:53.508959 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:34:01.125311 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:34:01.135268 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:34:01.139609 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:34:01.143389 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:34:01.148325 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:34:01.152645 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/legends.js
+[Sat Mar 12 13:34:01.157184 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:34:01.160698 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:34:01.163462 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/css/styles.css
+[Sat Mar 12 13:34:17.283746 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:34:17.289079 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:34:17.291470 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:34:17.293975 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:34:17.296615 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:34:17.300671 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/legends.js
+[Sat Mar 12 13:34:17.304348 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:34:17.307983 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:34:17.312362 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/css/styles.css
+[Sat Mar 12 13:35:34.166489 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:35:34.172537 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:35:34.175034 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:35:34.177660 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:35:34.180306 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:35:34.183018 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/js/legends.js
+[Sat Mar 12 13:35:34.188743 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:35:34.195523 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:35:34.197856 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/css/styles.css
+[Sat Mar 12 13:35:46.844903 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:35:46.855192 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:35:46.860270 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:35:46.866828 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:35:46.869406 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:35:46.872896 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/legends.js
+[Sat Mar 12 13:35:46.876768 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:35:46.880303 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:35:46.884922 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/css/styles.css
+[Sat Mar 12 13:35:58.071777 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:35:58.076879 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:35:58.079400 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:35:58.082006 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:35:58.084539 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:35:58.086947 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:35:58.090953 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/js/legends.js
+[Sat Mar 12 13:35:58.095692 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:35:58.098796 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/css/styles.css
+[Sat Mar 12 13:36:00.632042 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:36:00.635411 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:36:00.644357 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:36:00.647014 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:36:00.649654 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:36:00.654208 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/js/legends.js
+[Sat Mar 12 13:36:00.657462 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:36:00.661906 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:36:00.665346 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/css/styles.css
+[Sat Mar 12 13:36:04.719086 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/js/jquery/jquery-2.1.1.min.js
+[Sat Mar 12 13:36:04.726040 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/bootstrap/js/bootstrap.js
+[Sat Mar 12 13:36:04.731341 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.js
+[Sat Mar 12 13:36:04.735544 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/jquery/jquery.tablesorter.min.js
+[Sat Mar 12 13:36:04.738792 2016] [wsgi:error] [pid 31892:tid 139734789957376] Not Found: /static/fancybox/source/jquery.fancybox.js
+[Sat Mar 12 13:36:04.741947 2016] [wsgi:error] [pid 31892:tid 139734798350080] Not Found: /static/fancybox/source/jquery.fancybox.css
+[Sat Mar 12 13:36:04.744428 2016] [wsgi:error] [pid 31892:tid 139734781564672] Not Found: /static/fancybox/source/helpers/jquery.fancybox-buttons.css
+[Sat Mar 12 13:36:04.746611 2016] [wsgi:error] [pid 31892:tid 139734806742784] Not Found: /static/css/styles.css
+[Sat Mar 12 13:36:04.748588 2016] [wsgi:error] [pid 31892:tid 139734773171968] Not Found: /static/js/legends.js
+[Sat Mar 12 12:56:53.982396 2016] [mpm_event:notice] [pid 31891:tid 139734927181696] AH00491: caught SIGTERM, shutting down
+[Sat Mar 12 12:56:57.381475 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00489: Apache/2.4.7 (Ubuntu) mod_wsgi/4.4.11 Python/3.4.0 configured -- resuming normal operations
+[Sat Mar 12 12:56:57.381546 2016] [core:notice] [pid 32409:tid 140314874349440] AH00094: Command line: 'apache2 (mod_wsgi-express) -f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -D WSGI_MPM_ENABLE_EVENT_MODULE -D WSGI_MPM_EXISTS_EVENT_MODULE -D WSGI_MPM_EXISTS_WORKER_MODULE -D WSGI_MPM_EXISTS_PREFORK_MODULE'
+[Sat Mar 12 12:57:02.540832 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] mod_wsgi (pid=32410): Exception occurred processing WSGI script '/home/jeff/src/legends/www/mod_wsgi-express/htdocs/legends'.
+[Sat Mar 12 12:57:02.541013 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 12:57:02.541582 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 12:57:02.541608 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 12:57:02.541974 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 12:57:02.541996 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 12:57:02.542043 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 12:57:02.542080 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 12:57:02.542115 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 12:57:02.542148 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 12:57:02.542180 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 12:57:02.542211 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 12:57:02.542243 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 12:57:02.542275 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 12:57:02.542306 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 12:57:02.542337 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 12:57:02.542390 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 12:57:02.542445 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: No module named 'legends'
+[Sat Mar 12 12:57:02.542474 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 12:57:02.542485 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] During handling of the above exception, another exception occurred:
+[Sat Mar 12 12:57:02.542494 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 12:57:02.542515 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 12:57:02.544263 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 12:57:02.544290 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     return self.application(environ, start_response)
+[Sat Mar 12 12:57:02.544658 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 12:57:02.544679 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     self.load_middleware()
+[Sat Mar 12 12:57:02.545063 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 12:57:02.545083 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 12:57:02.545151 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 12:57:02.545164 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     self._setup(name)
+[Sat Mar 12 12:57:02.545215 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 12:57:02.545227 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 12:57:02.545274 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 12:57:02.545286 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 12:57:02.545329 2016] [wsgi:error] [pid 32410:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:04:45.343195 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00494: SIGHUP received.  Attempting to restart
+[Sat Mar 12 13:04:45.397563 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00489: Apache/2.4.7 (Ubuntu) mod_wsgi/4.4.11 Python/3.4.0 configured -- resuming normal operations
+[Sat Mar 12 13:04:45.397600 2016] [core:notice] [pid 32409:tid 140314874349440] AH00094: Command line: 'apache2 (mod_wsgi-express) -f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -D WSGI_MPM_ENABLE_EVENT_MODULE -D WSGI_MPM_EXISTS_EVENT_MODULE -D WSGI_MPM_EXISTS_WORKER_MODULE -D WSGI_MPM_EXISTS_PREFORK_MODULE'
+[Sat Mar 12 13:04:49.462560 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] mod_wsgi (pid=458): Exception occurred processing WSGI script '/home/jeff/src/legends/www/mod_wsgi-express/htdocs/legends'.
+[Sat Mar 12 13:04:49.462762 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 13:04:49.623045 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:04:49.623054 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:04:49.623161 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:04:49.623167 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:04:49.623178 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:04:49.623187 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:04:49.623196 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:04:49.623204 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:04:49.623212 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:04:49.623220 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:04:49.623227 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:04:49.623235 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:04:49.623243 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:04:49.623250 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:04:49.623258 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:04:49.623274 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: No module named 'legends'
+[Sat Mar 12 13:04:49.623281 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 13:04:49.623284 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:04:49.623286 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 13:04:49.623292 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 13:04:49.623729 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:04:49.623734 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     return self.application(environ, start_response)
+[Sat Mar 12 13:04:49.623825 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:04:49.623836 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     self.load_middleware()
+[Sat Mar 12 13:04:49.623935 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:04:49.623940 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:04:49.623957 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:04:49.623961 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     self._setup(name)
+[Sat Mar 12 13:04:49.623973 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:04:49.623976 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:04:49.623988 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:04:49.623991 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:04:49.624002 2016] [wsgi:error] [pid 458:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:12:12.332567 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] mod_wsgi (pid=458): Exception occurred processing WSGI script '/home/jeff/src/legends/www/mod_wsgi-express/htdocs/legends'.
+[Sat Mar 12 13:12:12.332726 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] Traceback (most recent call last):
+[Sat Mar 12 13:12:12.332853 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:12:12.332873 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:12:12.332944 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:12:12.332959 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:12:12.333006 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:12:12.333043 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:12:12.333077 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:12:12.333111 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:12:12.333144 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:12:12.333176 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:12:12.333233 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:12:12.333266 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:12:12.333297 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:12:12.333327 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:12:12.333357 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:12:12.333405 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] ImportError: No module named 'legends'
+[Sat Mar 12 13:12:12.333432 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] 
+[Sat Mar 12 13:12:12.333442 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:12:12.333451 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] 
+[Sat Mar 12 13:12:12.333471 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] Traceback (most recent call last):
+[Sat Mar 12 13:12:12.333544 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:12:12.333557 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     return self.application(environ, start_response)
+[Sat Mar 12 13:12:12.333610 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:12:12.333623 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     self.load_middleware()
+[Sat Mar 12 13:12:12.333673 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:12:12.333685 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:12:12.333732 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:12:12.333744 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     self._setup(name)
+[Sat Mar 12 13:12:12.333790 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:12:12.333802 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:12:12.333847 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:12:12.333859 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:12:12.333894 2016] [wsgi:error] [pid 458:tid 140314720339712] [remote 192.168.1.101:9114] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:43:27.948783 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00494: SIGHUP received.  Attempting to restart
+[Sat Mar 12 13:43:27.999104 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00489: Apache/2.4.7 (Ubuntu) mod_wsgi/4.4.11 Python/3.4.0 configured -- resuming normal operations
+[Sat Mar 12 13:43:27.999176 2016] [core:notice] [pid 32409:tid 140314874349440] AH00094: Command line: 'apache2 (mod_wsgi-express) -f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -D WSGI_MPM_ENABLE_EVENT_MODULE -D WSGI_MPM_EXISTS_EVENT_MODULE -D WSGI_MPM_EXISTS_WORKER_MODULE -D WSGI_MPM_EXISTS_PREFORK_MODULE'
+[Sat Mar 12 13:43:32.263088 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] mod_wsgi (pid=675): Exception occurred processing WSGI script '/home/jeff/src/legends/legends/'.
+[Sat Mar 12 13:43:32.263158 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 13:43:32.263321 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:43:32.263331 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:43:32.263423 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:43:32.263429 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:43:32.263441 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:43:32.263450 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:43:32.263458 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:43:32.263467 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:43:32.263474 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:43:32.263482 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:43:32.263490 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:43:32.263498 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:43:32.263505 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:43:32.263513 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:43:32.263520 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:43:32.263536 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: No module named 'legends'
+[Sat Mar 12 13:43:32.263543 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 13:43:32.263546 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:43:32.263548 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 13:43:32.263561 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 13:43:32.263996 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:43:32.264002 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     return self.application(environ, start_response)
+[Sat Mar 12 13:43:32.264093 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:43:32.264098 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     self.load_middleware()
+[Sat Mar 12 13:43:32.264194 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:43:32.264199 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:43:32.264216 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:43:32.264219 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     self._setup(name)
+[Sat Mar 12 13:43:32.264232 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:43:32.264236 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:43:32.264248 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:43:32.264251 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:43:32.264262 2016] [wsgi:error] [pid 675:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:45:36.382586 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00494: SIGHUP received.  Attempting to restart
+[Sat Mar 12 13:45:36.438719 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00489: Apache/2.4.7 (Ubuntu) mod_wsgi/4.4.11 Python/3.4.0 configured -- resuming normal operations
+[Sat Mar 12 13:45:36.438769 2016] [core:notice] [pid 32409:tid 140314874349440] AH00094: Command line: 'apache2 (mod_wsgi-express) -f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -D WSGI_MPM_ENABLE_EVENT_MODULE -D WSGI_MPM_EXISTS_EVENT_MODULE -D WSGI_MPM_EXISTS_WORKER_MODULE -D WSGI_MPM_EXISTS_PREFORK_MODULE'
+[Sat Mar 12 13:45:41.843104 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] mod_wsgi (pid=781): Exception occurred processing WSGI script '/home/jeff/src/legends/legends/legends'.
+[Sat Mar 12 13:45:41.843343 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 13:45:41.843911 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:45:41.843937 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:45:41.844301 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:45:41.844345 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:45:41.844393 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:45:41.844430 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:45:41.844463 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:45:41.844495 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:45:41.844525 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:45:41.844556 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:45:41.844586 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:45:41.844617 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:45:41.844647 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:45:41.844678 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:45:41.844708 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:45:41.844762 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: No module named 'legends'
+[Sat Mar 12 13:45:41.844792 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 13:45:41.844802 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:45:41.844811 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] 
+[Sat Mar 12 13:45:41.844831 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] Traceback (most recent call last):
+[Sat Mar 12 13:45:41.846491 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:45:41.846513 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     return self.application(environ, start_response)
+[Sat Mar 12 13:45:41.846864 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:45:41.846885 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     self.load_middleware()
+[Sat Mar 12 13:45:41.847321 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:45:41.847346 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:45:41.847416 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:45:41.847444 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     self._setup(name)
+[Sat Mar 12 13:45:41.847501 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:45:41.847514 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:45:41.847562 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:45:41.847575 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:45:41.847619 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 192.168.1.101:4243] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:45:47.198860 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] mod_wsgi (pid=781): Exception occurred processing WSGI script '/home/jeff/src/legends/legends/legends'.
+[Sat Mar 12 13:45:47.199022 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] Traceback (most recent call last):
+[Sat Mar 12 13:45:47.355584 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:45:47.355593 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:45:47.355615 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:45:47.355619 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:45:47.355632 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:45:47.355641 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:45:47.355650 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:45:47.355659 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:45:47.355667 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:45:47.355675 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:45:47.355683 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:45:47.355691 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:45:47.355699 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:45:47.355708 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:45:47.355715 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:45:47.355739 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] ImportError: No module named 'legends'
+[Sat Mar 12 13:45:47.355747 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] 
+[Sat Mar 12 13:45:47.355749 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:45:47.355751 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] 
+[Sat Mar 12 13:45:47.355757 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] Traceback (most recent call last):
+[Sat Mar 12 13:45:47.355778 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:45:47.355782 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     return self.application(environ, start_response)
+[Sat Mar 12 13:45:47.355796 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:45:47.355799 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     self.load_middleware()
+[Sat Mar 12 13:45:47.355813 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:45:47.355816 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:45:47.355828 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:45:47.355831 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     self._setup(name)
+[Sat Mar 12 13:45:47.355843 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:45:47.355846 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:45:47.355858 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:45:47.355861 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:45:47.355871 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 192.168.1.101:9114] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:56:18.622674 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] mod_wsgi (pid=781): Exception occurred processing WSGI script '/home/jeff/src/legends/legends/'.
+[Sat Mar 12 13:56:18.622729 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] Traceback (most recent call last):
+[Sat Mar 12 13:56:18.622766 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:56:18.622771 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:56:18.622791 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:56:18.622803 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:56:18.622815 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:56:18.622825 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:56:18.622833 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:56:18.622842 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:56:18.622850 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:56:18.622858 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:56:18.622866 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:56:18.622874 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:56:18.622882 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:56:18.622889 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:56:18.622897 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:56:18.622912 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] ImportError: No module named 'legends'
+[Sat Mar 12 13:56:18.622919 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] 
+[Sat Mar 12 13:56:18.622921 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:56:18.622924 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] 
+[Sat Mar 12 13:56:18.622929 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] Traceback (most recent call last):
+[Sat Mar 12 13:56:18.622948 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:56:18.622952 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     return self.application(environ, start_response)
+[Sat Mar 12 13:56:18.622967 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:56:18.622970 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     self.load_middleware()
+[Sat Mar 12 13:56:18.622983 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:56:18.622986 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:56:18.622998 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:56:18.623005 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     self._setup(name)
+[Sat Mar 12 13:56:18.623017 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:56:18.623021 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:56:18.623032 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:56:18.623035 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:56:18.623045 2016] [wsgi:error] [pid 781:tid 140314753910528] [remote 141.212.122.160:9114] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 13:57:18.648243 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] mod_wsgi (pid=781): Exception occurred processing WSGI script '/home/jeff/src/legends/legends/cgi-bin'.
+[Sat Mar 12 13:57:18.648289 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] Traceback (most recent call last):
+[Sat Mar 12 13:57:18.648326 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sat Mar 12 13:57:18.648330 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sat Mar 12 13:57:18.648349 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sat Mar 12 13:57:18.648352 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sat Mar 12 13:57:18.648364 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:57:18.648373 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:57:18.648381 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:57:18.648390 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:57:18.648398 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:57:18.648406 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:57:18.648414 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2189, in _find_and_load_unlocked
+[Sat Mar 12 13:57:18.648422 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sat Mar 12 13:57:18.648430 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sat Mar 12 13:57:18.648438 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sat Mar 12 13:57:18.648446 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "<frozen importlib._bootstrap>", line 2201, in _find_and_load_unlocked
+[Sat Mar 12 13:57:18.648466 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] ImportError: No module named 'legends'
+[Sat Mar 12 13:57:18.648474 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] 
+[Sat Mar 12 13:57:18.648476 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] During handling of the above exception, another exception occurred:
+[Sat Mar 12 13:57:18.648479 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] 
+[Sat Mar 12 13:57:18.648484 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] Traceback (most recent call last):
+[Sat Mar 12 13:57:18.648506 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/mod_wsgi/server/__init__.py", line 1299, in handle_request
+[Sat Mar 12 13:57:18.648510 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     return self.application(environ, start_response)
+[Sat Mar 12 13:57:18.648525 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sat Mar 12 13:57:18.648528 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     self.load_middleware()
+[Sat Mar 12 13:57:18.648541 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sat Mar 12 13:57:18.648544 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sat Mar 12 13:57:18.648556 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sat Mar 12 13:57:18.648559 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     self._setup(name)
+[Sat Mar 12 13:57:18.648571 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sat Mar 12 13:57:18.648573 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     self._wrapped = Settings(settings_module)
+[Sat Mar 12 13:57:18.648585 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]   File "/home/jeff/ve/legends/lib/python3.4/site-packages/django/conf/__init__.py", line 132, in __init__
+[Sat Mar 12 13:57:18.648588 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114]     % (self.SETTINGS_MODULE, e)
+[Sat Mar 12 13:57:18.648598 2016] [wsgi:error] [pid 781:tid 140314720339712] [remote 89.248.160.132:9114] ImportError: Could not import settings 'legends.settings.galba' (Is it on sys.path? Is there an import error in the settings file?): No module named 'legends'
+[Sat Mar 12 14:14:23.316839 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00494: SIGHUP received.  Attempting to restart
+[Sat Mar 12 14:14:23.490424 2016] [mpm_event:notice] [pid 32409:tid 140314874349440] AH00489: Apache/2.4.7 (Ubuntu) mod_wsgi/4.4.11 Python/3.4.0 configured -- resuming normal operations
+[Sat Mar 12 14:14:23.490475 2016] [core:notice] [pid 32409:tid 140314874349440] AH00094: Command line: 'apache2 (mod_wsgi-express) -f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -D WSGI_MPM_ENABLE_EVENT_MODULE -D WSGI_MPM_EXISTS_EVENT_MODULE -D WSGI_MPM_EXISTS_WORKER_MODULE -D WSGI_MPM_EXISTS_PREFORK_MODULE'
+[Sat Mar 12 15:16:16.224036 2016] [wsgi:error] [pid 1114:tid 140314753910528] Not Found: /favicon.ico
+[Sat Mar 12 15:17:27.307219 2016] [wsgi:error] [pid 1114:tid 140314720339712] Not Found: /favicon.ico

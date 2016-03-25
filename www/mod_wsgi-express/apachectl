@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# ['manage.py', 'runmodwsgi', '--setup-only', '--port=80', '--user', 'www-data', '--group', 'www-data', '--server-root=/home/jeff/src/legends/www/mod_wsgi-express']
+
+HTTPD="/usr/sbin/apache2"
+HTTPD_ARGS="-f /home/jeff/src/legends/www/mod_wsgi-express/httpd.conf -DWSGI_MPM_ENABLE_EVENT_MODULE -DWSGI_MPM_EXISTS_EVENT_MODULE -DWSGI_MPM_EXISTS_WORKER_MODULE -DWSGI_MPM_EXISTS_PREFORK_MODULE"
+
+HTTPD_COMMAND="$HTTPD $HTTPD_ARGS"
+
+HTTPD_MODULES_DIRECTORY="/usr/lib/apache2/modules"
+export HTTPD_MODULES_DIRECTORY
+
+SHLIBPATH=""
+
+if [ "x$SHLIBPATH" != "x" ]; then
+    LD_LIBRARY_PATH="$SHLIBPATH:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH
+fi
+
+WSGI_RUN_USER="${WSGI_RUN_USER:-www-data}"
+WSGI_RUN_GROUP="${WSGI_RUN_GROUP:-www-data}"
+
+export WSGI_RUN_USER
+export WSGI_RUN_GROUP
+
+if [ `id -u` = "0" -a ${WSGI_RUN_USER} = "root" ]; then
+    cat << EOF
+
+WARNING: When running as the 'root' user, it is required that the options
+'--user' and '--group' be specified to mod_wsgi-express. These should
+define a non 'root' user and group under which the Apache child worker
+processes and mod_wsgi daemon processes should be run. Failure to specify
+these options will result in Apache and/or the mod_wsgi daemon processes
+failing to start. See the mod_wsgi-express documentation for further
+information on this restriction.
+
+EOF
+
+fi
+
+LANG='en_AU.UTF-8'
+LC_ALL='en_AU.UTF-8'
+
+export LANG
+export LC_ALL
+
+ACMD="$1"
+ARGV="$@"
+
+if test -f /home/jeff/src/legends/www/mod_wsgi-express/envvars; then
+    . /home/jeff/src/legends/www/mod_wsgi-express/envvars
+fi
+
+STATUSURL="http://localhost:80/server-status"
+
+if [ "x$ARGV" = "x" ]; then
+    ARGV="-h"
+fi
+
+GDB="gdb"
+ENABLE_GDB="False"
+
+PROCESS_NAME="apache2 (mod_wsgi-express)"
+
+case $ACMD in
+start|stop|restart|graceful|graceful-stop)
+    if [ "x$ENABLE_GDB" != "xTrue" ]; then
+        exec -a "$PROCESS_NAME" $HTTPD_COMMAND -k $ARGV
+    else
+        echo "run $HTTPD_ARGS -k $ARGV" > /home/jeff/src/legends/www/mod_wsgi-express/gdb.cmds
+        gdb -x /home/jeff/src/legends/www/mod_wsgi-express/gdb.cmds $HTTPD
+    fi
+    ;;
+configtest)
+    exec $HTTPD_COMMAND -t
+    ;;
+status)
+    exec /home/jeff/ve/legends/bin/python -m webbrowser -t $STATUSURL
+    ;;
+*)
+    exec $HTTPD_COMMAND $ARGV
+esac
+

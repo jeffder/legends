@@ -40,6 +40,7 @@ SECRET_KEY = '&&kkxs=@%2^s-++fdby-wagu0po7#@p%)0j@=idkh6!_*yyqe='
 # Build paths like this: os.path.join(BASE_DIR, ...)
 base_dir = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = os.path.abspath(os.path.join(base_dir, '..'))
+BASE_DIR = PROJECT_DIR
 MAIN_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'main'))
 
 STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, 'static'))
