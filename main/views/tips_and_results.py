@@ -218,14 +218,17 @@ def get_results(request, round_id):
             create_streak_ladders(curr_round, available_results)
 
         # Update status for round
-        if curr_round.status == constants.Round.SCHEDULED:
+        if curr_round.status in (
+                constants.Round.SCHEDULED, constants.Round.PROVISIONAL):
             for game in available_results:
-                game.status = constants.Game.PROVISIONAL
+                if game.status == constants.Game.SCHEDULED:
+                    game.status = constants.Game.PROVISIONAL
                 game.save()
-            curr_round.status = constants.Round.PROVISIONAL
-            curr_round.set_tipping_deadline()
-        elif all(g.status == constants.Game.PROVISIONAL for g in games) or   \
-                curr_round.status == constants.Game.PROVISIONAL:
+            if curr_round.status == constants.Round.SCHEDULED:
+                curr_round.status = constants.Round.PROVISIONAL
+
+        # Have we got all the results for the round yet?
+        if all(g.status == constants.Game.PROVISIONAL for g in games):
             for game in games:
                 game.status = constants.Game.FINAL
                 game.save()
@@ -233,6 +236,7 @@ def get_results(request, round_id):
             finalise_round(request, curr_round)
         else:
             curr_round.set_tipping_deadline()
+
         curr_round.save()
 
         # Log the results we got
