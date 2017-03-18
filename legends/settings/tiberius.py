@@ -32,10 +32,10 @@ DATABASES = {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': SQLITE_DB_NAME,
 #        },
-    'old': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': OLD_SQLITE_DB_NAME,
-    },
+#    'old': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': OLD_SQLITE_DB_NAME,
+#    },
     'default': {
         'ENGINE': 'firebird',
         'NAME': 'legends',           # Path to database or db alias

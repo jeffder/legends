@@ -1,0 +1,239 @@
+Round 1
+Thu 23 Mar 7:20pm,Carlton,Richmond,MCG
+Fri 24 Mar 7:50pm,Collingwood,Western Bulldogs,MCG
+Sat 25 Mar 4:35pm,Sydney,Port Adelaide,SCG
+Sat 25 Mar 4:35pm,St Kilda,Melbourne,Etihad Stadium
+Sat 25 Mar 6:25pm,Gold Coast,Brisbane,Metricon Stadium
+Sat 25 Mar 7:25pm,Essendon,Hawthorn,MCG
+Sun 26 Mar 1:10pm,North Melbourne,West Coast,Etihad Stadium
+Sun 26 Mar 2:50pm,Adelaide,GWS,Adelaide Oval
+Sun 26 Mar 4:40pm,Fremantle,Geelong,Domain Stadium
+Round 2
+Thu 30 Mar 7:20pm,Richmond,Collingwood,MCG
+Fri 31 Mar 7:50pm,Western Bulldogs,Sydney,Etihad Stadium
+Sat 1 Apr 1:45pm,Hawthorn,Adelaide,MCG
+Sat 1 Apr 4:35pm,GWS,Gold Coast,Spotless Stadium
+Sat 1 Apr 4:40pm,West Coast,St Kilda,Domain Stadium
+Sat 1 Apr 6:25pm,Brisbane,Essendon,Gabba
+Sun 2 Apr 1:10pm,Geelong,North Melbourne,Etihad Stadium
+Sun 2 Apr 3:20pm,Melbourne,Carlton,MCG
+Sun 2 Apr 4:10pm,Port Adelaide,Fremantle,Adelaide Oval
+Round 3
+Fri 7 Apr 7:50pm,Sydney,Collingwood,SCG
+Sat 8 Apr 1:45pm,North Melbourne,GWS,Blundstone Arena
+Sat 8 Apr 2:10pm,Richmond,West Coast,MCG
+Sat 8 Apr 4:35pm,Geelong,Melbourne,Etihad Stadium
+Sat 8 Apr 5:40pm,Fremantle,Western Bulldogs,Domain Stadium
+Sat 8 Apr 7:10pm,Port Adelaide,Adelaide,Adelaide Oval
+Sun 9 Apr 1:10pm,St Kilda,Brisbane,Etihad Stadium
+Sun 9 Apr 3:20pm,Carlton,Essendon,MCG
+Sun 9 Apr 4:40pm,Gold Coast,Hawthorn,Metricon Stadium
+Round 4
+Thu 13 Apr 6:10pm,West Coast,Sydney,Domain Stadium
+Fri 14 Apr 4:20pm,North Melbourne,Western Bulldogs,Etihad Stadium
+Sat 15 Apr 1:45pm,Melbourne,Fremantle,MCG
+Sat 15 Apr 4:35pm,GWS,Port Adelaide,Manuka Oval
+Sat 15 Apr 7:10pm,Adelaide,Essendon,Adelaide Oval
+Sat 15 Apr 7:25pm,Carlton,Gold Coast,Etihad Stadium
+Sun 16 Apr 3:20pm,Collingwood,St Kilda,Etihad Stadium
+Sun 16 Apr 4:40pm,Brisbane,Richmond,Gabba
+Mon 17 Apr 3:20pm,Hawthorn,Geelong,MCG
+Round 5
+Fri 21 Apr 7:20pm,Port Adelaide,Carlton,Adelaide Oval
+Sat 22 Apr 1:45pm,Western Bulldogs,Brisbane,Etihad Stadium
+Sat 22 Apr 4:35pm,Gold Coast,Adelaide,Metricon Stadium
+Sat 22 Apr 5:40pm,Fremantle,North Melbourne,Domain Stadium
+Sat 22 Apr 7:25pm,Sydney,GWS,SCG
+Sun 23 Apr 3:20pm,St Kilda,Geelong,Etihad Stadium
+Sun 23 Apr 4:40pm,Hawthorn,West Coast,MCG
+Mon 24 Apr 7:25pm,Richmond,Melbourne,MCG
+Tue 25 Apr 3:20pm,Essendon,Collingwood,MCG
+Round 6
+Fri 28 Apr 7:50pm,GWS,Western Bulldogs,Manuka Oval
+Sat 29 Apr 1:45pm,Hawthorn,St Kilda,UTAS Stadium
+Sat 29 Apr 2:10pm,Carlton,Sydney,MCG
+Sat 29 Apr 4:35pm,Brisbane,Port Adelaide,Gabba
+Sat 29 Apr 6:10pm,West Coast,Fremantle,Domain Stadium
+Sat 29 Apr 7:25pm,North Melbourne,Gold Coast,Etihad Stadium
+Sun 30 Apr 1:10pm,Essendon,Melbourne,Etihad Stadium
+Sun 30 Apr 3:20pm,Geelong,Collingwood,MCG
+Sun 30 Apr 4:10pm,Adelaide,Richmond,Adelaide Oval
+Round 7
+Fri 5 May 7:50pm,St Kilda,GWS,Etihad Stadium
+Sat 6 May 1:45pm,North Melbourne,Adelaide,Blundstone Arena
+Sat 6 May 2:10pm,Collingwood,Carlton,MCG
+Sat 6 May 4:35pm,Port Adelaide,West Coast,Adelaide Oval
+Sat 6 May 7:25pm,Gold Coast,Geelong,Metricon Stadium
+Sat 6 May 7:25pm,Western Bulldogs,Richmond,Etihad Stadium
+Sun 7 May 1:10pm,Sydney,Brisbane,SCG
+Sun 7 May 2:40pm,Fremantle,Essendon,Domain Stadium
+Sun 7 May 3:20pm,Melbourne,Hawthorn,MCG
+Round 8
+Fri 12 May 6:10pm,West Coast,Western Bulldogs,Domain Stadium
+Sat 13 May 1:45pm,Hawthorn,Brisbane,UTAS Stadium
+Sat 13 May 2:10pm,St Kilda,Carlton,Etihad Stadium
+Sat 13 May 4:35pm,GWS,Collingwood,Spotless Stadium
+Sat 13 May 7:10pm,Adelaide,Melbourne,Adelaide Oval
+Sat 13 May 7:25pm,Essendon,Geelong,MCG
+Sun 14 May 1:10pm,Richmond,Fremantle,MCG
+Sun 14 May 3:20pm,Gold Coast,Port Adelaide,Jiangwan Stadium
+Sun 14 May 4:40pm,North Melbourne,Sydney,Etihad Stadium
+Round 9
+Fri 19 May 7:50pm,Geelong,Western Bulldogs,Simonds Stadium
+Sat 20 May 1:45pm,St Kilda,Sydney,Etihad Stadium
+Sat 20 May 4:35pm,GWS,Richmond,Spotless Stadium
+Sat 20 May 7:25pm,Brisbane,Adelaide,Gabba
+Sat 20 May 7:25pm,Collingwood,Hawthorn,MCG
+Sun 21 May 1:10pm,Essendon,West Coast,Etihad Stadium
+Sun 21 May 2:40pm,Fremantle,Carlton,Domain Stadium
+Sun 21 May 3:20pm,Melbourne,North Melbourne,MCG
+Port Adelaide,BYE
+Gold Coast,BYE
+Round 10
+Thu 25 May 7:20pm,Geelong,Port Adelaide,Simonds Stadium
+Fri 26 May 7:50pm,Sydney,Hawthorn,SCG
+Sat 27 May 1:45pm,Western Bulldogs,St Kilda,Etihad Stadium
+Sat 27 May 4:35pm,Melbourne,Gold Coast,TIO Traeger Park
+Sat 27 May 7:10pm,Adelaide,Fremantle,Adelaide Oval
+Sat 27 May 7:25pm,Richmond,Essendon,MCG
+Sun 28 May 1:10pm,Collingwood,Brisbane,MCG
+Sun 28 May 2:40pm,West Coast,GWS,Domain Stadium
+Sun 28 May 3:20pm,Carlton,North Melbourne,Etihad Stadium
+Round 11
+Thu 1 Jun 7:20pm,Port Adelaide,Hawthorn,Adelaide Oval
+Fri 2 Jun 7:50pm,Geelong,Adelaide,Simonds Stadium
+Sat 3 Jun 1:45pm,Gold Coast,West Coast,Metricon Stadium
+Sat 3 Jun 4:35pm,GWS,Essendon,Spotless Stadium
+Sat 3 Jun 7:25pm,North Melbourne,Richmond,Etihad Stadium
+Sun 4 Jun 2:40pm,Fremantle,Collingwood,Domain Stadium
+Brisbane,BYE
+Sydney,BYE
+Melbourne,BYE
+Western Bulldogs,BYE
+Carlton,BYE
+St Kilda,BYE
+Round 12
+Thu 8 Jun 7:20pm,Sydney,Western Bulldogs,SCG
+Fri 9 Jun 7:20pm,Adelaide,St Kilda,Adelaide Oval
+Sat 10 Jun 1:45pm,Hawthorn,Gold Coast,MCG
+Sat 10 Jun 4:35pm,Brisbane,Fremantle,Gabba
+Sat 10 Jun 7:25pm,Essendon,Port Adelaide,Etihad Stadium
+Sun 11 Jun 3:20pm,Carlton,GWS,Etihad Stadium
+Mon 12 Jun 3:20pm,Melbourne,Collingwood,MCG
+North Melbourne,BYE
+West Coast,BYE
+Richmond,BYE
+Geelong,BYE
+Round 13
+Thu 15 Jun 6:10pm,West Coast,Geelong,Domain Stadium
+Fri 16 Jun 7:50pm,North Melbourne,St Kilda,Etihad Stadium
+Sat 17 Jun 1:45pm,Richmond,Sydney,MCG
+Sat 17 Jun 4:35pm,Port Adelaide,Brisbane,Adelaide Oval
+Sat 17 Jun 7:25pm,Gold Coast,Carlton,Metricon Stadium
+Sun 18 Jun 3:20pm,Western Bulldogs,Melbourne,Etihad Stadium
+Adelaide,BYE
+Hawthorn,BYE
+GWS,BYE
+Collingwood,BYE
+Essendon,BYE
+Fremantle,BYE
+Round 14
+Thu 22 Jun 7:20pm,Adelaide,Hawthorn,Adelaide Oval
+Fri 23 Jun 7:50pm,Sydney,Essendon,SCG
+Sat 24 Jun 1:45pm,Collingwood,Port Adelaide,MCG
+Sat 24 Jun 4:35pm,Brisbane,GWS,Gabba
+Sat 24 Jun 5:40pm,West Coast,Melbourne,Domain Stadium
+Sat 24 Jun 7:25pm,Western Bulldogs,North Melbourne,Etihad Stadium
+Sun 25 Jun 1:10pm,Geelong,Fremantle,Simonds Stadium
+Sun 25 Jun 3:20pm,Richmond,Carlton,MCG
+Sun 25 Jun 4:40pm,St Kilda,Gold Coast,Etihad Stadium
+Round 15
+Fri 30 Jun 7:50pm,Melbourne,Sydney,MCG
+Sat 1 Jul 1:45pm,Western Bulldogs,West Coast,Etihad Stadium
+Sat 1 Jul 2:10pm,Carlton,Adelaide,MCG
+Sat 1 Jul 4:35pm,Gold Coast,North Melbourne,Metricon Stadium
+Sat 1 Jul 7:10pm,Port Adelaide,Richmond,Adelaide Oval
+Sat 1 Jul 7:25pm,GWS,Geelong,Spotless Stadium
+Sun 2 Jul 1:10pm,Essendon,Brisbane,Etihad Stadium
+Sun 2 Jul 2:40pm,Fremantle,St Kilda,Domain Stadium
+Sun 2 Jul 3:20pm,Hawthorn,Collingwood,MCG
+Round 16
+Fri 7 Jul 7:20pm,Adelaide,Western Bulldogs,Adelaide Oval
+Sat 8 Jul 1:45pm,Hawthorn,GWS,UTAS Stadium
+Sat 8 Jul 2:10pm,Collingwood,Essendon,MCG
+Sat 8 Jul 4:35pm,Sydney,Gold Coast,SCG
+Sat 8 Jul 7:25pm,Brisbane,Geelong,Gabba
+Sat 8 Jul 7:25pm,St Kilda,Richmond,Etihad Stadium
+Sun 9 Jul 1:10pm,North Melbourne,Fremantle,Etihad Stadium
+Sun 9 Jul 2:40pm,West Coast,Port Adelaide,Domain Stadium
+Sun 9 Jul 3:20pm,Carlton,Melbourne,MCG
+Round 17
+Fri 14 Jul 7:50pm,St Kilda,Essendon,Etihad Stadium
+Sat 15 Jul 1:45pm,Geelong,Hawthorn,MCG
+Sat 15 Jul 2:10pm,Port Adelaide,North Melbourne,Adelaide Oval
+Sat 15 Jul 4:35pm,Gold Coast,Collingwood,Metricon Stadium
+Sat 15 Jul 7:10pm,Melbourne,Adelaide,TIO Stadium
+Sat 15 Jul 7:25pm,GWS,Sydney,Spotless Stadium
+Sun 16 Jul 1:10pm,Richmond,Brisbane,Etihad Stadium
+Sun 16 Jul 2:40pm,Fremantle,West Coast,Domain Stadium
+Sun 16 Jul 3:20pm,Carlton,Western Bulldogs,MCG
+Round 18
+Fri 21 Jul 7:20pm,Adelaide,Geelong,Adelaide Oval
+Sat 22 Jul 1:45pm,Essendon,North Melbourne,Etihad Stadium
+Sat 22 Jul 2:10pm,Melbourne,Port Adelaide,MCG
+Sat 22 Jul 4:35pm,Western Bulldogs,Gold Coast,Cazaly's Stadium
+Sat 22 Jul 5:40pm,Fremantle,Hawthorn,Domain Stadium
+Sat 22 Jul 7:25pm,Sydney,St Kilda,SCG
+Sun 23 Jul 1:10pm,Richmond,GWS,MCG
+Sun 23 Jul 3:20pm,Collingwood,West Coast,Etihad Stadium
+Sun 23 Jul 4:40pm,Brisbane,Carlton,Gabba
+Round 19
+Fri 28 Jul 7:50pm,Hawthorn,Sydney,MCG
+Sat 29 Jul 1:45pm,North Melbourne,Melbourne,Blundstone Arena
+Sat 29 Jul 2:10pm,GWS,Fremantle,Spotless Stadium
+Sat 29 Jul 4:35pm,Port Adelaide,St Kilda,Adelaide Oval
+Sat 29 Jul 7:25pm,Carlton,Geelong,Etihad Stadium
+Sat 29 Jul 7:25pm,Gold Coast,Richmond,Metricon Stadium
+Sun 30 Jul 1:10pm,Western Bulldogs,Essendon,Etihad Stadium
+Sun 30 Jul 2:40pm,West Coast,Brisbane,Domain Stadium
+Sun 30 Jul 3:20pm,Collingwood,Adelaide,MCG
+Round 20
+Fri 4 Aug 7:50pm,Geelong,Sydney,Simonds Stadium
+Sat 5 Aug 1:45pm,GWS,Melbourne,Manuka Oval
+Sat 5 Aug 2:10pm,Essendon,Carlton,MCG
+Sat 5 Aug 4:35pm,Brisbane,Western Bulldogs,Gabba
+Sat 5 Aug 5:40pm,Fremantle,Gold Coast,Domain Stadium
+Sat 5 Aug 7:25pm,North Melbourne,Collingwood,Etihad Stadium
+Sun 6 Aug 1:10pm,St Kilda,West Coast,Etihad Stadium
+Sun 6 Aug 3:20pm,Richmond,Hawthorn,MCG
+Sun 6 Aug 4:10pm,Adelaide,Port Adelaide,Adelaide Oval
+Round 21
+Fri 11 Aug 7:50pm,Western Bulldogs,GWS,Etihad Stadium
+Sat 12 Aug 1:45pm,Sydney,Fremantle,SCG
+Sat 12 Aug 2:10pm,Geelong,Richmond,Simonds Stadium
+Sat 12 Aug 4:35pm,Brisbane,Gold Coast,Gabba
+Sat 12 Aug 5:40pm,West Coast,Carlton,Domain Stadium
+Sat 12 Aug 7:25pm,Essendon,Adelaide,Etihad Stadium
+Sun 13 Aug 1:10pm,Melbourne,St Kilda,MCG
+Sun 13 Aug 3:20pm,Hawthorn,North Melbourne,UTAS Stadium
+Sun 13 Aug 4:10pm,Port Adelaide,Collingwood,Adelaide Oval
+Round 22
+Fri 18 Aug 7:20pm,Adelaide,Sydney,Adelaide Oval
+Sat 19 Aug 1:45pm,Western Bulldogs,Port Adelaide,Eureka Stadium
+Sat 19 Aug 2:10pm,Collingwood,Geelong,MCG
+Sat 19 Aug 4:35pm,GWS,West Coast,Spotless Stadium
+Sat 19 Aug 7:25pm,Gold Coast,Essendon,Metricon Stadium
+Sat 19 Aug 7:25pm,Carlton,Hawthorn,Etihad Stadium
+Sun 20 Aug 1:10pm,Melbourne,Brisbane,MCG
+Sun 20 Aug 2:40pm,Fremantle,Richmond,Domain Stadium
+Sun 20 Aug 3:20pm,St Kilda,North Melbourne,Etihad Stadium
+Round 23
+Sun 27 Aug 8:00pm,Geelong,GWS,Simonds Stadium
+Sun 27 Aug 8:00pm,Port Adelaide,Gold Coast,Adelaide Oval
+Sun 27 Aug 8:00pm,West Coast,Adelaide,Domain Stadium
+Sun 27 Aug 8:00pm,Richmond,St Kilda,MCG
+Sun 27 Aug 8:00pm,Essendon,Fremantle,Etihad Stadium
+Sun 27 Aug 8:00pm,Brisbane,North Melbourne,Gabba
+Sun 27 Aug 8:00pm,Sydney,Carlton,SCG
+Sun 27 Aug 8:00pm,Collingwood,Melbourne,MCG
+Sun 27 Aug 8:00pm,Hawthorn,Western Bulldogs,Etihad Stadium

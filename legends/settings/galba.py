@@ -26,10 +26,10 @@ DATABASES = {
         'PORT': '3050',               # If is empty, use default 3050
         'OPTIONS': {'charset': 'UTF8'},
     },
-    'old': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': SQLITE_DB_NAME,
-    }
+#    'old': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': SQLITE_DB_NAME,
+#    }
 }
 
 TEMPLATE_STRING_IF_INVALID = ''
