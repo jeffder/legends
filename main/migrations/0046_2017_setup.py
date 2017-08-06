@@ -10,8 +10,8 @@ from main import constants
 
 
 SEASON = 2017
-GAME_DATA = '/home/jeff/src/legends_site/main/data/2017/fixtures_2017.txt'
-PLAYER_DATA = '/home/jeff/src/legends_site/main/data/2017/players_2017.html'
+GAME_DATA = '/home/jeff/src/legends/main/data/2017/fixtures_2017.txt'
+PLAYER_DATA = '/home/jeff/src/legends/main/data/2017/players_2017.html'
 
 club_lookup = {
     'Adelaide Crows': 'Adelaide',
