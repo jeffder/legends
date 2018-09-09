@@ -82,7 +82,7 @@ class Footywire(object):
                 cols = [c for c in row.children if c != u'\n']
                 player = cols[0].string.strip()
                 try:
-                    score = int(cols[13].string.strip())
+                    score = int(cols[-1].string.strip())
                 except IndexError:
                     raise NoSupercoachScoresError
                 scores[club].append({'player': player, 'score': score})

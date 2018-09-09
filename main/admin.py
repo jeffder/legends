@@ -9,6 +9,7 @@ admin.site.register(models.Season)
 admin.site.register(models.Club)
 admin.site.register(models.Ground)
 admin.site.register(models.LegendsLadder)
+admin.site.register(models.MarginsLadder)
 
 
 class CoachAdmin(admin.ModelAdmin):

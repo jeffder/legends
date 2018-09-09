@@ -47,6 +47,7 @@ def view_tips(request, round_id):
     form_games = []
     result_games = []
     tip_games = []
+
     for game in games:
         tips = game.tips_by_club(clubs)
         if game.status == 'Scheduled':
@@ -182,13 +183,12 @@ def get_results(request, round_id):
                 # The game's result might be missing due to a problem with
                 # Footywire (e.g. missing Supercoach scores) so just ignore it
                 # unless it's flagged as an manual result
-                try:
-                    result = results[(game.afl_home.name, game.afl_away.name)]
-                except KeyError:
-                    if game.is_manual_result:
-                        available_results.append(game)
-                    continue
                 if not game.is_manual_result:
+                    try:
+                        result = results[(game.afl_home.name, game.afl_away.name)]
+                    except KeyError:
+                        continue
+
                     SupercoachRanking.objects.filter(game=game).delete()
                     set_afl_result(game, result)
                 available_results.append(game)
@@ -321,20 +321,13 @@ def render_results(request, selected_round, games):
         }
 
     # Split games into two chunks
-    if selected_round.is_finals:
-        size, remainder = divmod(selected_round.num_games, 2)
-        if remainder:
-            size += 1
-    elif selected_round.has_byes:
-        size, remainder = divmod(len(selected_round.bye_clubs), 2)
-        if remainder:
-            size += 1
-    else:
-        size = 5
-    grouped_games = chunks((g for g in legends_games), size)
+    size, remainder = divmod(len(legends_games), 2)
+    if remainder:
+        size += 1
+    grouped_games = chunks(legends_games, size)
 
     # Split byes into two chunks
-    size, remainder = divmod(selected_round.num_games, 2)
+    size, remainder = divmod(len(byes), 2)
     if remainder:
         size += 1
     byes = [byes[:size], byes[size:]]
